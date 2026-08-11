@@ -1,0 +1,273 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-05T14:20:00Z",
+  "title": "Design System: Zenduit Homepage",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "Zenduit Blue",
+        "canonical": "#2188d9",
+        "tonalRamp": ["#07213a", "#0c3a63", "#11538c", "#166bb5", "#2188d9", "#4fa3e6", "#8ac2f0", "#c9e3f9"]
+      },
+      "ink-900": {
+        "role": "neutral",
+        "displayName": "Console Ink",
+        "canonical": "#0a0f1e",
+        "tonalRamp": ["#04070f", "#0a0f1e", "#111a31", "#1a2745", "#2a3a63", "#45568a", "#7484b0", "#b3bcd6"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "#f6f5f1",
+        "tonalRamp": ["#26251f", "#4d4b3f", "#75725f", "#9d9a82", "#c2bfad", "#dcdacf", "#eceae2", "#f6f5f1"]
+      },
+      "signal": {
+        "role": "secondary",
+        "displayName": "Signal Teal",
+        "canonical": "#68c8b4",
+        "tonalRamp": ["#0b2620", "#14473c", "#1d6957", "#2f8f77", "#4aad93", "#68c8b4", "#9adcce", "#cdefe7"]
+      },
+      "warn": {
+        "role": "tertiary",
+        "displayName": "Caution Amber",
+        "canonical": "#ffc466",
+        "tonalRamp": ["#3a2503", "#6b4506", "#9c660a", "#c98a1f", "#eba63e", "#ffc466", "#ffd899", "#ffeccc"]
+      },
+      "alarm": {
+        "role": "tertiary",
+        "displayName": "Fault Coral",
+        "canonical": "#f4674f",
+        "tonalRamp": ["#3d0f08", "#6e1d10", "#9e2c1a", "#c74331", "#f4674f", "#f78d7b", "#fab3a7", "#fdd9d3"]
+      },
+      "faint": {
+        "role": "neutral",
+        "displayName": "Faint Ink",
+        "canonical": "#636b7c",
+        "tonalRamp": ["#14161a", "#282c33", "#3d424c", "#515866", "#636b7c", "#8a919f", "#b1b6c0", "#d8dbe0"]
+      },
+      "dfaint": {
+        "role": "neutral",
+        "displayName": "Faint Sky",
+        "canonical": "#7e8aa6",
+        "tonalRamp": ["#191c22", "#323744", "#4b5366", "#646e88", "#7e8aa6", "#9ba5bb", "#b8bfd0", "#d5dae5"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero h1 only, weight 700, two lines max. Runs over the full-bleed hero photograph, never boxed into a column."
+      },
+      "headline": { "displayName": "Headline", "purpose": "Section h2." },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Panel and card titles; title-lg for split-section h3, title-sm for compact card headings."
+      },
+      "sub": {
+        "displayName": "Sub",
+        "purpose": "Card and split-section body copy. The workhorse size below Body."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Secondary lines inside compact components, such as pipeline step descriptions."
+      },
+      "label": {
+        "displayName": "Mono Label",
+        "purpose": "The single mono size (12px, +0.08em, uppercase). Panel headers, provenance labels, telemetry meta. Reserved for data-shaped content: sections carrying no live telemetry use plain sans headings instead."
+      },
+      "stat": {
+        "displayName": "Stat",
+        "purpose": "Platform-fact figures and metric callouts. Always tabular-nums."
+      }
+    },
+    "shadows": [
+      {
+        "name": "ambient",
+        "value": "0 1px 2px rgb(19 27 46 / 0.04), 0 16px 40px -16px rgb(19 27 46 / 0.14)",
+        "purpose": "Resting lift for framed product photographs on paper."
+      },
+      {
+        "name": "lift",
+        "value": "0 2px 4px rgb(19 27 46 / 0.05), 0 24px 56px -20px rgb(19 27 46 / 0.18)",
+        "purpose": "Reserved tier; hover feedback brightens borders instead of deepening shadow."
+      },
+      {
+        "name": "console",
+        "value": "inset 0 1px 0 rgb(237 241 248 / 0.07), 0 32px 80px -32px rgb(2 6 18 / 0.85)",
+        "purpose": "The hero telemetry card, the one floating surface over the photograph."
+      },
+      {
+        "name": "product-drop",
+        "value": "drop-shadow(0 26px 40px rgb(19 27 46 / 0.22))",
+        "purpose": "Applied to transparent-PNG hardware renders so they sit on the raised panel rather than float."
+      }
+    ],
+    "motion": [
+      {
+        "name": "transition-standard",
+        "value": "150ms ease",
+        "purpose": "Buttons, links, colour and border state changes. The primary CTA scales to 1.02 on hover and dips 1px on press."
+      },
+      {
+        "name": "transition-surface",
+        "value": "200ms ease",
+        "purpose": "Card border and background hover shifts. Surfaces never translate or grow."
+      },
+      {
+        "name": "reveal",
+        "value": "opacity 0 + y 22px -> resolved, 500ms cubic-bezier(0.21, 0.47, 0.32, 0.98), whileInView once, -70px margin",
+        "purpose": "Scroll-triggered fade-up for sections and panels. Reduced motion renders static and fully visible via a post-mount swap so hydration still matches the server."
+      },
+      {
+        "name": "count-up",
+        "value": "0 -> final, 1.4s cubic-bezier(0.16, 1, 0.3, 1), on first view",
+        "purpose": "Platform-fact figures. Reduced motion shows final values immediately with no in-view gating."
+      },
+      {
+        "name": "rail-scroll",
+        "value": "scrollBy({ behavior: 'smooth' }) with snap-x snap-mandatory and scroll-padding matched to the container gutter",
+        "purpose": "Industries rail arrow navigation. The scroll-padding is what keeps card one aligned to the container line at rest."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ],
+    "notes": [
+      "No infinite or ambient animation ships anywhere on the page. Every motion is a one-shot response to scroll or input, which is why the old marquee, chip-float and pulse-dot keyframes were deleted rather than left unused.",
+      "Font tokens MUST live in `@theme inline`. A plain `@theme` emits the var() chain onto :root where the next/font variables on <html> cannot resolve, silently dropping every face to the system stack."
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The demo CTA. Harbor blue with an inset top highlight; grows 2% on hover, the system's one sanctioned grow.",
+      "html": "<button class=\"ds-btn-primary\">Get a Demo</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 24px; background: var(--color-accent-deep, #1668b0); color: var(--color-dfg, #edf1f8); font: 500 1rem/1 Archivo, system-ui, sans-serif; letter-spacing: -0.006em; border: none; border-radius: 8px; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.14); cursor: pointer; transition: background-color 150ms ease, transform 150ms ease; } .ds-btn-primary:hover { background: var(--color-accent-deeper, #135c9e); transform: scale(1.02); } .ds-btn-primary:active { transform: translateY(1px) scale(1); } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-accent, #2188d9); outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button (Dark)",
+      "kind": "button",
+      "refersTo": "button-ghost-dark",
+      "description": "Secondary CTA on dark sections. Hairline border, near-invisible fill.",
+      "html": "<div style=\"background:#0a0f1e;padding:20px;border-radius:12px\"><button class=\"ds-btn-ghost-dark\">Check Our Prices</button></div>",
+      "css": ".ds-btn-ghost-dark { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 24px; background: rgb(255 255 255 / 0.03); color: var(--color-dfg, #edf1f8); font: 500 1rem/1 Archivo, system-ui, sans-serif; border: 1px solid rgb(237 241 248 / 0.08); border-radius: 8px; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05); cursor: pointer; transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease; } .ds-btn-ghost-dark:hover { background: rgb(255 255 255 / 0.07); border-color: rgb(237 241 248 / 0.25); } .ds-btn-ghost-dark:active { transform: translateY(1px); } .ds-btn-ghost-dark:focus-visible { outline: 2px solid var(--color-accent, #2188d9); outline-offset: 2px; }"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "description": "Stripe grammar: the visual owns its own half of the card behind a hairline, and the copy leads with one plain question in brand blue before the detail.",
+      "html": "<article class=\"ds-product\"><div class=\"ds-product-stage\"><div class=\"ds-product-shape\"></div></div><div class=\"ds-product-body\"><h3 class=\"ds-product-name\">ZenDoor</h3><p class=\"ds-product-q\">Was the trailer opened?</p><p class=\"ds-product-copy\">Wireless door and cargo sensor. Logs every open and close with a time and a place.</p></div></article>",
+      "css": ".ds-product { display: grid; grid-template-columns: 0.9fr 1.1fr; overflow: hidden; border: 1px solid rgb(19 27 46 / 0.1); border-radius: 16px; background: var(--color-card, #fdfdfb); max-width: 460px; } .ds-product-stage { display: flex; align-items: center; justify-content: center; min-height: 12rem; padding: 32px; background: var(--color-paper-raised, #fbfaf7); } .ds-product-shape { width: 74px; height: 104px; border-radius: 18px; background: linear-gradient(160deg,#ffffff,#dfe3ea); filter: drop-shadow(0 18px 28px rgb(19 27 46 / 0.2)); } .ds-product-body { display: flex; flex-direction: column; justify-content: center; padding: 24px; border-left: 1px solid rgb(19 27 46 / 0.1); } .ds-product-name { margin: 0; font: 600 1.125rem/1.35 Archivo, system-ui, sans-serif; color: var(--color-fg, #131b2e); } .ds-product-q { margin: 8px 0 0; font: 500 0.9375rem/1.4 Archivo, system-ui, sans-serif; color: var(--color-accent-deep, #1668b0); } .ds-product-copy { margin: 10px 0 0; font: 400 0.9375rem/1.6 Archivo, system-ui, sans-serif; color: var(--color-muted, #4b5568); }"
+    },
+    {
+      "name": "Pipeline Step",
+      "kind": "custom",
+      "description": "The signature way this system explains a process on a dark surface: hairline spine, ringed signal node, name and one short line. Used for the Zenduit Cloud panel instead of a paragraph.",
+      "html": "<div style=\"background:#0a0f1e;padding:28px;border-radius:12px;max-width:260px\"><ol class=\"ds-pipe\"><li class=\"ds-pipe-item\"><span class=\"ds-pipe-line\"></span><span class=\"ds-pipe-node\"><span></span></span><span><span class=\"ds-pipe-step\">Ingest</span><span class=\"ds-pipe-copy\">Every reading, the second it happens</span></span></li><li class=\"ds-pipe-item\"><span class=\"ds-pipe-node\"><span></span></span><span><span class=\"ds-pipe-step\">Evaluate</span><span class=\"ds-pipe-copy\">Against the rules you set</span></span></li></ol></div>",
+      "css": ".ds-pipe { margin: 0; padding: 0; list-style: none; } .ds-pipe-item { position: relative; display: flex; gap: 14px; padding-bottom: 24px; } .ds-pipe-item:last-child { padding-bottom: 0; } .ds-pipe-line { position: absolute; left: 5px; top: 14px; width: 1px; height: 100%; background: rgb(237 241 248 / 0.08); } .ds-pipe-node { position: relative; display: grid; place-items: center; flex-shrink: 0; width: 11px; height: 11px; margin-top: 4px; border-radius: 999px; background: #0a0f1e; box-shadow: 0 0 0 1px rgb(104 200 180 / 0.4); } .ds-pipe-node span { width: 5px; height: 5px; border-radius: 999px; background: var(--color-signal, #68c8b4); } .ds-pipe-step { display: block; font: 600 0.9375rem/1.4 Archivo, system-ui, sans-serif; color: var(--color-dfg, #edf1f8); } .ds-pipe-copy { display: block; margin-top: 2px; font: 400 0.8125rem/1.4 Archivo, system-ui, sans-serif; color: var(--color-dmuted, #9aa6c1); }"
+    },
+    {
+      "name": "Industry Rail Card",
+      "kind": "card",
+      "description": "Photograph clean at the top, text below a hairline. No label is ever set over the image.",
+      "html": "<div style=\"background:#0a0f1e;padding:20px\"><article class=\"ds-rail\"><div class=\"ds-rail-img\"></div><div class=\"ds-rail-body\"><p class=\"ds-rail-tag\">LIVE ETA · HOS</p><h3 class=\"ds-rail-name\">Transportation &amp; Logistics</h3><p class=\"ds-rail-copy\">Live ETAs, route history, and hours-of-service in one screen.</p></div></article></div>",
+      "css": ".ds-rail { width: 288px; overflow: hidden; border: 1px solid rgb(237 241 248 / 0.08); border-radius: 12px; background: var(--color-ink-850, #0c1322); transition: border-color 200ms ease; } .ds-rail:hover { border-color: rgb(237 241 248 / 0.25); } .ds-rail-img { aspect-ratio: 16 / 9; background: linear-gradient(135deg,#1a2745,#0c1322); } .ds-rail-body { padding: 16px 20px 20px; border-top: 1px solid rgb(237 241 248 / 0.08); } .ds-rail-tag { margin: 0; font: 500 0.75rem/1.4 'IBM Plex Mono', monospace; letter-spacing: 0.05em; color: var(--color-dfaint, #7e8aa6); } .ds-rail-name { margin: 8px 0 0; font: 600 0.9375rem/1.35 Archivo, system-ui, sans-serif; color: var(--color-dfg, #edf1f8); } .ds-rail-copy { margin: 6px 0 0; font: 400 0.8125rem/1.55 Archivo, system-ui, sans-serif; color: var(--color-dmuted, #9aa6c1); }"
+    },
+    {
+      "name": "Telemetry Card",
+      "kind": "custom",
+      "description": "The single piece of product truth allowed over the hero photograph: real glass, a stat grid, and a route-progress footer.",
+      "html": "<div style=\"background:#0a0f1e;padding:24px\"><div class=\"ds-telem\"><div class=\"ds-telem-head\"><span class=\"ds-telem-id\">TRK-047</span><span class=\"ds-telem-status\"><span class=\"ds-dot\"></span>IN TRANSIT</span></div><div class=\"ds-telem-grid\"><div><span class=\"ds-telem-k\">SPEED</span><span class=\"ds-telem-v\">62 km/h</span></div><div><span class=\"ds-telem-k\">FUEL</span><span class=\"ds-telem-v\">71%</span></div><div><span class=\"ds-telem-k\">ETA</span><span class=\"ds-telem-v\">14:32</span></div></div></div></div>",
+      "css": ".ds-telem { width: 256px; overflow: hidden; border: 1px solid rgb(237 241 248 / 0.08); border-radius: 12px; background: rgb(6 10 20 / 0.7); backdrop-filter: blur(24px); box-shadow: inset 0 1px 0 rgb(237 241 248 / 0.07), 0 32px 80px -32px rgb(2 6 18 / 0.85); } .ds-telem-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid rgb(237 241 248 / 0.08); } .ds-telem-id { font: 500 0.75rem/1 'IBM Plex Mono', monospace; letter-spacing: 0.05em; color: var(--color-dfg, #edf1f8); } .ds-telem-status { display: inline-flex; align-items: center; gap: 6px; font: 400 0.75rem/1 'IBM Plex Mono', monospace; color: var(--color-dmuted, #9aa6c1); } .ds-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--color-signal, #68c8b4); } .ds-telem-grid { display: grid; grid-template-columns: repeat(3, 1fr); } .ds-telem-grid > div { padding: 10px 12px; border-left: 1px solid rgb(237 241 248 / 0.08); } .ds-telem-grid > div:first-child { border-left: none; } .ds-telem-k { display: block; font: 500 0.75rem/1 'IBM Plex Mono', monospace; letter-spacing: 0.08em; color: var(--color-dfaint, #7e8aa6); } .ds-telem-v { display: block; margin-top: 2px; font: 400 0.75rem/1 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; color: var(--color-dfg, #edf1f8); }"
+    },
+    {
+      "name": "Rail Control",
+      "kind": "button",
+      "description": "Squared icon control for the industries rail. Squared, not circular: the system carries no pill or capsule shapes.",
+      "html": "<div style=\"background:#0a0f1e;padding:20px;display:flex;gap:8px\"><button class=\"ds-rail-btn\" aria-label=\"Back\">&#8249;</button><button class=\"ds-rail-btn\" aria-label=\"Forward\">&#8250;</button></div>",
+      "css": ".ds-rail-btn { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid rgb(237 241 248 / 0.08); border-radius: 8px; background: rgb(12 19 34 / 0.6); backdrop-filter: blur(12px); color: var(--color-dmuted, #9aa6c1); font-size: 16px; cursor: pointer; transition: border-color 150ms ease, color 150ms ease; } .ds-rail-btn:hover { border-color: rgb(237 241 248 / 0.25); color: var(--color-dfg, #edf1f8); } .ds-rail-btn:disabled { opacity: 0.3; cursor: default; } .ds-rail-btn:focus-visible { outline: 2px solid var(--color-accent, #2188d9); outline-offset: 2px; }"
+    },
+    {
+      "name": "Mono Label",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "The system's only text ornament, and only where the content is data-shaped.",
+      "html": "<span class=\"ds-mono-label\">TRUSTED BY FLEETS AT</span>",
+      "css": ".ds-mono-label { font: 500 0.75rem/1.4 'IBM Plex Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-faint, #636b7c); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Living Dashboard",
+    "overview": "The page is the product. Every surface behaves like a fleet console that never sleeps: telemetry set in mono, status carried by small colored dots, panels divided by hairlines, and one full-bleed photograph above the fold — a drone view of an active earthworks site where a mixed fleet is working, graded into the dark world; the overhead angle is the point, because it is the view the product itself gives you. The grammar is Linear's — quiet neutral labels, hairline-divided panels, tight Archivo, restrained color — worn over Zenduit's own materials: designed navy darks, warm paper lights, and a telemetry palette drawn from the company's real brand family. Chrome stays silent so data can speak. Color is never decoration; it marks something a visitor can click or a vehicle's live condition.",
+    "keyCharacteristics": [
+      "Real photography where it earns its place: the graded hero, Zenduit's own per-industry photos on the rail, and the official hardware renders",
+      "Photographs ship unadorned, framed by a hairline and radius, never overlaid or captioned with fake UI status chrome",
+      "Frosted glass on dark sections only, and only where content actually passes beneath it",
+      "Hairline-divided panel grammar for every feature group",
+      "Mono voice (IBM Plex Mono, tabular) reserved for data-shaped content; sections carrying no telemetry use plain sans",
+      "Hybrid rhythm: dark cinema at the edges, warm paper for the body",
+      "One accent (Zenduit blue) that appears only where something acts",
+      "No infinite animation anywhere; every motion is a one-shot response to scroll or input"
+    ],
+    "rules": [
+      {
+        "name": "The No-Pill Rule",
+        "body": "Badges and labels are never pill-shaped containers. A label is type — mono, tracked, colored if it must signal. Circles are reserved for telemetry status dots and nothing else.",
+        "section": "colors"
+      },
+      {
+        "name": "The Color Earns Its Place Rule",
+        "body": "Color appears in exactly three roles: interactive elements (links, primary CTA), the brand route/selection accent, and telemetry status dots. Labels, icons, eyebrows, and badges stay neutral.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Gradients Rule",
+        "body": "Exactly two gradient moments exist on the page, the hero scrim and the final CTA panel wash. No other gradients, ever.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mono-for-Data Rule",
+        "body": "Every number, unit ID, timestamp, percentage, and status string is IBM Plex Mono with tabular-nums. If it could appear in a terminal, it is mono. If it could not, it is not.",
+        "section": "typography"
+      },
+      {
+        "name": "The Heading Stands Alone Rule",
+        "body": "Section headings carry their own weight. No decorative eyebrow above them, and no dot-separated uppercase triads anywhere: that construction reads as machine-generated.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hairline Rule",
+        "body": "Separation is a 1px low-alpha border before it is ever a shadow. Hover feedback brightens the border and shifts the background tint; nothing translates or grows, with the primary CTA's 1.02 hover scale as the single stated exception.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Verified Proof Rule",
+        "body": "No customer name, logo, rating, or outcome metric ships unless it is verifiable on zenduit.com or supplied by the client. Unverifiable claims are removed, not softened.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do set every number, ID, and timestamp in IBM Plex Mono with tabular-nums.",
+      "Do build feature groups as hairline-divided panels with a plain heading.",
+      "Do let photographs bleed into their own region of a card rather than sitting in a letterboxed strip.",
+      "Do keep font tokens in `@theme inline`, or every custom face silently falls back to the system stack.",
+      "Do use Zenduit's real product names (ZenCam Plus, ZenTemp, ZenDoor, ZenID, ZenTitan, ZenTurbo, ZenduELD, ZenduConnect).",
+      "Do respect prefers-reduced-motion on every animation, including scroll reveals and count-ups."
+    ],
+    "donts": [
+      "Don't add gradients beyond the two sanctioned moments.",
+      "Don't color labels, eyebrows, icons, or badges: color marks action and telemetry only.",
+      "Don't use pill-shaped badges or capsule containers anywhere.",
+      "Don't set mono micro-labels in sections that carry no live data.",
+      "Don't write em-dashes into visible copy, or dot-separated uppercase triads.",
+      "Don't use pure #fff or #000; the neutrals are designed.",
+      "Don't invent a type size: the ramp is a closed set, not a suggestion.",
+      "Don't ship a customer name, rating, or metric that cannot be verified."
+    ]
+  }
+}

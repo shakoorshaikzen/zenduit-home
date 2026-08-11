@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/*
+  Zenduit design tokens — every value used in components comes from here.
+  Accent family extracted from zenduit.com (2026-08-04). Confirm with brand team.
+*/
+@theme {
+  /* ---- Neutrals · dark (designed navy, never pure black) ---- */
+  --color-ink-950: #060a14;
+  --color-ink-900: #0a0f1e;
+  --color-ink-850: #0c1322;
+  --color-ink-800: #101a31;
+  --color-ink-700: #182441;
+  --color-ink-600: #223055;
+
+  /* ---- Neutrals · light (warm paper, never pure white) ---- */
+  --color-paper: #f6f5f1;
+  --color-paper-raised: #fbfaf7;
+  --color-card: #fdfdfb;
+
+  /* ---- Text on light (all three AA ≥4.5 on paper AND card) ---- */
+  --color-fg: #131b2e;
+  --color-muted: #4b5568;
+  --color-faint: #636b7c;
+
+  /* ---- Text on dark (all three AA ≥4.5 on ink-800 through ink-950) ---- */
+  --color-dfg: #edf1f8;
+  --color-dmuted: #9aa6c1;
+  --color-dfaint: #7e8aa6;
+
+  /* ---- Brand accent (extracted from zenduit.com) ---- */
+  --color-accent: #2188d9;
+  --color-accent-hi: #5cb3f8; /* readable accent on dark surfaces */
+  --color-accent-deep: #1668b0; /* AA-safe button/label blue on light */
+  --color-accent-deeper: #135c9e;
+
+  /* ---- Telemetry status semantics (product-UI vignettes) ---- */
+  --color-signal: #68c8b4; /* healthy / live  (Zenduit teal) */
+  --color-signal-deep: #14735f;
+  --color-warn: #ffc466; /* attention       (Zenduit amber) */
+  --color-warn-deep: #8a5a00;
+  --color-alarm: #f4674f; /* fault / event   (Zenduit coral) */
+  --color-alarm-deep: #b23a2c;
+
+  /* ---- Hairlines (Linear-style 1px low-alpha borders) ---- */
+  --color-hairline-d: rgb(237 241 248 / 0.08);
+  --color-hairline-l: rgb(19 27 46 / 0.1);
+
+  /* Cinematic hero scale — user-accepted live variant (2026-08-05) */
+  --text-hero: clamp(2.85rem, 5.2vw, 4.45rem);
+  --text-hero--line-height: 1.04;
+  --text-hero--letter-spacing: -0.033em;
+  --text-display: clamp(2.15rem, 3.6vw, 3.2rem);
+  --text-display--line-height: 1.07;
+  --text-display--letter-spacing: -0.028em;
+  --text-title-lg: clamp(1.6rem, 2.4vw, 1.95rem);
+  --text-title-lg--line-height: 1.16;
+  --text-title-lg--letter-spacing: -0.02em;
+  --text-title: 1.3125rem;
+  --text-title--line-height: 1.3;
+  --text-title--letter-spacing: -0.012em;
+  --text-stat: clamp(2.4rem, 3.6vw, 3.3rem);
+  --text-stat--line-height: 1;
+  --text-stat--letter-spacing: -0.02em;
+
+  /* ---- Radius scale ---- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* ---- Shadow tiers (one ambient tier + console) ---- */
+  --shadow-ambient: 0 1px 2px rgb(19 27 46 / 0.04), 0 16px 40px -16px rgb(19 27 46 / 0.14);
+  --shadow-lift: 0 2px 4px rgb(19 27 46 / 0.05), 0 24px 56px -20px rgb(19 27 46 / 0.18);
+  --shadow-console: inset 0 1px 0 rgb(237 241 248 / 0.07), 0 32px 80px -32px rgb(2 6 18 / 0.85);
+
+}
+
+/*
+ * Type (Inter w/ optical sizing = Inter Display at large sizes — Linear's
+ * grammar). MUST live in `@theme inline`: these reference next/font variables
+ * defined on <html>, and a non-inline @theme emits the var() chain onto :root
+ * where it cannot resolve — every font utility then falls back to the system
+ * stack.
+ */
+@theme inline {
+  --font-display: var(--font-archivo);
+  --font-sans: var(--font-archivo);
+  --font-mono: var(--font-plex-mono);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgb(33 136 217 / 0.28);
+  }
+
+  /* Designed focus — never default browser blue */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
