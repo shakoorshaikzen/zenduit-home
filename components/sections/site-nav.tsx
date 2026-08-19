@@ -6,35 +6,36 @@ import { cx } from "@/lib/cx";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
 
-/* Real Zenduit taxonomy (verified on zenduit.com) — link stubs for the homepage build. */
-const MENUS: { label: string; columns: { header: string; links: string[] }[] }[] = [
+/* Real Zenduit taxonomy — every destination live on zenduit.com or its
+   support portal (verified 2026-08-17). */
+type NavLink = { label: string; href: string };
+const Z = "https://zenduit.com";
+const MENUS: { label: string; columns: { header: string; links: NavLink[] }[] }[] = [
   {
     label: "Products",
     columns: [
       {
         header: "Platform",
         links: [
-          "GPS Fleet Tracking",
-          "Asset Tracking & Monitoring",
-          "Smart Sensors & Alerts",
-          "AI Cameras & Video Safety",
-          "Routing & Dispatch",
-          "Maintenance",
-          "Fuel Management",
-          "ZenduELD",
+          { label: "GPS Fleet Tracking", href: `${Z}/solutions/gps-fleet-telematics/` },
+          { label: "Asset Tracking & Monitoring", href: `${Z}/solutions/gps-asset-tracking/` },
+          { label: "Smart Sensors & Alerts", href: `${Z}/solutions/asset-monitoring/` },
+          { label: "AI Cameras & Video Safety", href: `${Z}/solutions/video-based-telematics/` },
+          { label: "Routing & Dispatch", href: `${Z}/solutions/routing-dispatch-solutions-for-fleets/` },
+          { label: "Maintenance", href: `${Z}/solutions/fleet-maintenance-management/` },
+          { label: "Fuel Management", href: `${Z}/solutions/fuel-management-solutions/` },
+          { label: "ZenduELD", href: `${Z}/solutions/eld-compliance-software/` },
         ],
       },
       {
         header: "Hardware",
         links: [
-          "ZenCam Plus",
-          "360° Fleet Visibility",
-          "ZenTitan",
-          "ZenTemp",
-          "ZenDoor",
-          "ZenID",
-          "ZenTurbo",
-          "Vehicle Trackers",
+          { label: "All Products", href: `${Z}/products/` },
+          { label: "ZenDoor", href: `${Z}/products/zendoor-door-monitoring/` },
+          { label: "ZenID", href: `${Z}/products/zenid-driver-indentification/` },
+          { label: "ZenTrack OBD", href: `${Z}/products/zentrack-obd/` },
+          { label: "ZenTrack Power", href: `${Z}/products/zentrack-power-vehicle-tracker/` },
+          { label: "ZenduConnect", href: "https://zenduconnect.com/" },
         ],
       },
     ],
@@ -45,12 +46,12 @@ const MENUS: { label: string; columns: { header: string; links: string[] }[] }[]
       {
         header: "By outcome",
         links: [
-          "Video Safety & Coaching",
-          "ELD Compliance",
-          "Fuel & Cost Control",
-          "Cold Chain Integrity",
-          "Equipment & Theft Recovery",
-          "Dispatch & Routing",
+          { label: "Video Safety & Coaching", href: `${Z}/solutions/video-based-telematics/` },
+          { label: "ELD Compliance", href: `${Z}/solutions/eld-compliance-software/` },
+          { label: "Fuel & Cost Control", href: `${Z}/solutions/fuel-management-solutions/` },
+          { label: "Cold Chain Integrity", href: `${Z}/solutions/asset-monitoring/` },
+          { label: "Equipment & Theft Recovery", href: `${Z}/solutions/gps-asset-tracking/` },
+          { label: "Dispatch & Routing", href: `${Z}/solutions/routing-dispatch-solutions-for-fleets/` },
         ],
       },
     ],
@@ -61,24 +62,24 @@ const MENUS: { label: string; columns: { header: string; links: string[] }[] }[]
       {
         header: "Operations",
         links: [
-          "Construction",
-          "Transportation & Logistics",
-          "Utilities & Field Services",
-          "Forestry",
-          "Waste Management",
-          "Agriculture",
-          "Public Works & Winter Ops",
+          { label: "Construction", href: `${Z}/industries/construction-fleet-management/` },
+          { label: "Transportation & Logistics", href: `${Z}/industries/transportation-logistic-fleet-management/` },
+          { label: "Utilities & Field Services", href: `${Z}/industries/utility-fleet-management/` },
+          { label: "Forestry", href: `${Z}/industries/` },
+          { label: "Waste Management", href: `${Z}/industries/waste-management-fleet-software/` },
+          { label: "Agriculture", href: `${Z}/industries/agriculture-fleet-management/` },
+          { label: "Public Works & Winter Ops", href: `${Z}/industries/public-works-winter-ops/` },
         ],
       },
       {
         header: "Public & specialized",
         links: [
-          "Government",
-          "Public & School Transportation",
-          "Healthcare & Emergency Response",
-          "Airports & Security",
-          "Rental & Leasing",
-          "Food & Pharmaceutical",
+          { label: "Government", href: `${Z}/industries/` },
+          { label: "Public & School Transportation", href: `${Z}/industries/public-school-transportation-fleet-management/` },
+          { label: "Healthcare & Emergency Response", href: `${Z}/industries/healthcare-emergency-fleet-solutions/` },
+          { label: "Airports & Security", href: `${Z}/industries/airports-security-fleet-management/` },
+          { label: "Rental & Leasing", href: `${Z}/industries/rental-fleet-management/` },
+          { label: "Food & Pharmaceutical", href: `${Z}/industries/food-pharma-fleet-management/` },
         ],
       },
     ],
@@ -86,17 +87,37 @@ const MENUS: { label: string; columns: { header: string; links: string[] }[] }[]
   {
     label: "Resources",
     columns: [
-      { header: "Learn", links: ["Blog", "Webinars", "Case Studies", "Product Updates"] },
+      {
+        header: "Learn",
+        links: [
+          { label: "Blog", href: `${Z}/blog` },
+          { label: "Webinars", href: `${Z}/webinars` },
+          { label: "Case Studies", href: `${Z}/success-stories` },
+          { label: "Product Updates", href: `${Z}/category/updates/` },
+        ],
+      },
       {
         header: "Support",
-        links: ["Help Center", "API Documentation", "Training", "System Status"],
+        links: [
+          { label: "Help Center", href: "https://support.zenduit.com/portal/en/home" },
+          { label: "Knowledge Base", href: "https://support.zenduit.com/portal/en/kb" },
+          { label: "Training", href: "https://support.zenduit.com/portal/en/kb/training-enrollment" },
+        ],
       },
     ],
   },
   {
     label: "Company",
     columns: [
-      { header: "Company", links: ["About", "Careers", "Become a Partner", "Press", "Contact"] },
+      {
+        header: "Company",
+        links: [
+          { label: "About", href: `${Z}/about/` },
+          { label: "Careers", href: `${Z}/careers/` },
+          { label: "Become a Partner", href: `${Z}/partnership/` },
+          { label: "Contact", href: `${Z}/contact/` },
+        ],
+      },
     ],
   },
 ];
@@ -126,7 +147,7 @@ export function SiteNav() {
         aria-label="Main"
         className="mx-auto flex max-w-[75rem] items-center justify-between px-5 py-3.5 sm:px-8"
       >
-        <a href="#" aria-label="Zenduit home" className="rounded-sm">
+        <a href="#main" aria-label="Zenduit home" className="rounded-sm">
           <Logo tone="dark" />
         </a>
 
@@ -155,12 +176,12 @@ export function SiteNav() {
                       </p>
                       <ul>
                         {col.links.map((link) => (
-                          <li key={link}>
+                          <li key={link.label}>
                             <a
-                              href="#"
+                              href={link.href}
                               className="block whitespace-nowrap rounded-[6px] px-2.5 py-[7px] text-[13px] text-dmuted transition-colors hover:bg-dfg/[0.05] hover:text-dfg focus-visible:bg-dfg/[0.05] focus-visible:text-dfg"
                             >
-                              {link}
+                              {link.label}
                             </a>
                           </li>
                         ))}
@@ -175,7 +196,7 @@ export function SiteNav() {
 
         <div className="flex items-center gap-1.5">
           <a
-            href="#pricing"
+            href="https://zenduit.com/contact/"
             className="hidden rounded-sm px-3 py-2 text-sm text-dmuted transition-colors hover:text-dfg sm:block"
           >
             Check Our Prices

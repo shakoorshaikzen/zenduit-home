@@ -19,6 +19,14 @@ next-env.d.ts
 *.png.tmp
 Screenshot*.png
 
+# Reference material and working masters — not shipped with the site.
+# The hero renders public/hero-site-loop.mp4; the raw generator output and the
+# upload crop it was made from stay local. Screenshot folders are research.
+photos/
+zenduonepage/
+hero-banner-video.mp4
+hero-site-for-video.png
+
 # Environment (none committed today — keep it that way)
 .env
 .env.*

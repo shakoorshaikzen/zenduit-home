@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono } from "next/font/google";
+import { Archivo, Chivo_Mono } from "next/font/google";
 import "./globals.css";
 
 /* Archivo — grotesque drawn for editorial headlines: sturdy stems, tight
@@ -11,17 +11,20 @@ const archivo = Archivo({
   display: "swap",
 });
 
-const plexMono = IBM_Plex_Mono({
+/* Chivo Mono — the monospace sibling of Archivo's grotesque family
+   (Omnibus-Type): same skeleton as the display face, so labels and telemetry
+   read as one voice with the headlines rather than a borrowed terminal font. */
+const chivoMono = Chivo_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
-  variable: "--font-plex-mono",
+  variable: "--font-chivo-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Zenduit — Your Entire Fleet. One Living Dashboard.",
+  title: "Zenduit: Your Entire Fleet. One Living Dashboard.",
   description:
-    "GPS tracking, AI dash cams, dispatch, maintenance, and ELD compliance in one platform — so your fleet is safer, cheaper to run, and never a mystery.",
+    "GPS tracking, AI dash cams, dispatch, maintenance, and ELD compliance in one platform, so your fleet is safer, cheaper to run, and never a mystery.",
 };
 
 export const viewport: Viewport = {
@@ -32,7 +35,7 @@ const directionContract = `<!--
 THESIS: The dashboard is the hero — a live fleet console proves "see everything, act early"
 before any claim is made; refuses the stock-photo-truck + feature-grid template of fleet marketing.
 OWN-WORLD: Linear's grammar in Zenduit's skin — designed navy (#0A0F1E family) dark moments,
-warm paper body, hairline-divided panels, Inter (optical) display set tight, IBM Plex Mono for
+warm paper body, hairline-divided panels, Inter (optical) display set tight, Chivo Mono for
 every number and label; color appears only on interactive elements, the primary CTA, and
 telemetry status dots; topographic hairline texture in dark sections; 8/12/16 radii.
 STORY: A fleet manager sees their whole operation alive in one screen, believes surprises are
@@ -51,7 +54,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${archivo.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${archivo.variable} ${chivoMono.variable}`}>
       <body className="font-sans">
         <span hidden aria-hidden dangerouslySetInnerHTML={{ __html: directionContract }} />
         <a

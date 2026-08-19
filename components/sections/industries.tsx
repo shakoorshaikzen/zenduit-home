@@ -1,177 +1,273 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { cx } from "@/lib/cx";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 
 /*
- * Industries rail — real industry photography from zenduit.com (their own
- * per-industry hero images), frosted-glass card bodies, and an engineered
- * scroll: arrow controls, live progress bar, position counter. Samsara-grade
- * industry storytelling in the Zenduit system.
+ * Industries as scrollytelling — the page's one authored scroll moment.
+ * Six featured industries scroll past a pinned stage; each step swaps the
+ * stage to that industry's real zenduit.com photograph with a telemetry
+ * chip carrying its playbook. All thirteen industries index below, linking
+ * to Zenduit's real industry pages.
+ *
+ * Under reduced motion the crossfade collapses to an instant swap (global
+ * override); the interaction itself is scroll-driven, so nothing autoplays.
  */
 
-const INDUSTRIES = [
-  { img: "construction", name: "Construction", tag: "GEOFENCES · THEFT RECOVERY", prop: "Know where every machine is, and who is on it, across every site." },
-  { img: "transportation-logistics", name: "Transportation & Logistics", tag: "LIVE ETA · HOS", prop: "Live ETAs, route history, and hours-of-service in one screen." },
-  { img: "utilities-field-services", name: "Utilities & Field Services", tag: "CLOSEST-CREW DISPATCH", prop: "Dispatch the closest crew and prove the job was done." },
-  { img: "public-school-transportation", name: "Public & School Transportation", tag: "STOP-BY-STOP TIMING", prop: "Every stop on time, every rider accounted for." },
-  { img: "forestry", name: "Forestry", tag: "OFF-GRID TRACKING", prop: "Track equipment deep off-road, beyond cell coverage." },
-  { img: "waste-management", name: "Waste Management", tag: "PICKUP VERIFICATION", prop: "Verify every pickup and cut missed-bin callbacks." },
-  { img: "rental-leasing", name: "Rental & Leasing", tag: "UTILIZATION BILLING", prop: "Utilization, location, and condition for every unit on rent." },
-  { img: "public-work-winter-ops", name: "Public Works & Winter Ops", tag: "PLOW + SALT PROOF", prop: "Plow routes, salt usage, and proof-of-service maps." },
-  { img: "government", name: "Government", tag: "PUBLIC AUDIT TRAIL", prop: "Fleet accountability and reporting built for public scrutiny." },
-  { img: "healthcare-emergency", name: "Healthcare & Emergency Response", tag: "COLD CHAIN · RESPONSE TIME", prop: "Cold chain integrity and response times you can audit." },
-  { img: "airports", name: "Airports & Security", tag: "RAMP + RESTRICTED ZONES", prop: "Ground-vehicle visibility across ramps and restricted zones." },
-  { img: "agriculture", name: "Agriculture", tag: "SEASON READINESS", prop: "Season-ready equipment, tracked from field to barn." },
-  { img: "food-pharma", name: "Food & Pharmaceutical", tag: "TEMP-VERIFIED DELIVERY", prop: "Temperature-verified delivery, documented end to end." },
+type Industry = {
+  img: string;
+  name: string;
+  tag: string;
+  prop: string;
+  href: string;
+};
+
+const FEATURED: Industry[] = [
+  {
+    img: "construction",
+    name: "Construction",
+    tag: "GEOFENCES · THEFT RECOVERY",
+    prop: "Know where every machine is, and who is on it, across every site.",
+    href: "https://zenduit.com/industries/construction-fleet-management/",
+  },
+  {
+    img: "transportation-logistics",
+    name: "Transportation & Logistics",
+    tag: "LIVE ETA · HOS",
+    prop: "Live ETAs, route history, and hours-of-service in one screen.",
+    href: "https://zenduit.com/industries/transportation-logistic-fleet-management/",
+  },
+  {
+    img: "utilities-field-services",
+    name: "Utilities & Field Services",
+    tag: "CLOSEST-CREW DISPATCH",
+    prop: "Dispatch the closest crew and prove the job was done.",
+    href: "https://zenduit.com/industries/utility-fleet-management/",
+  },
+  {
+    img: "public-school-transportation",
+    name: "Public & School Transportation",
+    tag: "STOP-BY-STOP TIMING",
+    prop: "Every stop on time, every rider accounted for.",
+    href: "https://zenduit.com/industries/public-school-transportation-fleet-management/",
+  },
+  {
+    img: "waste-management",
+    name: "Waste Management",
+    tag: "PICKUP VERIFICATION",
+    prop: "Verify every pickup and cut missed-bin callbacks.",
+    href: "https://zenduit.com/industries/waste-management-fleet-software/",
+  },
+  {
+    img: "government",
+    name: "Government",
+    tag: "PUBLIC AUDIT TRAIL",
+    prop: "Fleet accountability and reporting built for public scrutiny.",
+    href: "https://zenduit.com/industries/",
+  },
+];
+
+const REST: Industry[] = [
+  { img: "forestry", name: "Forestry", tag: "OFF-GRID TRACKING", prop: "", href: "https://zenduit.com/industries/" },
+  { img: "rental-leasing", name: "Rental & Leasing", tag: "UTILIZATION BILLING", prop: "", href: "https://zenduit.com/industries/rental-fleet-management/" },
+  { img: "public-work-winter-ops", name: "Public Works & Winter Ops", tag: "PLOW + SALT PROOF", prop: "", href: "https://zenduit.com/industries/public-works-winter-ops/" },
+  { img: "healthcare-emergency", name: "Healthcare & Emergency", tag: "COLD CHAIN · RESPONSE", prop: "", href: "https://zenduit.com/industries/healthcare-emergency-fleet-solutions/" },
+  { img: "airports", name: "Airports & Security", tag: "RAMP + RESTRICTED ZONES", prop: "", href: "https://zenduit.com/industries/airports-security-fleet-management/" },
+  { img: "agriculture", name: "Agriculture", tag: "SEASON READINESS", prop: "", href: "https://zenduit.com/industries/agriculture-fleet-management/" },
+  { img: "food-pharma", name: "Food & Pharmaceutical", tag: "TEMP-VERIFIED DELIVERY", prop: "", href: "https://zenduit.com/industries/food-pharma-fleet-management/" },
 ];
 
 export function Industries() {
-  const railRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0); // 0..1 scroll position
-  const [frac, setFrac] = useState(0.3); // visible fraction
-  const [atStart, setAtStart] = useState(true);
-  const [atEnd, setAtEnd] = useState(false);
-
-  const measure = useCallback(() => {
-    const el = railRef.current;
-    if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    setFrac(el.clientWidth / el.scrollWidth);
-    setProgress(max > 0 ? el.scrollLeft / max : 0);
-    setAtStart(el.scrollLeft < 8);
-    setAtEnd(el.scrollLeft > max - 8);
-  }, []);
+  const [active, setActive] = useState(0);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    measure();
-    const el = railRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", measure, { passive: true });
-    window.addEventListener("resize", measure);
-    return () => {
-      el.removeEventListener("scroll", measure);
-      window.removeEventListener("resize", measure);
-    };
-  }, [measure]);
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const idx = stepRefs.current.indexOf(
+              entry.target as HTMLDivElement,
+            );
+            if (idx !== -1) setActive(idx);
+          }
+        }
+      },
+      { rootMargin: "-45% 0px -45% 0px" },
+    );
+    stepRefs.current.forEach((el) => el && io.observe(el));
+    return () => io.disconnect();
+  }, []);
 
-  const nudge = (dir: 1 | -1) => {
-    const el = railRef.current;
-    if (!el) return;
-    const card = el.querySelector("li");
-    const step = card ? (card.getBoundingClientRect().width + 16) * 2 : 600;
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
-  };
+  const current = FEATURED[active];
 
   return (
     <section className="bg-ink-900 py-20 lg:py-28">
       <Container>
-        <Reveal className="flex flex-wrap items-end justify-between gap-6">
+        <Reveal>
           <SectionHeading
             tone="dark"
             title="Built for how your fleet actually works"
             lede="Thirteen industries run on Zenduit, each with its own playbook."
           />
-          <div className="mb-2 hidden items-center gap-4 md:flex">
-            <div className="flex gap-2">
-              <button
-                type="button"
-                aria-label="Scroll industries back"
-                onClick={() => nudge(-1)}
-                disabled={atStart}
-                className="grid size-9 cursor-pointer place-items-center rounded-sm border border-hairline-d bg-ink-850/60 text-dmuted backdrop-blur-md transition-colors hover:border-dfg/25 hover:text-dfg disabled:cursor-default disabled:opacity-30 disabled:hover:border-hairline-d disabled:hover:text-dmuted"
-              >
-                <ChevronLeft size={16} strokeWidth={1.5} />
-              </button>
-              <button
-                type="button"
-                aria-label="Scroll industries forward"
-                onClick={() => nudge(1)}
-                disabled={atEnd}
-                className="grid size-9 cursor-pointer place-items-center rounded-sm border border-hairline-d bg-ink-850/60 text-dmuted backdrop-blur-md transition-colors hover:border-dfg/25 hover:text-dfg disabled:cursor-default disabled:opacity-30 disabled:hover:border-hairline-d disabled:hover:text-dmuted"
-              >
-                <ChevronRight size={16} strokeWidth={1.5} />
-              </button>
-            </div>
-          </div>
         </Reveal>
       </Container>
 
-      {/* Mobile: compact vertical list — no horizontal text bleed, all 13 scannable */}
-      <Container className="md:hidden">
-        <ul className="mt-8 space-y-3">
-          {INDUSTRIES.map((ind) => (
-            <li
-              key={ind.name}
-              className="flex gap-4 overflow-hidden rounded-md border border-hairline-d bg-ink-850"
-            >
-              <img
-                src={`/industries/${ind.img}.webp`}
-                alt=""
-                loading="lazy"
-                className="h-auto w-28 shrink-0 object-cover"
-              />
-              <div className="min-w-0 py-3 pr-4">
-                <h3 className="text-sm font-semibold leading-snug text-dfg">{ind.name}</h3>
-                <p className="mt-1 font-mono text-xs tracking-[0.05em] text-dfaint">
-                  {ind.tag}
-                </p>
-              </div>
+      {/* Mobile: compact scannable cards, every industry linked */}
+      <Container className="lg:hidden">
+        <ul className="mt-10 space-y-3">
+          {[...FEATURED, ...REST].map((ind) => (
+            <li key={ind.name}>
+              <a
+                href={ind.href}
+                className="flex gap-4 overflow-hidden rounded-md border border-hairline-d bg-ink-850 transition-colors hover:border-dfg/25"
+              >
+                <img
+                  src={`/industries/${ind.img}.webp`}
+                  alt=""
+                  loading="lazy"
+                  className="h-auto w-28 shrink-0 object-cover"
+                />
+                <div className="min-w-0 py-3 pr-4">
+                  <h3 className="text-sm font-semibold leading-snug text-dfg">
+                    {ind.name}
+                  </h3>
+                  <p className="mt-1 font-mono text-xs tracking-[0.05em] text-dfaint">
+                    {ind.tag}
+                  </p>
+                </div>
+              </a>
             </li>
           ))}
         </ul>
       </Container>
 
-      <Reveal delay={0.08} className="hidden md:block">
-        <div
-          ref={railRef}
-          className="mt-12 snap-x snap-mandatory overflow-x-auto [scroll-padding-left:max(1.25rem,calc((100vw-75rem)/2+2rem))] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          <ul className="flex w-max gap-4 px-[max(1.25rem,calc((100vw-75rem)/2+2rem))]">
-            {INDUSTRIES.map((ind) => (
-              <li key={ind.name} className="snap-start">
-                <div className="group w-72 overflow-hidden rounded-md border border-hairline-d bg-ink-850 transition-colors duration-200 hover:border-dfg/25">
-                  <div className="aspect-[16/9] overflow-hidden">
-                    <img
-                      src={`/industries/${ind.img}.webp`}
-                      alt=""
-                      loading="lazy"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <div className="border-t border-hairline-d px-5 pb-5 pt-4">
-                    <p className="font-mono text-xs tracking-[0.05em] text-dfaint">
-                      {ind.tag}
-                    </p>
-                    <h3 className="mt-2 text-[0.9375rem] font-semibold leading-snug text-dfg">
-                      {ind.name}
-                    </h3>
-                    <p className="mt-1.5 text-[13px] leading-relaxed text-dmuted">
-                      {ind.prop}
-                    </p>
-                  </div>
+      {/* Desktop: pinned stage + scrolling industry stories */}
+      <Container className="hidden lg:block">
+        <div className="mt-14 grid grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-14">
+          {/* Scroll steps, metered by a minimal vertical progress rail */}
+          <div className="relative pl-10">
+            <div
+              aria-hidden
+              className="absolute bottom-[26vh] left-0 top-[26vh] w-px bg-hairline-d"
+            >
+              <span
+                className="absolute left-0 top-0 block w-px bg-accent transition-[height] duration-500 ease-out"
+                style={{ height: `${(active / (FEATURED.length - 1)) * 100}%` }}
+              />
+              <span
+                className="absolute left-1/2 block size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent transition-[top] duration-500 ease-out"
+                style={{ top: `${(active / (FEATURED.length - 1)) * 100}%` }}
+              />
+            </div>
+            {FEATURED.map((ind, i) => (
+              <div
+                key={ind.name}
+                ref={(el) => {
+                  stepRefs.current[i] = el;
+                }}
+                className="flex min-h-[52vh] items-center"
+              >
+                <div>
+                  <h3
+                    className={cx(
+                      "text-balance font-display text-title-lg font-semibold transition-colors duration-300",
+                      i === active ? "text-dfg" : "text-dfaint",
+                    )}
+                  >
+                    {ind.name}
+                  </h3>
+                  <p
+                    className={cx(
+                      "mt-2 font-mono text-xs tracking-[0.08em] transition-colors duration-300",
+                      i === active ? "text-signal" : "text-dfaint",
+                    )}
+                  >
+                    {ind.tag}
+                  </p>
+                  <p
+                    className={cx(
+                      "mt-3 max-w-sm text-pretty text-[0.9375rem] leading-relaxed transition-colors duration-300",
+                      i === active ? "text-dmuted" : "text-dfaint/60",
+                    )}
+                  >
+                    {ind.prop}
+                  </p>
+                  <a
+                    href={ind.href}
+                    tabIndex={i === active ? 0 : -1}
+                    className={cx(
+                      "mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent-hi underline-offset-4 transition-opacity duration-300 hover:underline",
+                      i === active ? "opacity-100" : "pointer-events-none opacity-0",
+                    )}
+                  >
+                    See the {ind.name.split(" ")[0].toLowerCase()} playbook
+                    <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden />
+                  </a>
                 </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Pinned stage */}
+          <div className="relative">
+            <div className="sticky top-[16vh] h-[64vh] overflow-hidden rounded-lg border border-hairline-d">
+              {FEATURED.map((ind, i) => (
+                <div
+                  key={ind.name}
+                  aria-hidden={i !== active}
+                  className={cx(
+                    "absolute inset-0 transition-opacity duration-500",
+                    i === active ? "opacity-100" : "opacity-0",
+                  )}
+                >
+                  <img
+                    src={`/industries/${ind.img}.webp`}
+                    alt={ind.name}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    className="absolute inset-0 h-full w-full object-cover object-[center_65%]"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink-950/80 to-transparent" />
+                  <span className="absolute bottom-5 left-5 flex items-center gap-2 rounded-[6px] border border-hairline-d bg-ink-950/85 px-3 py-2 font-mono text-xs tracking-[0.05em] text-dmuted backdrop-blur-sm">
+                    <span aria-hidden className="size-1.5 rounded-full bg-signal" />
+                    {ind.tag}
+                  </span>
+                  <span className="absolute bottom-5 right-5 font-mono text-xs tracking-[0.08em] text-dfg/80">
+                    {String(active + 1).padStart(2, "0")} / {String(FEATURED.length).padStart(2, "0")}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* The other seven, one line each — every industry has a page */}
+        <Reveal className="mt-16 overflow-hidden rounded-lg border border-hairline-d">
+          <ul className="grid divide-y divide-hairline-d sm:grid-cols-2 sm:divide-x lg:grid-cols-7 lg:divide-y-0">
+            {REST.map((ind) => (
+              <li key={ind.name}>
+                <a
+                  href={ind.href}
+                  className="group flex h-full flex-col justify-between gap-4 bg-ink-850/40 p-4 transition-colors hover:bg-ink-850"
+                >
+                  <span className="text-[13px] font-semibold leading-snug text-dmuted transition-colors group-hover:text-dfg">
+                    {ind.name}
+                  </span>
+                  <ArrowUpRight
+                    size={13}
+                    strokeWidth={1.5}
+                    aria-hidden
+                    className="text-dfaint transition-colors group-hover:text-accent-hi"
+                  />
+                </a>
               </li>
             ))}
           </ul>
-        </div>
-      </Reveal>
-
-      {/* live scroll progress */}
-      <Container>
-        <div className="relative mt-10 hidden h-px w-full bg-hairline-d md:block">
-          <div
-            className="absolute -top-px h-[3px] rounded-full bg-accent transition-[left] duration-75"
-            style={{
-              width: `${Math.max(6, frac * 100)}%`,
-              left: `${progress * (100 - Math.max(6, frac * 100))}%`,
-            }}
-          />
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

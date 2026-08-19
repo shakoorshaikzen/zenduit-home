@@ -1,18 +1,14 @@
 import { AnnouncementBar } from "@/components/sections/announcement-bar";
-import { CameraShowpiece } from "@/components/sections/camera-showpiece";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Hero } from "@/components/sections/hero";
 import { Industries } from "@/components/sections/industries";
-import { Integrations } from "@/components/sections/integrations";
-import { ModuleRow } from "@/components/sections/module-row";
-import { Pillars } from "@/components/sections/pillars";
-import { PlatformOverview } from "@/components/sections/platform-overview";
-import { ProductDives } from "@/components/sections/product-dives";
+import { PlatformExplorer } from "@/components/sections/platform-explorer";
+import { CoreMessage } from "@/components/sections/core-message";
+import { PlatformStory } from "@/components/sections/platform-story";
 import { Resources } from "@/components/sections/resources";
-import { ResultsBand } from "@/components/sections/results-band";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { SiteNav } from "@/components/sections/site-nav";
-import { Testimonials } from "@/components/sections/testimonials";
+import { Validation } from "@/components/sections/validation";
 
 export default function Home() {
   return (
@@ -21,15 +17,11 @@ export default function Home() {
       <SiteNav />
       <main id="main">
         <Hero />
-        <Pillars />
-        <PlatformOverview />
-        <ProductDives />
-        <CameraShowpiece />
-        <ModuleRow />
-        <ResultsBand />
+        <CoreMessage />
+        <PlatformExplorer />
+        <PlatformStory />
+        <Validation />
         <Industries />
-        <Testimonials />
-        <Integrations />
         <Resources />
         <FinalCta />
       </main>

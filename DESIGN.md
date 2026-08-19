@@ -75,12 +75,12 @@ typography:
     fontWeight: 400
     lineHeight: 1.5
   label:
-    fontFamily: "IBM Plex Mono, monospace"
+    fontFamily: "Chivo Mono, monospace"
     fontSize: "0.75rem"
     fontWeight: 500
     letterSpacing: "0.08em"
   stat:
-    fontFamily: "IBM Plex Mono, monospace"
+    fontFamily: "Chivo Mono, monospace"
     fontSize: "clamp(2.4rem, 3.6vw, 3.3rem)"
     fontWeight: 500
     lineHeight: 1
@@ -151,7 +151,7 @@ comparison work.
 - Frosted glass on dark sections only: bg-ink-850/60–70 + backdrop-blur-md/xl +
   hairline-d border (hero telemetry cards, nav bar, industries cards, rail controls)
 - Hairline-divided panel grammar for every feature group
-- Mono voice (IBM Plex Mono, tabular) for every number, label, and telemetry string
+- Mono voice (Chivo Mono, tabular) for every number, label, and telemetry string
 - Hybrid rhythm: dark cinema at the edges, warm paper for the body
 - One accent (Zenduit blue) that appears only where something acts
 
@@ -200,7 +200,7 @@ top-center light in the hero and in the final CTA panel. No other gradients, eve
 **Display Font:** Archivo (editorial grotesque — sturdy stems, tight apertures,
 slightly condensed; not on any AI-monoculture font list), fallback system-ui
 **Body Font:** Archivo (same family)
-**Label/Mono Font:** IBM Plex Mono (400/500/600)
+**Label/Mono Font:** Chivo Mono (400/500/600) — Archivo's monospace sibling from the same foundry
 
 **Character:** Linear's precision — tight-tracked Archivo at medium-large sizes,
 never oversized; paired with a telemetry mono that makes every number feel instrumented.
@@ -222,7 +222,7 @@ never oversized; paired with a telemetry mono that makes every number feel instr
 
 ### Named Rules
 **The Mono-for-Data Rule.** Every number, unit ID, timestamp, percentage, and status string
-is IBM Plex Mono with `tabular-nums`. If it could appear in a terminal, it's mono.
+is Chivo Mono with `tabular-nums`. If it could appear in a terminal, it's mono.
 
 **The Heading Stands Alone Rule.** Section headings carry their own weight — no decorative
 eyebrow above them. Product deep-dive headings carry the module name inline in the sentence
@@ -337,7 +337,7 @@ throughout. This family is the page's imagery; extend it rather than adding pict
 ## Do's and Don'ts
 
 ### Do:
-- **Do** set every number, ID, and timestamp in IBM Plex Mono with `tabular-nums`.
+- **Do** set every number, ID, and timestamp in Chivo Mono with `tabular-nums`.
 - **Do** build feature groups as hairline-divided panels with a mono label header row.
 - **Do** keep icons lucide-react at 1.5px stroke, neutral-colored (muted/dmuted).
 - **Do** use Zenduit's real product names (ZenCam Plus, ZenTemp, ZenDoor, ZenID, ZenTitan,

@@ -85,7 +85,7 @@
 @theme inline {
   --font-display: var(--font-archivo);
   --font-sans: var(--font-archivo);
-  --font-mono: var(--font-plex-mono);
+  --font-mono: var(--font-chivo-mono);
 }
 
 @layer base {
@@ -123,3 +123,26 @@
   }
 }
 
+/*
+ * ZenduONE demo motion (components/vignettes/zenduone-demo.tsx).
+ * TRK-047 patrols the drawn highway; the trip playhead runs once per replay
+ * press. Both are plain CSS animations, so the reduced-motion override above
+ * freezes them (the truck parks; the playhead sits at its start).
+ */
+.zd-drive {
+  offset-path: path("M 0 470 C 200 430 380 470 520 380 S 760 240 900 260");
+  offset-rotate: 0deg;
+  animation: zd-drive 52s linear infinite alternate;
+}
+@keyframes zd-drive {
+  from { offset-distance: 4%; }
+  to { offset-distance: 96%; }
+}
+.zd-playhead {
+  offset-rotate: 0deg;
+  animation: zd-playhead 6s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+}
+@keyframes zd-playhead {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
+}
