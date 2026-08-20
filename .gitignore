@@ -69,3 +69,6 @@ app/plugins/impeccable-live.client.ts
 src/plugins/impeccable-live.client.ts
 # impeccable-live-ignore-end
 hero-loop-master-4k.mp4
+
+# Internal Claude Code setup kit — tooling notes, not part of the website
+instructions.md
