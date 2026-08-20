@@ -13,6 +13,9 @@ next-env.d.ts
 .claude/
 .impeccable/*
 !.impeccable/design.json
+# Reviewed detector waivers are shared with the team (config.local.json,
+# ignored further down, stays personal).
+!.impeccable/config.json
 
 # OS / editor cruft
 .DS_Store
