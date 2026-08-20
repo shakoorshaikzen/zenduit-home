@@ -8,6 +8,7 @@ import { MaintainSchedules } from "./maintain";
 import { MapsLive } from "./maps-live";
 import { MapsTrips } from "./maps-trips";
 import { SafetyCoaching, SafetyOverview } from "./safety";
+import { TodayPane } from "./today";
 
 /*
  * ZenduONE — a working miniature of the real console.
@@ -25,6 +26,7 @@ import { SafetyCoaching, SafetyOverview } from "./safety";
  * pulsing hotspot the rest of this design system bans.
  */
 const HINTS: Record<string, string> = {
+  "today:cases": "Review the coaching case, approve the drafted work order, and see what was handled for you",
   "maps:live": "Click any vehicle on the map or in the list, then open its full record",
   "maps:trips": "Switch vehicle to redraw the route, or replay the trip",
   "safety:overview": "Click REVIEW on a risk factor to open that clip",
@@ -38,13 +40,14 @@ const SPEED_MAX = 68;
 const SPEED_START = 62;
 
 export function ZenduOneDemo() {
-  const [module, setModule] = useState<ModuleId>("maps");
-  const [tab, setTab] = useState("live");
+  const [module, setModule] = useState<ModuleId>("today");
+  const [tab, setTab] = useState("cases");
   const [sel, setSel] = useState<AssetId | null>("trk047");
   const [tripAsset, setTripAsset] = useState<AssetId>("trk047");
   const [playKey, setPlayKey] = useState(0);
   const [event, setEvent] = useState(0);
   const [queued, setQueued] = useState<string[]>(["e3"]);
+  const [woApproved, setWoApproved] = useState(false);
   const [speed, setSpeed] = useState(SPEED_START);
 
   /* The one thing that ticks in JS. Reduced-motion freezes the CSS animations
@@ -79,6 +82,19 @@ export function ZenduOneDemo() {
     if (!moduleLive) return <LockedPane label={railItem?.label ?? "This module"} />;
     if (!tabLive) return <LockedPane label={current?.label ?? "This view"} />;
 
+    if (module === "today" && tab === "cases") {
+      return (
+        <TodayPane
+          approved={woApproved}
+          onApprove={() => setWoApproved(true)}
+          onReview={() => {
+            setModule("safety");
+            setTab("coaching");
+            setEvent(0);
+          }}
+        />
+      );
+    }
     if (module === "maps" && tab === "live") {
       return <MapsLive sel={sel} onSelect={setSel} speed={speed} />;
     }

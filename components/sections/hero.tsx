@@ -33,23 +33,25 @@ export function Hero() {
           <Reveal>
             <h1 className="max-w-[45rem] font-display text-hero font-bold text-dfg">
               <span className="block text-balance">Your entire fleet.</span>
-              <span className="block text-balance">One living dashboard.</span>
+              <span className="block text-balance">From signal to done.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-6 max-w-md text-pretty text-[1.0625rem] leading-relaxed text-dfg/80">
-              GPS, AI dash cams, dispatch, maintenance, and ELD compliance in
-              one platform. See every vehicle and act before problems get
-              expensive.
+              ZenduONE connects your vehicles, systems and people to surface
+              what matters, coordinate the response and measure the result.
+            </p>
+            <p className="mt-5 font-mono text-xs tracking-[0.12em] text-dfaint">
+              SEE · UNDERSTAND · ACT · MEASURE · IMPROVE
             </p>
           </Reveal>
           <Reveal delay={0.16}>
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              <Button size="lg" href="#demo">
-                Get a Demo
+              <Button size="lg" href="#how-it-works">
+                See How It Works
               </Button>
               <Button size="lg" variant="ghostDark" href="https://zenduit.com/contact/">
-                Check Our Prices
+                Get an Operations Diagnostic
               </Button>
             </div>
           </Reveal>

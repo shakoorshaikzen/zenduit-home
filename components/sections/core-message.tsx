@@ -23,7 +23,7 @@ const STATS = [
     end: 15,
     suffix: "",
     label: "Solutions",
-    sub: "from live GPS to ELD, in a single platform",
+    sub: "from live GPS to ELD, feeding one operating picture",
     source: "ZENDUIT.COM/SOLUTIONS",
   },
   {
@@ -37,7 +37,7 @@ const STATS = [
     end: 1,
     suffix: "",
     label: "Login",
-    sub: "instead of the five tools it replaces",
+    sub: "where the next action starts",
     source: "ZENDUONE",
   },
 ] as const;
@@ -54,8 +54,8 @@ export function CoreMessage() {
           </h2>
           <p className="mt-5 max-w-xl text-pretty text-[1.0625rem] leading-relaxed text-dmuted">
             The idling, the hard brake, the trailer nobody can place. Zenduit
-            puts it all on one live screen the moment it happens, not in
-            Friday's report.
+            catches it the moment it happens, assembles the context and moves
+            the response to done. Nothing waits for Friday's report.
           </p>
         </Reveal>
 

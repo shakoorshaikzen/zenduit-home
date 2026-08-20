@@ -106,13 +106,14 @@ export function FleetScene() {
       {/* Grounding: the photograph settles into the page rather than stopping */}
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink-950 via-ink-950/70 to-transparent" />
 
-      {/* One piece of product truth: the dashboard reading THIS site. Every
-          row names a machine visible in the footage (excavator trenching,
-          pipe truck, loader staging). Synthetic-plausible values. */}
+      {/* One piece of product truth: Today reading THIS site. Every row
+          names a machine visible in the footage, and the card shows the
+          attention triage rather than raw monitoring: one decision waiting,
+          the rest already handled. Synthetic-plausible values. */}
       <div className="absolute right-[4.5%] top-1/2 hidden w-[17rem] -translate-y-1/2 overflow-hidden rounded-md border border-hairline-d bg-ink-950/65 shadow-console backdrop-blur-md lg:block">
         <div className="flex items-center justify-between border-b border-hairline-d px-3.5 py-2.5">
           <span className="font-mono text-xs font-medium tracking-[0.05em] text-dfg">
-            SITE 12 · EARTHWORKS
+            TODAY · SITE 12
           </span>
           <span className="flex items-center gap-1.5 font-mono text-xs text-dmuted">
             <span className="size-1.5 rounded-full bg-signal" />
@@ -121,8 +122,8 @@ export function FleetScene() {
         </div>
         <div className="grid grid-cols-3 divide-x divide-hairline-d border-b border-hairline-d">
           {[
-            ["UNITS", "3"],
-            ["LOADS", "27"],
+            ["NEEDS YOU", "1"],
+            ["HANDLED", "6"],
             ["IDLE", "4%"],
           ].map(([k, v]) => (
             <div key={k} className="px-3 py-2.5">
@@ -137,19 +138,25 @@ export function FleetScene() {
         </div>
         <div className="divide-y divide-hairline-d">
           {[
-            ["EXC-114", "TRENCHING"],
-            ["TRK-032", "PIPES ON SITE"],
-            ["LDR-05", "STAGING"],
+            ["EXC-114", "TRENCHING · ON PLAN"],
+            ["TRK-032", "BRAKE WEAR · WO DRAFTED"],
+            ["LDR-05", "STAGING · HANDLED"],
           ].map(([unit, status]) => (
             <div
               key={unit}
               className="flex items-center justify-between px-3.5 py-2"
             >
-              <span className="font-mono text-xs tracking-[0.05em] text-dfg">
+              <span className="whitespace-nowrap font-mono text-xs tracking-[0.05em] text-dfg">
                 {unit}
               </span>
               <span className="flex items-center gap-1.5 font-mono text-xs tracking-[0.05em] text-dmuted">
-                <span className="size-1 rounded-full bg-signal" />
+                <span
+                  className={
+                    status.includes("DRAFTED")
+                      ? "size-1 rounded-full bg-warn"
+                      : "size-1 rounded-full bg-signal"
+                  }
+                />
                 {status}
               </span>
             </div>
@@ -157,11 +164,11 @@ export function FleetScene() {
         </div>
         <div className="flex items-center justify-between border-t border-hairline-d px-3.5 py-2">
           <span className="font-mono text-xs tracking-[0.08em] text-dfaint">
-            GEOFENCE ACTIVE
+            1 DECISION WAITING
           </span>
           <span className="flex items-center gap-1.5 font-mono text-xs text-dmuted">
             <span className="size-1 rounded-full bg-signal" />
-            ON SCHEDULE
+            REST IS HANDLED
           </span>
         </div>
       </div>

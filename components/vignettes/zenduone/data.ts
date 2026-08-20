@@ -1,4 +1,5 @@
 import {
+  Inbox,
   BarChart3,
   Briefcase,
   ClipboardList,
@@ -22,7 +23,14 @@ import {
 
 /* ---------- Shared vocabulary ---------- */
 
-export type ModuleId = "maps" | "safety" | "maintain" | "work" | "forms" | "reports";
+export type ModuleId =
+  | "today"
+  | "maps"
+  | "safety"
+  | "maintain"
+  | "work"
+  | "forms"
+  | "reports";
 
 export type AssetId = "trk047" | "van112" | "trk051" | "reef09" | "pkp08";
 
@@ -281,6 +289,7 @@ export const SERVICES: readonly Service[] = [
 /* ---------- Console chrome ---------- */
 
 export const RAIL: RailItem[] = [
+  { id: "today", icon: Inbox, label: "Today", live: true },
   { id: "maps", icon: MapIcon, label: "Maps", live: true },
   { id: "safety", icon: Shield, label: "Safety", live: true },
   { id: "maintain", icon: Wrench, label: "Maintain", live: true },
@@ -294,6 +303,7 @@ export const RAIL: RailItem[] = [
  * ModuleId is always safe — their stage is a LockedPane, no tabs to render.
  */
 export const MODULE_TABS: Record<ModuleId, ModuleTab[]> = {
+  today: [{ id: "cases", label: "What matters now", live: true }],
   maps: [
     { id: "live", label: "Live Map", live: true },
     { id: "trips", label: "Trips", live: true },
@@ -485,3 +495,44 @@ export const SERVICE_DETAIL: Record<string, ServiceDetail> = {
     assignee: "Certified inspector",
   },
 };
+
+/*
+ * Today: the operation reduced to what matters. Three cases spanning the
+ * guide's attention triage: one needing human judgment, one already
+ * prepared and awaiting approval, one handled with no action required.
+ */
+export type TodayCase = {
+  id: string;
+  kind: "review" | "approve" | "handled";
+  tone: "alarm" | "warn" | "signal";
+  changed: string;
+  matters: string;
+  next: string;
+};
+
+export const CASES: TodayCase[] = [
+  {
+    id: "c1",
+    kind: "review",
+    tone: "alarm",
+    changed: "Harsh acceleration, TRK-047 on Route 7",
+    matters: "Second event this week for D. Kowalski",
+    next: "Clip and context ready for coaching review",
+  },
+  {
+    id: "c2",
+    kind: "approve",
+    tone: "warn",
+    changed: "Fault P0217 on TRK-051 in the yard",
+    matters: "Oil service already 12 days overdue",
+    next: "WO-1482 drafted, parts in stock, slot open Thu",
+  },
+  {
+    id: "c3",
+    kind: "handled",
+    tone: "signal",
+    changed: "Reefer temp dip on REEF-09 at Dock 4",
+    matters: "Load spec 2-4°C, recovered to 3.0°C in 6 min",
+    next: "Logged to the cold-chain record. Nothing needs you",
+  },
+];

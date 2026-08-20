@@ -11,12 +11,12 @@ import { ZenduOneDemo } from "@/components/vignettes/zenduone";
  */
 export function PlatformStory() {
   return (
-    <section className="bg-paper py-20 lg:py-28">
+    <section id="how-it-works" className="bg-paper py-20 lg:py-28">
       <Container>
         <Reveal>
           <SectionHeading
             title="ZenduONE, before the demo call"
-            lede="A working miniature of the real console. Drive the live map, replay a trip, review a coaching clip, and check the maintenance queue."
+            lede="A working miniature of the real console. Start in Today, where the operation is reduced to what matters, then drive the map, review a coaching clip and check maintenance."
           />
         </Reveal>
 

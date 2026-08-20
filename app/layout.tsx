@@ -22,9 +22,9 @@ const chivoMono = Chivo_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Zenduit: Your Entire Fleet. One Living Dashboard.",
+  title: "Zenduit: Your Entire Fleet. From Signal to Done.",
   description:
-    "GPS tracking, AI dash cams, dispatch, maintenance, and ELD compliance in one platform, so your fleet is safer, cheaper to run, and never a mystery.",
+    "Operational intelligence for fleet and equipment operations. ZenduONE surfaces what matters, coordinates the response and measures the result.",
 };
 
 export const viewport: Viewport = {

@@ -28,6 +28,27 @@ type Industry = {
 
 const FEATURED: Industry[] = [
   {
+    img: "waste-management",
+    name: "Waste & Recycling",
+    tag: "PROTECT THE ROUTE · PROTECT THE MARGIN",
+    prop: "Missed pickups, contamination and unbilled events surface with the evidence attached, while you can still act on them.",
+    href: "https://zenduit.com/industries/waste-management-fleet-software/",
+  },
+  {
+    img: "public-school-transportation",
+    name: "Passenger Transport",
+    tag: "ON TIME IS A SYSTEM",
+    prop: "Driver readiness, vehicle readiness and routing coordinated before the run, so every rider is accounted for.",
+    href: "https://zenduit.com/industries/public-school-transportation-fleet-management/",
+  },
+  {
+    img: "airports",
+    name: "Airside & GSE",
+    tag: "RIGHT EQUIPMENT · RIGHT OPERATOR · RIGHT NOW",
+    prop: "Serviceable equipment and qualified operators matched to the turnaround before the clock becomes the problem.",
+    href: "https://zenduit.com/industries/airports-security-fleet-management/",
+  },
+  {
     img: "construction",
     name: "Construction",
     tag: "GEOFENCES · THEFT RECOVERY",
@@ -42,41 +63,21 @@ const FEATURED: Industry[] = [
     href: "https://zenduit.com/industries/transportation-logistic-fleet-management/",
   },
   {
-    img: "utilities-field-services",
-    name: "Utilities & Field Services",
-    tag: "CLOSEST-CREW DISPATCH",
-    prop: "Dispatch the closest crew and prove the job was done.",
-    href: "https://zenduit.com/industries/utility-fleet-management/",
-  },
-  {
-    img: "public-school-transportation",
-    name: "Public & School Transportation",
-    tag: "STOP-BY-STOP TIMING",
-    prop: "Every stop on time, every rider accounted for.",
-    href: "https://zenduit.com/industries/public-school-transportation-fleet-management/",
-  },
-  {
-    img: "waste-management",
-    name: "Waste Management",
-    tag: "PICKUP VERIFICATION",
-    prop: "Verify every pickup and cut missed-bin callbacks.",
-    href: "https://zenduit.com/industries/waste-management-fleet-software/",
-  },
-  {
     img: "government",
     name: "Government",
     tag: "PUBLIC AUDIT TRAIL",
     prop: "Fleet accountability and reporting built for public scrutiny.",
     href: "https://zenduit.com/industries/",
   },
+
 ];
 
 const REST: Industry[] = [
+  { img: "utilities-field-services", name: "Utilities & Field Services", tag: "CLOSEST-CREW DISPATCH", prop: "", href: "https://zenduit.com/industries/utility-fleet-management/" },
   { img: "forestry", name: "Forestry", tag: "OFF-GRID TRACKING", prop: "", href: "https://zenduit.com/industries/" },
   { img: "rental-leasing", name: "Rental & Leasing", tag: "UTILIZATION BILLING", prop: "", href: "https://zenduit.com/industries/rental-fleet-management/" },
   { img: "public-work-winter-ops", name: "Public Works & Winter Ops", tag: "PLOW + SALT PROOF", prop: "", href: "https://zenduit.com/industries/public-works-winter-ops/" },
   { img: "healthcare-emergency", name: "Healthcare & Emergency", tag: "COLD CHAIN · RESPONSE", prop: "", href: "https://zenduit.com/industries/healthcare-emergency-fleet-solutions/" },
-  { img: "airports", name: "Airports & Security", tag: "RAMP + RESTRICTED ZONES", prop: "", href: "https://zenduit.com/industries/airports-security-fleet-management/" },
   { img: "agriculture", name: "Agriculture", tag: "SEASON READINESS", prop: "", href: "https://zenduit.com/industries/agriculture-fleet-management/" },
   { img: "food-pharma", name: "Food & Pharmaceutical", tag: "TEMP-VERIFIED DELIVERY", prop: "", href: "https://zenduit.com/industries/food-pharma-fleet-management/" },
 ];

@@ -52,7 +52,7 @@ const SOLUTIONS: Solution[] = [
     key: "video-safety",
     name: "Video Safety",
     icon: Video,
-    copy: "ZenCam Plus flags harsh braking and distraction as they happen. The clip uploads itself, and drivers get coaching instead of blame.",
+    copy: "A camera should help the driver and save the manager time. ZenCam Plus coaches in the moment, recognizes good driving, and escalates with the clip already attached.",
     tags: "VIDEO BASED SAFETY · DRIVER EMPOWERMENT · IN-CAB ALERTS",
     href: "https://zenduit.com/solutions/video-based-telematics/",
     image: {
@@ -130,8 +130,8 @@ export function PlatformExplorer() {
       <Container>
         <Reveal>
           <SectionHeading
-            title="Everything a fleet runs on"
-            lede="Every solution on the platform, one login. Pick one and see it work."
+            title="The work after the signal"
+            lede="Five jobs where a signal becomes finished work. Pick one and see it happen."
           />
         </Reveal>
 

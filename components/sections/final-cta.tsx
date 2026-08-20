@@ -23,18 +23,19 @@ export function FinalCta() {
 
           <div className="relative mx-auto max-w-3xl">
             <h2 className="text-balance font-display text-hero font-bold text-dfg">
-              Track smarter, not harder
+              Grow without growing complexity
             </h2>
             <p className="mx-auto mt-5 max-w-lg text-pretty text-[1.0625rem] leading-relaxed text-dmuted">
-              Walk through your whole operation with a fleet specialist, on
-              your own routes and vehicles.
+              Start with an Operations Diagnostic: a fleet specialist maps
+              where your operation leaks time, money or service, on your own
+              routes and vehicles.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <Button size="lg" href="https://zenduit.com/contact/">
                 Get a Demo
               </Button>
               <Button size="lg" variant="ghostDark" href="https://zenduit.com/contact/">
-                Contact Sales
+                Get an Operations Diagnostic
               </Button>
             </div>
             <a
