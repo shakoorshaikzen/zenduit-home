@@ -12,14 +12,13 @@ import { cx } from "@/lib/cx";
  *  - Motive: one authentic product moment rather than a collage of chips
  *  - Apple/Linear: depth from grading and a single light source
  *
- * Photography: an active earthworks site shot from a drone (Unsplash, free licence),
- * graded to sit in the dark world. A mixed fleet working under one god's-eye view —
- * the same view the product gives you.
- *
- * The photograph is alive: /hero-site-loop.mp4 is an AI image-to-video render
- * of this exact frame (machines working, dust, heat shimmer), cut into a
- * seamless 9s crossfade loop. The still remains the poster, the fallback,
- * and the whole experience for anyone preferring reduced motion.
+ * Footage: professionally shot native-4K aerial of an active earthworks
+ * site (Pexels free licence, video 33360034 — commercial use permitted, no
+ * attribution required), untouched apart from the loop hold; the scrims
+ * below do the grading. Served as a codec ladder (AV1 / HEVC / H.264): the
+ * clip plays through, holds its final frame for a beat, and restarts. The
+ * poster is the clip's own first frame at 4K (responsive srcSet), so the
+ * fade-in is seamless and reduced-motion users see the same site at rest.
  */
 
 export function FleetScene() {
@@ -60,13 +59,14 @@ export function FleetScene() {
           Always rendered: poster, reduced-motion state, and fallback. */}
       <img
         src="/hero-site.webp"
+        srcSet="/hero-site.webp 1920w, /hero-site-4k.webp 3840w"
+        sizes="100vw"
         alt=""
-        className="absolute inset-0 h-full w-full object-cover object-[58%_50%]"
+        className="absolute inset-0 h-full w-full object-cover"
       />
 
-      {/* The same frame in motion. The render was generated from the 58%-
-          biased crop, so its own center already matches the photo's focal
-          point; the 1s fade-in absorbs the small reframe between the two. */}
+      {/* The same frame in motion: poster and video share frame one and the
+          same center crop, so the fade-in lands without any reframe. */}
       <video
         ref={videoRef}
         muted
@@ -80,6 +80,22 @@ export function FleetScene() {
           videoLive ? "opacity-100" : "opacity-0",
         )}
       >
+        {/* Resolution + codec ladder. The browser takes the first source
+            whose media query matches AND whose codec it can decode, so each
+            screen gets the best master it can actually resolve: phones pull
+            the 1080p AV1 (a 4K decode they cannot display is wasted
+            bandwidth and battery), everything larger pulls native
+            3840x2160 via AV1 (Chrome/Firefox/Edge) or HEVC (Safari). The
+            1080p H.264 is the universal floor: any browser reaching it
+            supports neither modern codec, so it predates 4K displays and
+            gains nothing from a 4K master. */}
+        <source
+          src="/hero-site-loop-1080.webm"
+          type="video/webm"
+          media="(max-width: 768px)"
+        />
+        <source src="/hero-site-loop-4k.webm" type="video/webm" />
+        <source src="/hero-site-loop-4k-hevc.mp4" type='video/mp4; codecs="hvc1"' />
         <source src="/hero-site-loop.mp4" type="video/mp4" />
       </video>
 
@@ -91,8 +107,8 @@ export function FleetScene() {
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink-950 via-ink-950/70 to-transparent" />
 
       {/* One piece of product truth: the dashboard reading THIS site. Every
-          row names a machine visible in the footage (excavator loading,
-          dump truck hauling, crusher running). Synthetic-plausible values. */}
+          row names a machine visible in the footage (excavator trenching,
+          pipe truck, loader staging). Synthetic-plausible values. */}
       <div className="absolute right-[4.5%] top-1/2 hidden w-[17rem] -translate-y-1/2 overflow-hidden rounded-md border border-hairline-d bg-ink-950/65 shadow-console backdrop-blur-md lg:block">
         <div className="flex items-center justify-between border-b border-hairline-d px-3.5 py-2.5">
           <span className="font-mono text-xs font-medium tracking-[0.05em] text-dfg">
@@ -105,7 +121,7 @@ export function FleetScene() {
         </div>
         <div className="grid grid-cols-3 divide-x divide-hairline-d border-b border-hairline-d">
           {[
-            ["UNITS", "7"],
+            ["UNITS", "3"],
             ["LOADS", "27"],
             ["IDLE", "4%"],
           ].map(([k, v]) => (
@@ -121,9 +137,9 @@ export function FleetScene() {
         </div>
         <div className="divide-y divide-hairline-d">
           {[
-            ["EXC-114", "LOADING"],
-            ["TRK-047", "HAUL CYCLE 9"],
-            ["CRH-02", "CRUSHER RUNNING"],
+            ["EXC-114", "TRENCHING"],
+            ["TRK-032", "PIPES ON SITE"],
+            ["LDR-05", "STAGING"],
           ].map(([unit, status]) => (
             <div
               key={unit}
