@@ -1,8 +1,5 @@
 import {
   Inbox,
-  BarChart3,
-  Briefcase,
-  ClipboardList,
   Map as MapIcon,
   Shield,
   Wrench,
@@ -23,14 +20,7 @@ import {
 
 /* ---------- Shared vocabulary ---------- */
 
-export type ModuleId =
-  | "today"
-  | "maps"
-  | "safety"
-  | "maintain"
-  | "work"
-  | "forms"
-  | "reports";
+export type ModuleId = "today" | "maps" | "safety" | "maintain";
 
 export type AssetId = "trk047" | "van112" | "trk051" | "reef09" | "pkp08";
 
@@ -177,7 +167,7 @@ export const ASSETS: Asset[] = [
     y: 500,
     beacons: "3.0°C · IN RANGE",
     state: "stopped",
-    statusLine: "REEFER OK · 3.0°C",
+    statusLine: "REEFER OK",
   },
   {
     id: "pkp08",
@@ -293,37 +283,25 @@ export const RAIL: RailItem[] = [
   { id: "maps", icon: MapIcon, label: "Maps", live: true },
   { id: "safety", icon: Shield, label: "Safety", live: true },
   { id: "maintain", icon: Wrench, label: "Maintain", live: true },
-  { id: "work", icon: Briefcase, label: "Work", live: false },
-  { id: "forms", icon: ClipboardList, label: "Forms", live: false },
-  { id: "reports", icon: BarChart3, label: "Reports", live: false },
 ];
 
 /**
- * Tab sets per module. Locked modules keep an (empty) entry so indexing by
- * ModuleId is always safe — their stage is a LockedPane, no tabs to render.
+ * Tab sets per module. Every module and tab in the demo is live; nothing
+ * renders locked or inert.
  */
 export const MODULE_TABS: Record<ModuleId, ModuleTab[]> = {
   today: [{ id: "cases", label: "What matters now", live: true }],
   maps: [
     { id: "live", label: "Live Map", live: true },
     { id: "trips", label: "Trips", live: true },
-    { id: "assets", label: "Assets", live: false },
-    { id: "drivers", label: "Drivers", live: false },
-    { id: "locations", label: "Locations", live: false },
-  ],
+        ],
   safety: [
     { id: "overview", label: "Overview", live: true },
     { id: "coaching", label: "Exceptions", live: true },
   ],
   maintain: [
     { id: "schedules", label: "Schedules", live: true },
-    { id: "issues", label: "Issues", live: false },
-    { id: "workorders", label: "Work Orders", live: false },
-    { id: "parts", label: "Parts", live: false },
-  ],
-  work: [],
-  forms: [],
-  reports: [],
+        ],
 };
 
 /** Tone → dot background utility, shared by status chips and event rows. */

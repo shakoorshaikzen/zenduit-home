@@ -33,7 +33,7 @@ export function TodayPane({
         </p>
         <p className="font-mono text-[10px] tracking-[0.05em] text-faint">
           {approved ? "1 NEEDS YOU" : "2 NEED YOU"} · {approved ? "2" : "1"}{" "}
-          HANDLED · 5 ASSETS QUIET
+          HANDLED · 2 ASSETS QUIET
         </p>
       </div>
 

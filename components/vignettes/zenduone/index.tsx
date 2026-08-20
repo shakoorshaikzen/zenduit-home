@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { ArrowRight, MousePointerClick } from "lucide-react";
-import { LockedPane, Rail, TopBar } from "./chrome";
-import { MODULE_TABS, RAIL, type AssetId, type ModuleId } from "./data";
+import { Rail, TopBar } from "./chrome";
+import { MODULE_TABS, type AssetId, type ModuleId } from "./data";
 import { MaintainSchedules } from "./maintain";
 import { MapsLive } from "./maps-live";
 import { MapsTrips } from "./maps-trips";
@@ -16,7 +16,7 @@ import { TodayPane } from "./today";
  * This shell owns ALL of the demo's state; every pane below is pure and
  * props-driven, so a number can only ever come from ./data. Maps, Safety and
  * Maintain are live; Work, Forms, Reports (and the secondary tabs inside the
- * live modules) render a LockedPane, exactly like a guided trial.
+ * every module and view in the miniature is live and interactive.
  */
 
 /*
@@ -61,27 +61,17 @@ export function ZenduOneDemo() {
     return () => clearInterval(id);
   }, []);
 
-  /* Switching module always lands on that module's first tab — locked modules
-     have no tabs, so their stage falls straight through to the LockedPane. */
+  /* Switching module always lands on that module's first tab. */
   const selectModule = (id: ModuleId) => {
     setModule(id);
     setTab(MODULE_TABS[id][0]?.id ?? "locked");
   };
 
-  const railItem = RAIL.find((r) => r.id === module);
-  const moduleLive = railItem?.live ?? false;
+
   const tabs = MODULE_TABS[module];
-  const current = tabs.find((t) => t.id === tab);
-  const tabLive = current?.live ?? false;
-  const hint =
-    moduleLive && tabLive
-      ? (HINTS[`${module}:${tab}`] ?? "Explore the live modules in the rail")
-      : "Maps, Safety and Maintain are live in this miniature";
+  const hint = HINTS[`${module}:${tab}`] ?? "Every view in this miniature is live";
 
   function stage() {
-    if (!moduleLive) return <LockedPane label={railItem?.label ?? "This module"} />;
-    if (!tabLive) return <LockedPane label={current?.label ?? "This view"} />;
-
     if (module === "today" && tab === "cases") {
       return (
         <TodayPane
@@ -131,7 +121,7 @@ export function ZenduOneDemo() {
     if (module === "maintain" && tab === "schedules") {
       return <MaintainSchedules />;
     }
-    return <LockedPane label={current?.label ?? "This view"} />;
+    return null;
   }
 
   return (

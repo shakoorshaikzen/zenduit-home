@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, ChevronDown, Lock, Settings, Video, VideoOff } from "lucide-react";
+import { Bell, ChevronDown, Settings, Video, VideoOff } from "lucide-react";
 import { cx } from "@/lib/cx";
 import { MODULE_TABS, RAIL, type ModuleId } from "./data";
 
@@ -47,7 +47,6 @@ export function TopBar({
                 tab === t.id ? "bg-accent/[0.09] text-accent-deep" : "text-muted hover:text-fg",
               )}
             >
-              {!t.live && <Lock size={10} strokeWidth={1.5} aria-hidden className="text-faint" />}
               {t.label}
             </button>
           ))}
@@ -97,7 +96,6 @@ export function Rail({ module, onModule }: { module: ModuleId; onModule: (id: Mo
               <item.icon size={16} strokeWidth={1.5} aria-hidden />
             </span>
             <span className="flex items-center gap-0.5 text-[11px] font-medium">
-              {!item.live && <Lock size={8} strokeWidth={1.5} aria-hidden />}
               {item.label}
             </span>
           </button>
@@ -109,18 +107,6 @@ export function Rail({ module, onModule }: { module: ModuleId; onModule: (id: Mo
 
 /* ---------- Demo lock ---------- */
 
-export function LockedPane({ label }: { label: string }) {
-  return (
-    <div className="flex h-full flex-col items-center justify-center gap-3 bg-paper-raised/60 p-8 text-center">
-      <span className="grid size-10 place-items-center rounded-full border border-hairline-l bg-card">
-        <Lock size={15} strokeWidth={1.5} className="text-faint" aria-hidden />
-      </span>
-      <p className="max-w-[220px] text-[13px] leading-relaxed text-muted">
-        {label} is part of the full ZenduONE platform. See it live on your demo.
-      </p>
-    </div>
-  );
-}
 
 /* ---------- Atoms shared by the panes ---------- */
 
