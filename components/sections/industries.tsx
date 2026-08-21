@@ -49,6 +49,13 @@ const FEATURED: Industry[] = [
     href: "https://zenduit.com/industries/airports-security-fleet-management/",
   },
   {
+    img: "healthcare-indoor",
+    name: "Hospitals & Senior Care",
+    tag: "INDOOR TRACKING · ZENCARE",
+    prop: "Find any wheelchair, bed or resident in seconds, and hear about it the moment one leaves its zone.",
+    href: "https://zenducare-landing.vercel.app/",
+  },
+  {
     img: "construction",
     name: "Construction",
     tag: "GEOFENCES · THEFT RECOVERY",
@@ -77,7 +84,7 @@ const REST: Industry[] = [
   { img: "forestry", name: "Forestry", tag: "OFF-GRID TRACKING", prop: "", href: "https://zenduit.com/industries/" },
   { img: "rental-leasing", name: "Rental & Leasing", tag: "UTILIZATION BILLING", prop: "", href: "https://zenduit.com/industries/rental-fleet-management/" },
   { img: "public-work-winter-ops", name: "Public Works & Winter Ops", tag: "PLOW + SALT PROOF", prop: "", href: "https://zenduit.com/industries/public-works-winter-ops/" },
-  { img: "healthcare-emergency", name: "Healthcare & Emergency", tag: "COLD CHAIN · RESPONSE", prop: "", href: "https://zenduit.com/industries/healthcare-emergency-fleet-solutions/" },
+  { img: "healthcare-emergency", name: "Emergency Response Fleets", tag: "COLD CHAIN · RESPONSE", prop: "", href: "https://zenduit.com/industries/healthcare-emergency-fleet-solutions/" },
   { img: "agriculture", name: "Agriculture", tag: "SEASON READINESS", prop: "", href: "https://zenduit.com/industries/agriculture-fleet-management/" },
   { img: "food-pharma", name: "Food & Pharmaceutical", tag: "TEMP-VERIFIED DELIVERY", prop: "", href: "https://zenduit.com/industries/food-pharma-fleet-management/" },
 ];
@@ -113,7 +120,7 @@ export function Industries() {
           <SectionHeading
             tone="dark"
             title="Built for how your fleet actually works"
-            lede="Thirteen industries run on Zenduit, each with its own playbook."
+            lede="Every industry runs a different operation. The playbook changes with it."
           />
         </Reveal>
       </Container>
@@ -230,7 +237,12 @@ export function Industries() {
                     src={`/industries/${ind.img}.webp`}
                     alt={ind.name}
                     loading={i === 0 ? "eager" : "lazy"}
-                    className="absolute inset-0 h-full w-full object-cover object-[center_65%]"
+                    className={cx(
+                      "absolute inset-0 h-full w-full object-cover",
+                      ind.img === "healthcare-indoor"
+                        ? "object-center"
+                        : "object-[center_65%]",
+                    )}
                   />
                   <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink-950/80 to-transparent" />
                   <span className="absolute bottom-5 left-5 flex items-center gap-2 rounded-[6px] border border-hairline-d bg-ink-950/85 px-3 py-2 font-mono text-xs tracking-[0.05em] text-dmuted backdrop-blur-sm">

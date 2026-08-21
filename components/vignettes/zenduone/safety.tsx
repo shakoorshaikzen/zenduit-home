@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cx } from "@/lib/cx";
 import { Kpi } from "./chrome";
 import { ASSETS, EVENTS, EVENT_DETAIL, RISKS } from "./data";
@@ -209,31 +209,81 @@ export function SafetyCoaching({
 /* ---------- Night-road clip frame (drawn camera imagery) ---------- */
 
 export function ClipFrame({ event }: { event: (typeof EVENTS)[number] }) {
+  /* The recording clock. A frozen timestamp is the main tell that footage is
+     a still, so it advances even under reduced motion: a changing number is
+     not motion anyone needs to dodge. */
+  const [sec, setSec] = useState(12);
+  useEffect(() => {
+    setSec(12);
+    const id = setInterval(() => setSec((v) => (v + 1) % 60), 1000);
+    return () => clearInterval(id);
+  }, [event.id]);
+
   return (
     <div className="relative h-full w-full overflow-hidden bg-ink-950">
       <svg
-        viewBox="0 0 900 620"
+        viewBox="0 0 900 556"
         preserveAspectRatio="xMidYMid slice"
         className="h-full w-full"
         role="img"
         aria-label={`Dash cam clip frame: ${event.label} on ${event.asset} at ${event.time} (demonstration)`}
       >
-        <rect width="900" height="400" fill="#0b1122" />
-        <rect y="400" width="900" height="220" fill="#141a28" />
-        <path d="M 330 620 L 430 400 L 470 400 L 570 620 Z" fill="#1d2434" />
-        {[0, 1, 2, 3].map((i) => (
-          <rect
-            key={i}
-            x={446 + i * 1.5}
-            y={420 + i * 50}
-            width={8 - i}
-            height={26 - i * 4}
-            fill="#8b93a8"
-            opacity={0.8 - i * 0.15}
-          />
-        ))}
-        <ellipse cx="450" cy="410" rx="190" ry="46" fill="#f6e7b8" opacity="0.14" />
-        <ellipse cx="450" cy="405" rx="90" ry="22" fill="#f6e7b8" opacity="0.18" />
+        <defs>
+          {/* Headlight throw: a cone of light that falls off with distance,
+              which is what a real dash cam sees at night. */}
+          <radialGradient id="zd-throw" cx="50%" cy="100%" r="72%">
+            <stop offset="0%" stopColor="#f6e7b8" stopOpacity="0.30" />
+            <stop offset="45%" stopColor="#f6e7b8" stopOpacity="0.12" />
+            <stop offset="100%" stopColor="#f6e7b8" stopOpacity="0" />
+          </radialGradient>
+          {/* Sky gets lighter toward the horizon, never a flat block. */}
+          <linearGradient id="zd-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#080d1a" />
+            <stop offset="100%" stopColor="#141d33" />
+          </linearGradient>
+          <clipPath id="zd-road">
+            <path d="M 196 556 L 418 326 L 482 326 L 704 556 Z" />
+          </clipPath>
+        </defs>
+
+        <rect width="900" height="330" fill="url(#zd-sky)" />
+        <rect y="326" width="900" height="230" fill="#10151f" />
+
+        {/* Road surface, wide enough at the bottom to read as a lane */}
+        <path d="M 196 556 L 418 326 L 482 326 L 704 556 Z" fill="#1b212e" />
+        {/* Painted edges converging on the vanishing point */}
+        <path d="M 214 556 L 424 328" stroke="#6f7a91" strokeWidth="3" opacity="0.5" />
+        <path d="M 686 556 L 476 328" stroke="#6f7a91" strokeWidth="3" opacity="0.5" />
+
+        {/* Lane markings running toward the camera, clipped to the surface so
+            a growing dash can never spill onto the shoulder. */}
+        <g clipPath="url(#zd-road)">
+          {[0, 1, 2, 3].map((i) => (
+            <rect
+              key={i}
+              className="zd-lane"
+              x={444}
+              y={432}
+              width={12}
+              height={34}
+              rx={2}
+              fill="#c9d2e4"
+              style={{ animationDelay: `${i * -0.475}s` }}
+            />
+          ))}
+        </g>
+
+        {/* The light itself, over the surface */}
+        <rect
+          className="zd-headlight"
+          y="270"
+          width="900"
+          height="286"
+          fill="url(#zd-throw)"
+        />
+
+        {/* Horizon haze and a few stars */}
+        <rect y="308" width="900" height="30" fill="#243149" opacity="0.55" />
         <circle cx="180" cy="120" r="1.5" fill="#5c6a8a" />
         <circle cx="260" cy="80" r="1" fill="#5c6a8a" />
         <circle cx="700" cy="140" r="1.5" fill="#5c6a8a" />
@@ -241,7 +291,7 @@ export function ClipFrame({ event }: { event: (typeof EVENTS)[number] }) {
 
       <span className="absolute left-4 top-4 flex items-center gap-2 font-mono text-xs tracking-[0.08em] text-dfg">
         <span aria-hidden className="size-1.5 rounded-full bg-alarm" />
-        REC · {event.time}:12
+        REC · {event.time}:{String(sec).padStart(2, "0")}
       </span>
       <span className="absolute right-4 top-4 font-mono text-xs tracking-[0.08em] text-dmuted">
         {event.asset} · ROAD CAM

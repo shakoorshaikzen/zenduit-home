@@ -494,8 +494,8 @@ export const CASES: TodayCase[] = [
     kind: "review",
     tone: "alarm",
     changed: "Harsh acceleration, TRK-047 on Route 7",
-    matters: "Second event this week for D. Kowalski",
-    next: "Clip and context ready for coaching review",
+    matters: "2nd event this week · D. Kowalski",
+    next: "Clip and context ready to review",
   },
   {
     id: "c2",
@@ -503,14 +503,14 @@ export const CASES: TodayCase[] = [
     tone: "warn",
     changed: "Fault P0217 on TRK-051 in the yard",
     matters: "Oil service already 12 days overdue",
-    next: "WO-1482 drafted, parts in stock, slot open Thu",
+    next: "WO-1482 drafted · parts in stock",
   },
   {
     id: "c3",
     kind: "handled",
     tone: "signal",
     changed: "Reefer temp dip on REEF-09 at Dock 4",
-    matters: "Load spec 2-4°C, recovered to 3.0°C in 6 min",
-    next: "Logged to the cold-chain record. Nothing needs you",
+    matters: "Spec 2–4°C · recovered in 6 min",
+    next: "Logged to the cold-chain record",
   },
 ];

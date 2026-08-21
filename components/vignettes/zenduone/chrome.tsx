@@ -123,12 +123,24 @@ export function CamChip({ on }: { on: boolean }) {
   );
 }
 
-export function Kpi({ label, value, delta }: { label: string; value: string; delta: string }) {
+export function Kpi({
+  label,
+  value,
+  delta,
+  note = "VS LAST WEEK",
+}: {
+  label: string;
+  value: string;
+  delta: string;
+  note?: string;
+}) {
   return (
-    <div className="rounded-md border border-hairline-l bg-card p-4">
+    <div className="rounded-md border border-hairline-l bg-card p-3.5">
       <p className="text-xs text-muted">{label}</p>
-      <p className="mt-1.5 font-mono text-[1.375rem] font-medium text-fg tabular-nums">{value}</p>
-      <p className="mt-1 font-mono text-[11px] tracking-[0.05em] text-signal-deep">{delta} VS LAST WEEK</p>
+      <p className="mt-1 font-mono text-[1.25rem] font-medium text-fg tabular-nums">{value}</p>
+      <p className="mt-1 font-mono text-[11px] tracking-[0.05em] text-signal-deep">
+        {delta}{note ? ` ${note}` : ""}
+      </p>
     </div>
   );
 }

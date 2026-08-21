@@ -146,3 +146,38 @@
   from { offset-distance: 0%; }
   to { offset-distance: 100%; }
 }
+
+/*
+ * Dash-cam footage in the demo's Safety clip (components/vignettes/zenduone/
+ * safety.tsx). Lane markings run toward the camera on a perspective curve:
+ * each dash starts small near the horizon and grows as it passes, so the
+ * frame reads as moving footage rather than a still. Plain CSS animations,
+ * so the global reduced-motion override parks the road.
+ */
+.zd-lane {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: zd-lane 1.9s linear infinite;
+}
+@keyframes zd-lane {
+  from {
+    transform: translateY(-96px) scale(0.3);
+    opacity: 0.2;
+  }
+  70% {
+    opacity: 0.95;
+  }
+  to {
+    transform: translateY(120px) scale(2.3);
+    opacity: 0;
+  }
+}
+
+/* Headlight wash breathes very slightly, the way real auto-exposure does. */
+.zd-headlight {
+  animation: zd-headlight 4.2s ease-in-out infinite alternate;
+}
+@keyframes zd-headlight {
+  from { opacity: 0.11; }
+  to { opacity: 0.2; }
+}

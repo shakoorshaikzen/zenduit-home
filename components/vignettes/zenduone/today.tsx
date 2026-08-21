@@ -1,5 +1,6 @@
 "use client";
 
+import { Kpi } from "./chrome";
 import { CASES } from "./data";
 import { cx } from "@/lib/cx";
 
@@ -8,6 +9,12 @@ import { cx } from "@/lib/cx";
  * next. One case needs judgment, one is prepared and waits for approval,
  * one is already handled. The system did the first round of thinking;
  * the manager gets the decisions.
+ *
+ * The layout follows the real console's dashboard grammar — a stat-card row
+ * over a record list, the same shape Safety Overview and Maintain Schedules
+ * use — so Today reads as a view of the platform rather than a marketing
+ * panel. The cards measure attention: how much coordination work the system
+ * removed, not how many events it detected.
  */
 
 const TONE_DOT = {
@@ -27,17 +34,38 @@ export function TodayPane({
 }) {
   return (
     <div className="h-full overflow-y-auto p-4 lg:p-5">
-      <div className="flex items-baseline justify-between gap-4">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <p className="text-[13px] font-semibold text-fg">
           Your operation, reduced to what matters
         </p>
-        <p className="font-mono text-[10px] tracking-[0.05em] text-faint">
-          {approved ? "1 NEEDS YOU" : "2 NEED YOU"} · {approved ? "2" : "1"}{" "}
-          HANDLED · 2 ASSETS QUIET
+        <p className="font-mono text-[11px] tracking-[0.05em] text-faint">
+          THU AUG 20 · 07:48 · FLEET OF 5
         </p>
       </div>
 
-      <ul className="mt-3 space-y-3">
+      {/* Attention, measured — the console's own stat-card row */}
+      <div className="mt-2.5 grid grid-cols-2 gap-2.5 lg:grid-cols-4">
+        <Kpi
+          label="Needs your judgment"
+          value={approved ? "1" : "2"}
+          delta={approved ? "-1" : "-4"}
+          note="VS YESTERDAY"
+        />
+        <Kpi
+          label="Handled for you"
+          value={approved ? "7" : "6"}
+          delta="+2"
+          note="VS YESTERDAY"
+        />
+        <Kpi label="Time to context" value="38s" delta="-4m 20s" />
+        <Kpi label="Manager time returned" value="3h 10m" delta="+40m" />
+      </div>
+
+      <p className="mt-4 font-mono text-[11px] tracking-[0.08em] text-faint">
+        CASES · THIS SHIFT
+      </p>
+
+      <ul className="mt-2 space-y-2.5">
         {CASES.map((c) => {
           const done = c.kind === "handled" || (c.kind === "approve" && approved);
           return (
@@ -48,7 +76,7 @@ export function TodayPane({
                 done && "opacity-80",
               )}
             >
-              <div className="flex items-center justify-between border-b border-hairline-l px-4 py-2">
+              <div className="flex items-center justify-between border-b border-hairline-l px-4 py-1.5">
                 <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.08em] text-faint">
                   <span
                     aria-hidden
@@ -65,7 +93,7 @@ export function TodayPane({
                   {c.kind === "handled" && "HANDLED · NO ACTION NEEDED"}
                 </span>
               </div>
-              <div className="grid gap-2 px-4 py-3 lg:grid-cols-[1.1fr_1fr_1.2fr] lg:gap-4">
+              <div className="grid gap-1.5 px-4 py-2.5 lg:grid-cols-[1.1fr_1fr_1.2fr] lg:gap-4">
                 <p className="text-[13px] font-medium leading-snug text-fg">{c.changed}</p>
                 <p className="text-xs leading-relaxed text-muted">
                   <span className="font-mono text-[10px] tracking-[0.08em] text-faint">WHY IT MATTERS · </span>
@@ -106,9 +134,6 @@ export function TodayPane({
         })}
       </ul>
 
-      <p className="mt-3 font-mono text-[10px] tracking-[0.05em] text-faint">
-        SEE · UNDERSTAND · ACT · MEASURE · IMPROVE — EVERY RESOLVED CASE SHARPENS THE NEXT ONE
-      </p>
     </div>
   );
 }
