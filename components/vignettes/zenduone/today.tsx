@@ -71,6 +71,7 @@ export function TodayPane({
           return (
             <li
               key={c.id}
+              data-tour={c.kind === "review" ? "case-review" : c.kind === "approve" ? "case-approve" : undefined}
               className={cx(
                 "overflow-hidden rounded-md border border-hairline-l bg-card",
                 done && "opacity-80",

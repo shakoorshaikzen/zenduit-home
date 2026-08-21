@@ -82,14 +82,11 @@ export function Rail({ module, onModule }: { module: ModuleId; onModule: (id: Mo
             key={item.id}
             type="button"
             onClick={() => onModule(item.id)}
-            title={item.live ? item.label : `${item.label} (demo locked)`}
+            title={item.label}
+            data-tour={`rail-${item.id}`}
             className={cx(
               "flex w-full cursor-pointer flex-col items-center gap-1 px-1 py-2.5 transition-colors",
-              active
-                ? "text-accent-hi"
-                : item.live
-                  ? "text-dmuted hover:text-dfg"
-                  : "text-dfaint/70 hover:text-dfaint",
+              active ? "text-accent-hi" : "text-dmuted hover:text-dfg",
             )}
           >
             <span className={cx("grid size-8 place-items-center rounded-[6px]", active && "bg-accent/20")}>

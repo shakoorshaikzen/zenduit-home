@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ArrowRight, MousePointerClick } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowRight, MousePointerClick, PlayCircle } from "lucide-react";
 import { Rail, TopBar } from "./chrome";
 import { MODULE_TABS, type AssetId, type ModuleId } from "./data";
 import { MaintainSchedules } from "./maintain";
@@ -9,6 +9,7 @@ import { MapsLive } from "./maps-live";
 import { MapsTrips } from "./maps-trips";
 import { SafetyCoaching, SafetyOverview } from "./safety";
 import { TodayPane } from "./today";
+import { TOUR, TourOverlay } from "./tour";
 
 /*
  * ZenduONE — a working miniature of the real console.
@@ -48,6 +49,11 @@ export function ZenduOneDemo() {
   const [event, setEvent] = useState(0);
   const [queued, setQueued] = useState<string[]>(["e3"]);
   const [woApproved, setWoApproved] = useState(false);
+  /* null = the guide is not running. */
+  const [tourStep, setTourStep] = useState<number | null>(null);
+  const windowRef = useRef<HTMLDivElement>(null);
+  const [windowEl, setWindowEl] = useState<HTMLElement | null>(null);
+  const autoStarted = useRef(false);
   const [speed, setSpeed] = useState(SPEED_START);
 
   /* The one thing that ticks in JS. Reduced-motion freezes the CSS animations
@@ -60,6 +66,54 @@ export function ZenduOneDemo() {
     }, 3000);
     return () => clearInterval(id);
   }, []);
+
+  /* The overlay measures against the console frame, so it needs the node
+     itself rather than just the ref. */
+  useEffect(() => setWindowEl(windowRef.current), []);
+
+  /* Offer the guide the first time the console is actually on screen, once
+     per session. Auto-running it on every visit would be nagging; never
+     running it means nobody discovers what the console does. */
+  useEffect(() => {
+    const el = windowRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    if (sessionStorage.getItem("zd-tour-seen") === "1") return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting && !autoStarted.current) {
+            autoStarted.current = true;
+            sessionStorage.setItem("zd-tour-seen", "1");
+            setTourStep(0);
+            io.disconnect();
+          }
+        }
+      },
+      { threshold: 0.55 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  /* Each step declares the state it needs; put the console there first so the
+     spotlight has something to land on. */
+  useEffect(() => {
+    if (tourStep === null) return;
+    const step = TOUR[tourStep];
+    setModule(step.module);
+    setTab(step.tab);
+  }, [tourStep]);
+
+  const startTour = useCallback(() => setTourStep(0), []);
+  const exitTour = useCallback(() => setTourStep(null), []);
+  const nextStep = useCallback(
+    () => setTourStep((i) => (i === null ? null : Math.min(i + 1, TOUR.length - 1))),
+    [],
+  );
+  const prevStep = useCallback(
+    () => setTourStep((i) => (i === null ? null : Math.max(i - 1, 0))),
+    [],
+  );
 
   /* Switching module always lands on that module's first tab. */
   const selectModule = (id: ModuleId) => {
@@ -125,7 +179,10 @@ export function ZenduOneDemo() {
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-hairline-l bg-card shadow-ambient">
+    <div
+      ref={windowRef}
+      className="relative overflow-hidden rounded-lg border border-hairline-l bg-card shadow-ambient"
+    >
       <TopBar module={module} tab={tab} onTabChange={setTab} />
 
       <div className="grid grid-cols-[64px_minmax(0,1fr)] lg:grid-cols-[88px_minmax(0,1fr)]">
@@ -139,14 +196,36 @@ export function ZenduOneDemo() {
           <MousePointerClick size={13} strokeWidth={1.5} aria-hidden className="shrink-0 text-faint" />
           <span className="truncate">{hint}</span>
         </p>
-        <a
-          href="#demo"
-          className="inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-accent-deep underline-offset-4 hover:underline"
-        >
-          See the full console
-          <ArrowRight size={12} strokeWidth={1.5} aria-hidden />
-        </a>
+        <div className="flex shrink-0 items-center gap-4">
+          <button
+            type="button"
+            onClick={startTour}
+            className="inline-flex cursor-pointer items-center gap-1.5 text-xs font-medium text-muted transition-colors hover:text-fg"
+          >
+            <PlayCircle size={13} strokeWidth={1.5} aria-hidden />
+            {tourStep === null ? "Show me around" : "Restart guide"}
+          </button>
+          <a
+            href="#demo"
+            className="inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-accent-deep underline-offset-4 hover:underline"
+          >
+            See the full console
+            <ArrowRight size={12} strokeWidth={1.5} aria-hidden />
+          </a>
+        </div>
       </div>
+
+      {tourStep !== null && (
+        <TourOverlay
+          step={TOUR[tourStep]}
+          index={tourStep}
+          total={TOUR.length}
+          container={windowEl}
+          onNext={nextStep}
+          onBack={prevStep}
+          onExit={exitTour}
+        />
+      )}
     </div>
   );
 }
