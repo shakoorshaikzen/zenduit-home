@@ -181,3 +181,24 @@
   from { opacity: 0.11; }
   to { opacity: 0.2; }
 }
+
+/* Lead vehicle's brake lights, for the tailgating clip. */
+.zd-brake {
+  animation: zd-brake 2.6s ease-in-out infinite;
+}
+@keyframes zd-brake {
+  0%, 55%, 100% { opacity: 0.55; }
+  65%, 85% { opacity: 1; }
+}
+
+/* Driver-monitoring detection box: re-fits around the face the way real
+   in-cab AI does, which is the only honest motion in a 0 km/h clip. */
+.zd-track {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: zd-track 3.4s ease-in-out infinite alternate;
+}
+@keyframes zd-track {
+  from { transform: translate(-3px, 1px) scale(0.985); }
+  to { transform: translate(3px, -1px) scale(1.015); }
+}
