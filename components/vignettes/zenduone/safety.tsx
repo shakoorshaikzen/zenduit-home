@@ -216,6 +216,38 @@ export function SafetyCoaching({
  * camera rather than a road that cannot be moving.
  */
 
+/*
+ * What separates footage from illustration: a wide-angle lens vignette,
+ * sensor grain, haze that softens distance, and bloom around anything
+ * bright. Defined once and laid over whichever scene is playing.
+ */
+function CameraOptics() {
+  return (
+    <>
+      <defs>
+        <radialGradient id="zd-vig" cx="50%" cy="48%" r="72%">
+          <stop offset="55%" stopColor="#000000" stopOpacity="0" />
+          <stop offset="100%" stopColor="#000000" stopOpacity="0.42" />
+        </radialGradient>
+        <filter id="zd-grain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+      </defs>
+      {/* Sensor grain: the single biggest tell between video and vector */}
+      <rect
+        width="900"
+        height="556"
+        filter="url(#zd-grain)"
+        opacity="0.085"
+        style={{ mixBlendMode: "overlay" }}
+      />
+      {/* Lens falloff toward the corners */}
+      <rect width="900" height="556" fill="url(#zd-vig)" />
+    </>
+  );
+}
+
 /* Morning highway and wet urban street share the road geometry and differ in
    grade, weather and whether there is a vehicle close ahead. */
 function RoadScene({ wet, lead, laneSeconds }: { wet: boolean; lead: boolean; laneSeconds: number }) {
@@ -245,6 +277,20 @@ function RoadScene({ wet, lead, laneSeconds }: { wet: boolean; lead: boolean; la
           <stop offset="0%" stopColor="#dfe6ee" stopOpacity="0.30" />
           <stop offset="100%" stopColor="#dfe6ee" stopOpacity="0" />
         </linearGradient>
+        <filter id="zd-far" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2.4" />
+        </filter>
+        <filter id="zd-bloom" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="7" result="b" />
+          <feMerge>
+            <feMergeNode in="b" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <linearGradient id="zd-haze" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#c8cfd8" stopOpacity="0.42" />
+          <stop offset="100%" stopColor="#c8cfd8" stopOpacity="0" />
+        </linearGradient>
         <clipPath id="zd-road">
           <path d="M 196 556 L 418 326 L 482 326 L 704 556 Z" />
         </clipPath>
@@ -260,7 +306,7 @@ function RoadScene({ wet, lead, laneSeconds }: { wet: boolean; lead: boolean; la
 
       {/* Urban edge: a few blocks and poles say city without drawing a city. */}
       {wet && (
-        <g opacity="0.5">
+        <g opacity="0.42" filter="url(#zd-far)">
           <rect x="40" y="196" width="120" height="132" fill="#5d646e" />
           <rect x="176" y="232" width="86" height="96" fill="#68707a" />
           <rect x="712" y="180" width="132" height="148" fill="#5d646e" />
@@ -268,11 +314,12 @@ function RoadScene({ wet, lead, laneSeconds }: { wet: boolean; lead: boolean; la
         </g>
       )}
 
+      <rect y="300" width="900" height="72" fill="url(#zd-haze)" />
       <path d="M 196 556 L 418 326 L 482 326 L 704 556 Z" fill={wet ? "#2f343c" : "#54565a"} />
       {/* Wet asphalt throws a sheen back at the lens. */}
       {wet && <path d="M 196 556 L 418 326 L 482 326 L 704 556 Z" fill="url(#zd-sheen)" />}
-      <path d="M 214 556 L 424 328" stroke="#e6e9ee" strokeWidth="3" opacity="0.65" />
-      <path d="M 686 556 L 476 328" stroke="#e6e9ee" strokeWidth="3" opacity="0.65" />
+      <path d="M 214 556 L 424 328" stroke="#d3d8df" strokeWidth="3" opacity="0.52" />
+      <path d="M 686 556 L 476 328" stroke="#d3d8df" strokeWidth="3" opacity="0.52" />
 
       <g clipPath="url(#zd-road)">
         {[0, 1, 2, 3].map((i) => (
@@ -284,7 +331,7 @@ function RoadScene({ wet, lead, laneSeconds }: { wet: boolean; lead: boolean; la
             width={12}
             height={34}
             rx={2}
-            fill="#f0f2f6"
+            fill="#dee3ea"
             style={{
               animationDuration: `${laneSeconds}s`,
               animationDelay: `${(i * -laneSeconds) / 4}s`,
@@ -299,8 +346,10 @@ function RoadScene({ wet, lead, laneSeconds }: { wet: boolean; lead: boolean; la
           <ellipse cx="450" cy="484" rx="104" ry="12" fill="#14181e" opacity="0.55" />
           <rect x="352" y="330" width="196" height="150" rx="10" fill="#2b3038" />
           <rect x="366" y="344" width="168" height="74" rx="6" fill="#3a4149" />
-          <rect className="zd-brake" x="364" y="440" width="34" height="16" rx="4" fill="#f4674f" />
-          <rect className="zd-brake" x="502" y="440" width="34" height="16" rx="4" fill="#f4674f" />
+          <g filter="url(#zd-bloom)">
+            <rect className="zd-brake" x="364" y="440" width="34" height="15" rx="4" fill="#d43a28" />
+            <rect className="zd-brake" x="502" y="440" width="34" height="15" rx="4" fill="#d43a28" />
+          </g>
           <rect x="418" y="462" width="64" height="14" rx="3" fill="#1d2229" />
         </g>
       )}
@@ -314,6 +363,16 @@ function CabScene() {
   return (
     <>
       <defs>
+        <filter id="zd-far2" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3" />
+        </filter>
+        <filter id="zd-bloom2" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="6" result="b" />
+          <feMerge>
+            <feMergeNode in="b" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
         <linearGradient id="zd-glass" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#d5dee7" />
           <stop offset="100%" stopColor="#9aa6b3" />
@@ -326,11 +385,14 @@ function CabScene() {
       {/* Windshield. The driver is backlit by it, which is exactly what an
           in-cab camera sees and what makes the silhouette readable. */}
       <rect x="88" y="26" width="724" height="306" rx="10" fill="url(#zd-glass)" />
-      {/* Yard beyond the glass: a fence line and two parked trailers */}
-      <rect x="88" y="250" width="724" height="82" fill="#8b97a4" />
-      <rect x="150" y="188" width="150" height="62" fill="#7e8a97" />
-      <rect x="600" y="176" width="176" height="74" fill="#7e8a97" />
-      <rect x="88" y="246" width="724" height="4" fill="#6f7a86" />
+      {/* Yard beyond the glass, blown out and slightly soft the way a cabin
+          camera sees daylight through a windscreen */}
+      <g filter="url(#zd-far2)">
+        <rect x="88" y="250" width="724" height="82" fill="#8b97a4" />
+        <rect x="150" y="188" width="150" height="62" fill="#7e8a97" />
+        <rect x="600" y="176" width="176" height="74" fill="#7e8a97" />
+        <rect x="88" y="246" width="724" height="4" fill="#6f7a86" />
+      </g>
 
       {/* Dashboard, distinctly lighter than the cab shell so shapes separate */}
       <rect y="332" width="900" height="224" fill="#252c37" />
@@ -359,7 +421,16 @@ function CabScene() {
         <circle cx="464" cy="250" r="48" fill="#191f27" />
         <ellipse cx="482" cy="282" rx="30" ry="18" fill="#151a21" />
         <rect x="500" y="292" width="26" height="40" rx="4" fill="#0e1218" />
-        <rect x="504" y="297" width="18" height="26" rx="2" fill="#5cb3f8" opacity="0.85" />
+        <rect
+          x="504"
+          y="297"
+          width="18"
+          height="26"
+          rx="2"
+          fill="#5cb3f8"
+          opacity="0.9"
+          filter="url(#zd-bloom2)"
+        />
       </g>
 
       {/* Driver-monitoring detection box, re-fitting around the face */}
@@ -425,6 +496,7 @@ export function ClipFrame({ event }: { event: (typeof EVENTS)[number] }) {
         ) : (
           <RoadScene wet={wet} lead={lead} laneSeconds={laneSeconds} />
         )}
+        <CameraOptics />
       </svg>
 
       <span className="absolute left-4 top-4 flex items-center gap-2 font-mono text-xs tracking-[0.08em] text-dfg [text-shadow:0_1px_3px_rgb(6_10_20/0.8)]">
