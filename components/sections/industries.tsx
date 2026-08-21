@@ -9,10 +9,10 @@ import { SectionHeading } from "@/components/ui/section-heading";
 
 /*
  * Industries as scrollytelling — the page's one authored scroll moment.
- * Six featured industries scroll past a pinned stage; each step swaps the
+ * Four featured industries scroll past a pinned stage; each step swaps the
  * stage to that industry's real zenduit.com photograph with a telemetry
- * chip carrying its playbook. All thirteen industries index below, linking
- * to Zenduit's real industry pages.
+ * chip carrying its playbook. The remaining ten index below in one line
+ * each, and every entry links to its own page.
  *
  * Under reduced motion the crossfade collapses to an instant swap (global
  * override); the interaction itself is scroll-driven, so nothing autoplays.
@@ -26,7 +26,38 @@ type Industry = {
   href: string;
 };
 
+/*
+ * The four Zenduit serves at the greatest scale, evidenced three ways: their
+ * own footer industry order (Construction, Transportation & Logistics,
+ * Utilities & Field Services lead it), the named customers on their logo
+ * strip (Aecon, Speedy, San Antonio Water System), and their published case
+ * studies (Labatt and Velocity Rail in logistics, Keystone ClearWater in
+ * field operations, and Sharpsmart — the story their success-stories page
+ * leads with — in waste). Everything else is one line in the index below,
+ * which still links to its own page.
+ */
 const FEATURED: Industry[] = [
+  {
+    img: "construction",
+    name: "Construction",
+    tag: "EVERY MACHINE · EVERY SITE",
+    prop: "Know which machine is on which site, who is running it, and what it cost you to get there.",
+    href: "https://zenduit.com/industries/construction-fleet-management/",
+  },
+  {
+    img: "transportation-logistics",
+    name: "Transportation & Logistics",
+    tag: "THE LOAD ARRIVES OR IT DOES NOT",
+    prop: "Live ETAs, hours-of-service and route history in one screen, so a late load is a decision rather than a surprise.",
+    href: "https://zenduit.com/industries/transportation-logistic-fleet-management/",
+  },
+  {
+    img: "utilities-field-services",
+    name: "Utilities & Field Services",
+    tag: "CLOSEST CREW · PROVEN JOB",
+    prop: "Dispatch the nearest qualified crew, then prove the work was done with the record already attached.",
+    href: "https://zenduit.com/industries/utility-fleet-management/",
+  },
   {
     img: "waste-management",
     name: "Waste & Recycling",
@@ -34,57 +65,19 @@ const FEATURED: Industry[] = [
     prop: "Missed pickups, contamination and unbilled events surface with the evidence attached, while you can still act on them.",
     href: "https://zenduit.com/industries/waste-management-fleet-software/",
   },
-  {
-    img: "public-school-transportation",
-    name: "Passenger Transport",
-    tag: "ON TIME IS A SYSTEM",
-    prop: "Driver readiness, vehicle readiness and routing coordinated before the run, so every rider is accounted for.",
-    href: "https://zenduit.com/industries/public-school-transportation-fleet-management/",
-  },
-  {
-    img: "airports",
-    name: "Airside & GSE",
-    tag: "RIGHT EQUIPMENT · RIGHT OPERATOR · RIGHT NOW",
-    prop: "Serviceable equipment and qualified operators matched to the turnaround before the clock becomes the problem.",
-    href: "https://zenduit.com/industries/airports-security-fleet-management/",
-  },
-  {
-    img: "healthcare-indoor",
-    name: "Hospitals & Senior Care",
-    tag: "INDOOR TRACKING · ZENCARE",
-    prop: "Find any wheelchair, bed or resident in seconds, and hear about it the moment one leaves its zone.",
-    href: "https://zenducare-landing.vercel.app/",
-  },
-  {
-    img: "construction",
-    name: "Construction",
-    tag: "GEOFENCES · THEFT RECOVERY",
-    prop: "Know where every machine is, and who is on it, across every site.",
-    href: "https://zenduit.com/industries/construction-fleet-management/",
-  },
-  {
-    img: "transportation-logistics",
-    name: "Transportation & Logistics",
-    tag: "LIVE ETA · HOS",
-    prop: "Live ETAs, route history, and hours-of-service in one screen.",
-    href: "https://zenduit.com/industries/transportation-logistic-fleet-management/",
-  },
-  {
-    img: "government",
-    name: "Government",
-    tag: "PUBLIC AUDIT TRAIL",
-    prop: "Fleet accountability and reporting built for public scrutiny.",
-    href: "https://zenduit.com/industries/",
-  },
-
 ];
 
+/* The rest of the book, one line each. Order follows Zenduit's own footer,
+   with the two newest offers first so they are not buried. */
 const REST: Industry[] = [
-  { img: "utilities-field-services", name: "Utilities & Field Services", tag: "CLOSEST-CREW DISPATCH", prop: "", href: "https://zenduit.com/industries/utility-fleet-management/" },
-  { img: "forestry", name: "Forestry", tag: "OFF-GRID TRACKING", prop: "", href: "https://zenduit.com/industries/" },
-  { img: "rental-leasing", name: "Rental & Leasing", tag: "UTILIZATION BILLING", prop: "", href: "https://zenduit.com/industries/rental-fleet-management/" },
+  { img: "healthcare-indoor", name: "Hospitals & Senior Care", tag: "INDOOR TRACKING · ZENCARE", prop: "", href: "https://zenducare-landing.vercel.app/" },
+  { img: "public-school-transportation", name: "Passenger Transport", tag: "ON TIME IS A SYSTEM", prop: "", href: "https://zenduit.com/industries/public-school-transportation-fleet-management/" },
+  { img: "airports", name: "Airside & GSE", tag: "RIGHT EQUIPMENT · RIGHT NOW", prop: "", href: "https://zenduit.com/industries/airports-security-fleet-management/" },
+  { img: "government", name: "Government", tag: "PUBLIC AUDIT TRAIL", prop: "", href: "https://zenduit.com/industries/" },
   { img: "public-work-winter-ops", name: "Public Works & Winter Ops", tag: "PLOW + SALT PROOF", prop: "", href: "https://zenduit.com/industries/public-works-winter-ops/" },
+  { img: "rental-leasing", name: "Rental & Leasing", tag: "UTILIZATION BILLING", prop: "", href: "https://zenduit.com/industries/rental-fleet-management/" },
   { img: "healthcare-emergency", name: "Emergency Response Fleets", tag: "COLD CHAIN · RESPONSE", prop: "", href: "https://zenduit.com/industries/healthcare-emergency-fleet-solutions/" },
+  { img: "forestry", name: "Forestry", tag: "OFF-GRID TRACKING", prop: "", href: "https://zenduit.com/industries/" },
   { img: "agriculture", name: "Agriculture", tag: "SEASON READINESS", prop: "", href: "https://zenduit.com/industries/agriculture-fleet-management/" },
   { img: "food-pharma", name: "Food & Pharmaceutical", tag: "TEMP-VERIFIED DELIVERY", prop: "", href: "https://zenduit.com/industries/food-pharma-fleet-management/" },
 ];
@@ -258,14 +251,16 @@ export function Industries() {
           </div>
         </div>
 
-        {/* The other seven, one line each — every industry has a page */}
-        <Reveal className="mt-16 overflow-hidden rounded-lg border border-hairline-d">
-          <ul className="grid divide-y divide-hairline-d sm:grid-cols-2 sm:divide-x lg:grid-cols-7 lg:divide-y-0">
+        {/* The other ten, one line each — every industry has a page. The
+            gap-px grid draws its own hairlines, so two rows divide cleanly
+            where divide-x/y would only have worked for a single row. */}
+        <Reveal className="mt-16 overflow-hidden rounded-lg border border-hairline-d bg-hairline-d">
+          <ul className="grid gap-px sm:grid-cols-2 lg:grid-cols-5">
             {REST.map((ind) => (
               <li key={ind.name}>
                 <a
                   href={ind.href}
-                  className="group flex h-full flex-col justify-between gap-4 bg-ink-850/40 p-4 transition-colors hover:bg-ink-850"
+                  className="group flex h-full flex-col justify-between gap-4 bg-ink-900 p-4 transition-colors hover:bg-ink-850"
                 >
                   <span className="text-[13px] font-semibold leading-snug text-dmuted transition-colors group-hover:text-dfg">
                     {ind.name}
