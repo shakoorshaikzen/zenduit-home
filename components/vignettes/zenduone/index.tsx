@@ -31,7 +31,7 @@ const HINTS: Record<string, string> = {
   "maps:live": "Click any vehicle on the map or in the list, then open its full record",
   "maps:trips": "Switch vehicle to redraw the route, or replay the trip",
   "safety:overview": "Click REVIEW on a risk factor to open its exception",
-  "safety:coaching": "Pick an exception, press play on its clip, then add it to the coaching queue",
+  "safety:coaching": "Pick an exception, watch its clip loop, then add it to the coaching queue",
   "maintain:schedules": "Filter by tile, then click any service to open its work order",
 };
 

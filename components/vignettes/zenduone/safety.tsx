@@ -2,7 +2,7 @@
 
 import { Check } from "lucide-react";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
 import { Kpi } from "./chrome";
 import { ASSETS, EVENTS, EVENT_DETAIL, RISKS } from "./data";
@@ -101,11 +101,40 @@ export function SafetyCoaching({
   onQueue: (id: string) => void;
 }) {
   const [record, setRecord] = useState(false);
+  const [reduced, setReduced] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const current = EVENTS[event] ?? EVENTS[0];
   const inQueue = queued.includes(current.id);
   const detail = EVENT_DETAIL[current.id];
   const status = inQueue ? "COACHED" : current.status;
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduced(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
+  /* The only thing that starts or stops the clip. Driving it from here rather
+     than from an autoPlay attribute means the motion preference is always read
+     first, and a preference that flips mid-session takes effect immediately.
+     Muted is set on the element because that is the condition browsers check
+     before allowing playback without a click, and a rejected play() (battery
+     saver, a strict policy) needs no handling: the poster and the controls
+     are still there. */
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (reduced) {
+      video.pause();
+      video.currentTime = 0;
+      return;
+    }
+    video.muted = true;
+    video.play().catch(() => {});
+  }, [current.id, reduced]);
 
   return (
     <div className="relative grid h-full grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)]">
@@ -211,17 +240,22 @@ export function SafetyCoaching({
           </div>
         </div>
 
-        {/* The clip, exactly as the camera exported it. preload="none" keeps a
-            21 MB export off the wire until someone actually presses play, and
-            the poster means the frame is never blank. key= forces the element
-            to pick up the new source when the selection changes. */}
+        {/* The clip, exactly as the camera exported it: it starts on its own,
+            muted, and loops until someone pauses it. The poster means the
+            frame is never blank while the first bytes arrive, and key= forces
+            the element to pick up the new source when the selection changes,
+            which is also what restarts playback. */}
         <div className="relative bg-ink-950">
           <video
             key={current.id}
+            ref={videoRef}
             controls
+            loop
             playsInline
             muted
-            preload="none"
+            /* The pane only mounts once someone opens Exceptions, so nothing
+               is fetched until the clip is on screen and about to play. */
+            preload="auto"
             poster={detail.poster}
             aria-label={`${current.label} on ${current.asset}, ${detail.when} (${detail.channels})`}
             className="mx-auto block h-[212px] w-full bg-ink-950 object-contain"

@@ -57,7 +57,7 @@ export const TOUR: TourStep[] = [
     module: "safety",
     tab: "coaching",
     title: "Safety arrives with the footage",
-    body: "Each exception carries the camera's own clip and its readings, so you press play and coach from evidence instead of argument.",
+    body: "Each exception carries the camera's own clip and its readings, playing on arrival, so you coach from evidence instead of argument.",
   },
   {
     target: "rail-maintain",
