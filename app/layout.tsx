@@ -1,23 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Chivo_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 /* Archivo — grotesque drawn for editorial headlines: sturdy stems, tight
    apertures, slightly condensed. Engineered character rather than the neutral
    SaaS default, and absent from every AI-monoculture font list. */
-const archivo = Archivo({
+/* Inter is the ONLY typeface in the Zenduit system — display, body, UI and
+   numerals. Weights 300-800 per the brand README; no secondary or display
+   family, and --font-mono resolves to the generic ui-monospace stack. */
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-archivo",
-  display: "swap",
-});
-
-/* Chivo Mono — the monospace sibling of Archivo's grotesque family
-   (Omnibus-Type): same skeleton as the display face, so labels and telemetry
-   read as one voice with the headlines rather than a borrowed terminal font. */
-const chivoMono = Chivo_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-chivo-mono",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -54,7 +48,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${archivo.variable} ${chivoMono.variable}`}>
+    <html lang="en" className={inter.variable}>
       <body className="font-sans">
         <span hidden aria-hidden dangerouslySetInnerHTML={{ __html: directionContract }} />
         <a

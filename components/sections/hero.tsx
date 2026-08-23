@@ -41,17 +41,17 @@ export function Hero() {
               ZenduONE connects your vehicles, systems and people to surface
               what matters, coordinate the response and measure the result.
             </p>
-            <p className="mt-5 font-mono text-xs tracking-[0.12em] text-dfaint">
+            <p className="mt-5 text-[13px] font-medium tracking-[0.08em] text-dfaint">
               SEE · UNDERSTAND · ACT · MEASURE · IMPROVE
             </p>
           </Reveal>
           <Reveal delay={0.16}>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Button size="lg" href="#how-it-works">
-                See How It Works
+                See how it works
               </Button>
               <Button size="lg" variant="ghostDark" href="https://zenduit.com/contact/">
-                Get an Operations Diagnostic
+                Book an operations review
               </Button>
             </div>
           </Reveal>
@@ -60,7 +60,7 @@ export function Hero() {
         {/* In-fold proof: real customers, their own logos. */}
         <Reveal delay={0.24}>
           <div className="border-t border-hairline-d pb-10 pt-8">
-            <p className="font-mono text-xs tracking-[0.08em] text-dfaint">
+            <p className="text-[13px] font-medium tracking-[0.08em] text-dfaint">
               TRUSTED BY FLEETS AT
             </p>
             <ul className="mt-6 flex flex-wrap items-center gap-x-10 gap-y-6 lg:gap-x-12">

@@ -110,12 +110,12 @@ export function FleetScene() {
           names a machine visible in the footage, and the card shows the
           attention triage rather than raw monitoring: one decision waiting,
           the rest already handled. Synthetic-plausible values. */}
-      <div className="absolute right-[4.5%] top-1/2 hidden w-[17rem] -translate-y-1/2 overflow-hidden rounded-md border border-hairline-d bg-ink-950/65 shadow-console backdrop-blur-md lg:block">
+      <div className="absolute right-[4.5%] top-1/2 hidden w-[19rem] -translate-y-1/2 overflow-hidden rounded-md border border-hairline-d bg-ink-950/65 shadow-console backdrop-blur-md lg:block">
         <div className="flex items-center justify-between border-b border-hairline-d px-3.5 py-2.5">
-          <span className="font-mono text-xs font-medium tracking-[0.05em] text-dfg">
+          <span className="text-[13px] font-semibold tracking-[0.04em] text-dfg">
             TODAY · SITE 12
           </span>
-          <span className="flex items-center gap-1.5 font-mono text-xs text-dmuted">
+          <span className="flex items-center gap-1.5 text-[11px] font-medium tracking-[0.06em] text-dmuted">
             <span className="size-1.5 rounded-full bg-signal" />
             LIVE
           </span>
@@ -127,10 +127,10 @@ export function FleetScene() {
             ["IDLE", "4%"],
           ].map(([k, v]) => (
             <div key={k} className="px-3 py-2.5">
-              <span className="block font-mono text-xs tracking-[0.08em] text-dfaint">
+              <span className="block text-[10px] font-medium tracking-[0.08em] text-dfaint">
                 {k}
               </span>
-              <span className="mt-0.5 block font-mono text-xs text-dfg tabular-nums">
+              <span className="mt-0.5 block text-[13px] font-semibold text-dfg tabular-nums">
                 {v}
               </span>
             </div>
@@ -146,10 +146,10 @@ export function FleetScene() {
               key={unit}
               className="flex items-center justify-between px-3.5 py-2"
             >
-              <span className="whitespace-nowrap font-mono text-xs tracking-[0.05em] text-dfg">
+              <span className="whitespace-nowrap text-[11px] font-semibold tracking-[0.04em] text-dfg">
                 {unit}
               </span>
-              <span className="flex items-center gap-1.5 font-mono text-xs tracking-[0.05em] text-dmuted">
+              <span className="flex items-center gap-1.5 text-[11px] font-medium tracking-[0.04em] text-dmuted">
                 <span
                   className={
                     status.includes("DRAFTED")
@@ -163,10 +163,10 @@ export function FleetScene() {
           ))}
         </div>
         <div className="flex items-center justify-between border-t border-hairline-d px-3.5 py-2">
-          <span className="font-mono text-xs tracking-[0.08em] text-dfaint">
+          <span className="text-[10px] font-medium tracking-[0.08em] text-dfaint">
             1 DECISION WAITING
           </span>
-          <span className="flex items-center gap-1.5 font-mono text-xs text-dmuted">
+          <span className="flex items-center gap-1.5 text-[11px] font-medium tracking-[0.06em] text-dmuted">
             <span className="size-1 rounded-full bg-signal" />
             REST IS HANDLED
           </span>

@@ -1,3 +1,4 @@
+import { ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
@@ -32,17 +33,18 @@ export function FinalCta() {
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <Button size="lg" href="https://zenduit.com/contact/">
-                Get a Demo
+                Book a demo
               </Button>
               <Button size="lg" variant="ghostDark" href="https://zenduit.com/contact/">
-                Get an Operations Diagnostic
+                Get an operations diagnostic
               </Button>
             </div>
             <a
               href="#solutions"
-              className="mt-6 inline-block font-mono text-xs tracking-[0.08em] text-dfaint underline-offset-4 transition-colors hover:text-dmuted hover:underline"
+              className="mt-6 inline-flex items-center gap-1.5 text-[13px] font-medium tracking-[0.08em] text-dfaint underline-offset-4 transition-colors hover:text-dmuted hover:underline"
             >
-              OR EXPLORE THE SOLUTIONS FIRST ↑
+              OR EXPLORE THE SOLUTIONS FIRST
+              <ArrowUp size={13} strokeWidth={1.5} aria-hidden />
             </a>
           </div>
           </div>

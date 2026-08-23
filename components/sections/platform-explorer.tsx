@@ -20,7 +20,7 @@ import { cx } from "@/lib/cx";
  * them a split panel pairing the story with Zenduit's own solution
  * photography and a telemetry chip. Five tabs cover every solution on
  * zenduit.com/solutions; merged aspects are named in each tab's mono tag
- * line, and Learn more goes to the real solution page.
+ * line, and See the solution goes to the real solution page.
  */
 
 type Solution = {
@@ -111,7 +111,7 @@ const CHIP_TONE = {
 
 function TelemetryChip({ chip }: { chip: Solution["chip"] }) {
   return (
-    <span className="pointer-events-none absolute bottom-4 right-4 flex items-center gap-2 rounded-[6px] border border-hairline-d bg-ink-950/85 px-3 py-2 font-mono text-xs tracking-[0.05em] text-dmuted backdrop-blur-sm">
+    <span className="pointer-events-none absolute bottom-4 right-4 flex items-center gap-2 rounded-[6px] border border-hairline-d bg-ink-950/85 px-3 py-2 text-[13px] font-medium tracking-[0.08em] text-dmuted backdrop-blur-sm">
       <span
         aria-hidden
         className={cx("size-1.5 rounded-full", CHIP_TONE[chip.tone])}
@@ -192,7 +192,7 @@ export function PlatformExplorer() {
               aria-labelledby={`solution-tab-${current.key}`}
               className="flex flex-col justify-center border-b border-hairline-l p-7 lg:border-b-0 lg:border-r lg:p-9"
             >
-              <p className="font-mono text-xs tracking-[0.08em] text-accent-deep">
+              <p className="text-[13px] font-medium tracking-[0.08em] text-accent-deep">
                 {current.tags}
               </p>
               <h3 className="mt-4 text-balance font-display text-title-lg font-semibold text-fg">
@@ -203,7 +203,7 @@ export function PlatformExplorer() {
               </p>
               <div className="mt-7">
                 <Button size="md" href={current.href}>
-                  Learn more
+                  See the solution
                 </Button>
               </div>
             </div>

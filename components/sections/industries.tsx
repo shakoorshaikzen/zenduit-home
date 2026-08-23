@@ -137,7 +137,7 @@ export function Industries() {
                   <h3 className="text-sm font-semibold leading-snug text-dfg">
                     {ind.name}
                   </h3>
-                  <p className="mt-1 font-mono text-xs tracking-[0.05em] text-dfaint">
+                  <p className="mt-1 text-[13px] font-medium tracking-[0.08em] text-dfaint">
                     {ind.tag}
                   </p>
                 </div>
@@ -184,7 +184,7 @@ export function Industries() {
                   </h3>
                   <p
                     className={cx(
-                      "mt-2 font-mono text-xs tracking-[0.08em] transition-colors duration-300",
+                      "mt-2 text-[13px] font-medium tracking-[0.08em] transition-colors duration-300",
                       i === active ? "text-signal" : "text-dfaint",
                     )}
                   >
@@ -238,11 +238,11 @@ export function Industries() {
                     )}
                   />
                   <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink-950/80 to-transparent" />
-                  <span className="absolute bottom-5 left-5 flex items-center gap-2 rounded-[6px] border border-hairline-d bg-ink-950/85 px-3 py-2 font-mono text-xs tracking-[0.05em] text-dmuted backdrop-blur-sm">
+                  <span className="absolute bottom-5 left-5 flex items-center gap-2 rounded-[6px] border border-hairline-d bg-ink-950/85 px-3 py-2 text-[13px] font-medium tracking-[0.08em] text-dmuted backdrop-blur-sm">
                     <span aria-hidden className="size-1.5 rounded-full bg-signal" />
                     {ind.tag}
                   </span>
-                  <span className="absolute bottom-5 right-5 font-mono text-xs tracking-[0.08em] text-dfg/80">
+                  <span className="absolute bottom-5 right-5 text-[13px] font-medium tracking-[0.08em] text-dfg/80">
                     {String(active + 1).padStart(2, "0")} / {String(FEATURED.length).padStart(2, "0")}
                   </span>
                 </div>

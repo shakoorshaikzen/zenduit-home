@@ -1,5 +1,7 @@
 "use client";
 
+import { Check } from "lucide-react";
+
 import { useEffect, useState } from "react";
 import { cx } from "@/lib/cx";
 import { Kpi } from "./chrome";
@@ -152,13 +154,14 @@ export function SafetyCoaching({
             onClick={() => onQueue(current.id)}
             disabled={inQueue}
             className={cx(
-              "rounded-sm px-3.5 py-2 font-mono text-[11px] tracking-[0.05em] transition-colors",
+              "inline-flex items-center gap-1.5 rounded-sm px-3.5 py-2 font-mono text-[11px] tracking-[0.05em] transition-colors",
               inQueue
                 ? "cursor-default border border-hairline-d bg-ink-950/85 text-signal"
                 : "cursor-pointer bg-accent-deep text-dfg hover:bg-accent-deeper",
             )}
           >
-            {inQueue ? "✓ IN COACHING QUEUE" : "ADD TO COACHING QUEUE"}
+            {inQueue && <Check size={12} strokeWidth={2} aria-hidden />}
+            {inQueue ? "IN COACHING QUEUE" : "ADD TO COACHING QUEUE"}
           </button>
         </div>
       </div>

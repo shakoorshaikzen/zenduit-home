@@ -5,73 +5,94 @@
   Accent family extracted from zenduit.com (2026-08-04). Confirm with brand team.
 */
 @theme {
-  /* ---- Neutrals · dark (designed navy, never pure black) ---- */
-  --color-ink-950: #060a14;
-  --color-ink-900: #0a0f1e;
-  --color-ink-850: #0c1322;
-  --color-ink-800: #101a31;
-  --color-ink-700: #182441;
-  --color-ink-600: #223055;
+  /* ---- Dark family · DS Black Pearl canvas and its surfaces ---- */
+  --color-ink-950: #000714; /* deepest — DS dark overlay tone */
+  --color-ink-900: #000f2b; /* Black Pearl — the canonical dark canvas */
+  --color-ink-850: #06183a; /* DS bg-subtle */
+  --color-ink-800: #0a1c40; /* DS surface */
+  --color-ink-700: #0e2247; /* DS bg-muted */
+  --color-ink-600: #122b55; /* DS surface-elevated */
 
-  /* ---- Neutrals · light (warm paper, never pure white) ---- */
-  --color-paper: #f6f5f1;
-  --color-paper-raised: #fbfaf7;
-  --color-card: #fdfdfb;
+  /* ---- Light family · DS cool off-white canvas ---- */
+  --color-paper: #f8fafd; /* DS bg */
+  --color-paper-raised: #f2f5fa; /* DS bg-subtle */
+  --color-card: #ffffff; /* DS surface — cards pop above the canvas */
 
-  /* ---- Text on light (all three AA ≥4.5 on paper AND card) ---- */
-  --color-fg: #131b2e;
-  --color-muted: #4b5568;
-  --color-faint: #636b7c;
+  /* ---- Text on light (DS light theme) ---- */
+  --color-fg: #000f2b; /* DS text-strong — headings */
+  --color-muted: #3d4a60; /* DS text — body copy */
+  /* DS text-muted #6b7a93 measures 4.16:1 on the DS canvas — just under AA.
+     Darkened within the same hue to 4.52:1; PRODUCT.md commits to AA. */
+  --color-faint: #66748c;
+  /* DS text-subtle #94a3ba is 2.45:1 — below the 3:1 large/UI floor.
+     Same hue, darkened to 3.02:1. */
+  --color-subtle: #8192ae;
 
-  /* ---- Text on dark (all three AA ≥4.5 on ink-800 through ink-950) ---- */
-  --color-dfg: #edf1f8;
-  --color-dmuted: #9aa6c1;
-  --color-dfaint: #7e8aa6;
+  /* ---- Text on dark (DS dark theme) ---- */
+  --color-dfg: #e6ecf5;
+  --color-dmuted: #a8b5cc;
+  --color-dfaint: #6e7e9a;
 
-  /* ---- Brand accent (extracted from zenduit.com) ---- */
-  --color-accent: #2188d9;
-  --color-accent-hi: #5cb3f8; /* readable accent on dark surfaces */
-  --color-accent-deep: #1668b0; /* AA-safe button/label blue on light */
-  --color-accent-deeper: #135c9e;
+  /* ---- Brand · Zenduit Blue, single-hue ladder ---- */
+  --color-accent: #136ab6; /* Zenduit Blue · primary-600 */
+  --color-accent-hi: #5ba0d6; /* DS dark text-link — readable blue on dark */
+  --color-accent-deep: #0f569a; /* DS brand-hover · primary-700 */
+  --color-accent-deeper: #0a406e; /* DS brand-pressed · primary-800 */
+  --color-accent-subtle: #e8f1fa; /* DS brand-subtle · primary-50 */
 
-  /* ---- Telemetry status semantics (product-UI vignettes) ---- */
-  --color-signal: #68c8b4; /* healthy / live  (Zenduit teal) */
-  --color-signal-deep: #14735f;
-  --color-warn: #ffc466; /* attention       (Zenduit amber) */
+  /* ---- Shape accents · already exact to the DS ---- */
+  --color-signal: #68c8b4; /* ⬢ Fleet Data — DS success */
+  --color-signal-deep: #14735f; /* AA-safe text variant on light */
+  --color-warn: #ffc466; /* ◼ Insights — DS warning */
   --color-warn-deep: #8a5a00;
-  --color-alarm: #f4674f; /* fault / event   (Zenduit coral) */
+  --color-alarm: #f4674f; /* ● Strategies — DS danger */
   --color-alarm-deep: #b23a2c;
 
-  /* ---- Hairlines (Linear-style 1px low-alpha borders) ---- */
-  --color-hairline-d: rgb(237 241 248 / 0.08);
-  --color-hairline-l: rgb(19 27 46 / 0.1);
+  /* ---- Borders (DS solid values, not alpha) ---- */
+  --color-hairline-d: #1e3260; /* DS dark border */
+  --color-hairline-l: #d8dee9; /* DS light border */
+  --color-divider-d: #14274d;
+  --color-divider-l: #eaeef6;
 
-  /* Cinematic hero scale — user-accepted live variant (2026-08-05) */
+  /* ---- Type scale · DS line-heights and tracking, fluid sizes ----
+     The DS scale is fixed-px for print collateral (h1 48 / h2 36 / h3 24);
+     a responsive marketing site needs fluid steps, so the sizes stay
+     clamped while every ratio below is the DS's own. */
   --text-hero: clamp(2.85rem, 5.2vw, 4.45rem);
-  --text-hero--line-height: 1.04;
-  --text-hero--letter-spacing: -0.033em;
+  --text-hero--line-height: 1.1; /* DS h1 */
+  --text-hero--letter-spacing: -0.02em; /* DS display */
   --text-display: clamp(2.15rem, 3.6vw, 3.2rem);
-  --text-display--line-height: 1.07;
-  --text-display--letter-spacing: -0.028em;
+  --text-display--line-height: 1.2; /* DS h2 */
+  --text-display--letter-spacing: -0.015em; /* DS h1 */
   --text-title-lg: clamp(1.6rem, 2.4vw, 1.95rem);
-  --text-title-lg--line-height: 1.16;
-  --text-title-lg--letter-spacing: -0.02em;
+  --text-title-lg--line-height: 1.3; /* DS h3 */
+  --text-title-lg--letter-spacing: -0.01em; /* DS h2 */
   --text-title: 1.3125rem;
   --text-title--line-height: 1.3;
-  --text-title--letter-spacing: -0.012em;
-  --text-stat: clamp(2.4rem, 3.6vw, 3.3rem);
+  --text-title--letter-spacing: -0.01em;
+  --text-stat: clamp(3rem, 5vw, 4.5rem); /* DS stat, 48-72px */
   --text-stat--line-height: 1;
-  --text-stat--letter-spacing: -0.02em;
+  --text-stat--letter-spacing: -0.02em; /* DS .zd-stat */
 
-  /* ---- Radius scale ---- */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  /* ---- Radii · DS scale. sm/md already matched its button/card defaults ---- */
+  --radius-xs: 4px;
+  --radius-sm: 8px; /* DS md — default button */
+  --radius-md: 12px; /* DS lg — default card */
+  --radius-lg: 20px; /* DS xl — panels and consoles */
+  --radius-pill: 999px;
 
-  /* ---- Shadow tiers (one ambient tier + console) ---- */
-  --shadow-ambient: 0 1px 2px rgb(19 27 46 / 0.04), 0 16px 40px -16px rgb(19 27 46 / 0.14);
-  --shadow-lift: 0 2px 4px rgb(19 27 46 / 0.05), 0 24px 56px -20px rgb(19 27 46 / 0.18);
-  --shadow-console: inset 0 1px 0 rgb(237 241 248 / 0.07), 0 32px 80px -32px rgb(2 6 18 / 0.85);
+  /* ---- Shadows (DS) ---- */
+  --shadow-ambient: 0 4px 12px rgb(0 15 43 / 0.08); /* DS md */
+  --shadow-lift: 0 12px 32px rgb(0 15 43 / 0.12); /* DS lg */
+  --shadow-brand: 0 8px 24px rgb(19 106 182 / 0.25);
+  --shadow-console: inset 0 1px 0 rgb(230 236 245 / 0.07), 0 16px 40px rgb(0 0 0 / 0.6);
+
+  /* ---- Motion (DS) ---- */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 360ms;
 
 }
 
@@ -83,9 +104,9 @@
  * stack.
  */
 @theme inline {
-  --font-display: var(--font-archivo);
-  --font-sans: var(--font-archivo);
-  --font-mono: var(--font-chivo-mono);
+  --font-display: var(--font-inter);
+  --font-sans: var(--font-inter);
+  --font-mono: ui-monospace, monospace;
 }
 
 @layer base {
@@ -97,12 +118,13 @@
     background-color: var(--color-paper);
     color: var(--color-fg);
     font-family: var(--font-sans);
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    background: rgb(33 136 217 / 0.28);
+    background: rgb(19 106 182 / 0.28); /* Zenduit Blue */
   }
 
   /* Designed focus — never default browser blue */

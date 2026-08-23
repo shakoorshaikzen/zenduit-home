@@ -1,6 +1,7 @@
 "use client";
 
 import { Kpi } from "./chrome";
+import { Check } from "lucide-react";
 import { CASES } from "./data";
 import { cx } from "@/lib/cx";
 
@@ -124,8 +125,9 @@ export function TodayPane({
                     </button>
                   )}
                   {(done || c.kind === "handled") && c.kind !== "review" && (
-                    <span className="shrink-0 font-mono text-[11px] tracking-[0.05em] text-signal-deep">
-                      ✓ DONE
+                    <span className="flex shrink-0 items-center gap-1 font-mono text-[11px] tracking-[0.05em] text-signal-deep">
+                      <Check size={12} strokeWidth={2} aria-hidden />
+                      DONE
                     </span>
                   )}
                 </div>

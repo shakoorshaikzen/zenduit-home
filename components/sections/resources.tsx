@@ -89,7 +89,7 @@ export function Resources() {
               </div>
               <div className="relative flex-1 p-7 lg:p-8">
                 <CornerArrow />
-                <p className="font-mono text-xs tracking-[0.08em] text-accent-deep">
+                <p className="text-[13px] font-medium tracking-[0.08em] text-accent-deep">
                   {FEATURED.date}
                 </p>
                 <h3 className="mt-3 max-w-xl text-balance font-display text-title-lg font-semibold text-fg">
@@ -109,7 +109,7 @@ export function Resources() {
                 <Logo tone="light" className="!h-32 w-auto" />
               </div>
               <div className="relative border-b border-accent/15 px-6 py-4">
-                <p className="font-mono text-xs tracking-[0.08em] text-accent-deep">
+                <p className="text-[13px] font-medium tracking-[0.08em] text-accent-deep">
                   WHAT WE SHIPPED · MONTHLY
                 </p>
               </div>
@@ -145,14 +145,14 @@ export function Resources() {
               >
                 <CornerArrow />
                 <div>
-                  <p className="font-mono text-xs tracking-[0.08em] text-accent-deep">
+                  <p className="text-[13px] font-medium tracking-[0.08em] text-accent-deep">
                     {p.date}
                   </p>
                   <h3 className="mt-3 text-balance pr-6 font-display text-lg font-semibold leading-snug text-fg">
                     {p.title}
                   </h3>
                 </div>
-                <span className="mt-8 font-mono text-xs tracking-[0.08em] text-muted">
+                <span className="mt-8 text-[13px] font-medium tracking-[0.08em] text-muted">
                   READ ON ZENDUIT.COM
                 </span>
               </a>

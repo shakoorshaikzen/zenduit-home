@@ -72,12 +72,12 @@ const SOCIALS = [
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-hairline-l bg-paper-raised">
+    <footer className="bg-ink-900">
       <Container className="py-16">
         <div className="grid gap-12 lg:grid-cols-[260px_1fr] lg:gap-16">
           <div>
-            <Logo tone="light" />
-            <p className="mt-4 max-w-[220px] text-sm leading-relaxed text-muted">
+            <Logo tone="dark" />
+            <p className="mt-4 max-w-[220px] text-sm leading-relaxed text-dmuted">
               One platform to measure, monitor, and manage your entire fleet.
             </p>
             <div className="mt-6 flex gap-2">
@@ -86,7 +86,7 @@ export function SiteFooter() {
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="grid size-9 place-items-center rounded-sm border border-hairline-l text-muted transition-colors hover:border-fg/20 hover:text-fg"
+                  className="grid size-9 place-items-center rounded-sm border border-hairline-d text-dmuted transition-colors hover:border-dfg/25 hover:text-dfg"
                 >
                   <s.icon size={15} strokeWidth={1.5} aria-hidden />
                 </a>
@@ -97,7 +97,7 @@ export function SiteFooter() {
           <nav aria-label="Footer" className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
             {COLUMNS.map((col) => (
               <div key={col.title}>
-                <h3 className="font-mono text-xs uppercase tracking-[0.08em] text-faint">
+                <h3 className="text-xs font-medium uppercase tracking-[0.08em] text-dfaint">
                   {col.title}
                 </h3>
                 <ul className="mt-4 space-y-2.5">
@@ -105,7 +105,7 @@ export function SiteFooter() {
                     <li key={link.label}>
                       <a
                         href={link.href}
-                        className="text-sm text-muted transition-colors hover:text-fg"
+                        className="text-sm text-dmuted transition-colors hover:text-dfg"
                       >
                         {link.label}
                       </a>
@@ -117,13 +117,13 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        <div className="mt-14 flex flex-col justify-between gap-4 border-t border-hairline-l pt-6 sm:flex-row sm:items-center">
-          <p className="text-[13px] text-faint">
+        <div className="mt-14 flex flex-col justify-between gap-4 border-t border-hairline-d pt-6 sm:flex-row sm:items-center">
+          <p className="text-[13px] text-dfaint">
             © 2026 Zenduit. All rights reserved.
           </p>
           <a
             href="https://zenduit.com/privacy-policy/"
-            className="text-[13px] text-faint transition-colors hover:text-fg"
+            className="text-[13px] text-dfaint transition-colors hover:text-dfg"
           >
             Privacy Policy
           </a>

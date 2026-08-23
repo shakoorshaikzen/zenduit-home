@@ -70,7 +70,7 @@ function ItemLink({ item, variant }: { item: NavItem; variant: NavColumn["varian
 function Column({ col }: { col: NavColumn }) {
   return (
     <div className="min-w-0">
-      <p className="px-3 font-mono text-xs uppercase tracking-[0.08em] text-faint">{col.header}</p>
+      <p className="px-3 text-xs font-medium uppercase tracking-[0.08em] text-faint">{col.header}</p>
       <div className="mt-2 space-y-0.5">
         {col.items.map((item) => (
           <ItemLink key={item.label} item={item} variant={col.variant} />
@@ -101,7 +101,7 @@ function Promo({ promo }: { promo: NavPromo }) {
         </span>
       )}
       <span className="flex flex-1 flex-col p-5">
-        <span className="w-fit rounded-[4px] bg-dfg/10 px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-dmuted">
+        <span className="w-fit rounded-[4px] bg-dfg/10 px-2 py-1 text-xs font-medium uppercase tracking-[0.08em] text-dmuted">
           {promo.badge}
         </span>
         {promo.kicker && (
@@ -282,7 +282,7 @@ export function SiteNav() {
                 <div className="pb-3">
                   {menu.columns.map((col) => (
                     <div key={col.header} className="mt-3 first:mt-0">
-                      <p className="font-mono text-xs uppercase tracking-[0.08em] text-dfaint">
+                      <p className="text-xs font-medium uppercase tracking-[0.08em] text-dfaint">
                         {col.header}
                       </p>
                       <ul className="mt-1.5 space-y-0.5">

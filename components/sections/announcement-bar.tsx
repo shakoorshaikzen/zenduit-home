@@ -12,7 +12,7 @@ export function AnnouncementBar() {
       <div className="mx-auto flex max-w-[75rem] items-center justify-center px-12 py-2.5">
         <a
           href="https://zenduit.com/solutions/eld-compliance-software/"
-          className="group inline-flex items-center gap-2.5 rounded-sm font-mono text-xs tracking-[0.02em] text-dmuted transition-colors hover:text-dfg"
+          className="group inline-flex items-center gap-2.5 rounded-sm text-[13px] font-medium tracking-[0.08em] text-dmuted transition-colors hover:text-dfg"
         >
           <span className="text-xs tracking-[0.08em] text-accent-hi">NEW</span>
           ZenduELD is here: hours-of-service compliance, built in

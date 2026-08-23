@@ -22,7 +22,7 @@ export function PlatformStory() {
 
         <Reveal delay={0.08} className="mt-12">
           <ZenduOneDemo />
-          <p className="mt-3 text-right font-mono text-xs tracking-[0.08em] text-faint">
+          <p className="mt-3 text-right text-[13px] font-medium tracking-[0.08em] text-faint">
             SYNTHETIC DEMO DATA · NOT A LIVE FLEET
           </p>
         </Reveal>

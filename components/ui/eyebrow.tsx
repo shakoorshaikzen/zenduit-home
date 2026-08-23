@@ -17,7 +17,7 @@ export function Eyebrow({
   return (
     <p
       className={cx(
-        "font-mono text-xs font-medium uppercase tracking-[0.08em]",
+        "text-xs font-medium font-medium uppercase tracking-[0.08em]",
         tone === "dark" ? "text-dfaint" : "text-faint",
         className,
       )}

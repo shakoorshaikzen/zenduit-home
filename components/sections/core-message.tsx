@@ -69,15 +69,15 @@ export function CoreMessage() {
                 <CountUp
                   end={s.end}
                   suffix={s.suffix}
-                  className="block font-mono text-stat font-medium text-dfg tabular-nums"
+                  className="block font-display text-stat font-bold text-dfg tabular-nums"
                 />
-                <span className="mt-3 block font-mono text-xs uppercase tracking-[0.08em] text-dmuted">
+                <span className="mt-3 block text-xs font-medium uppercase tracking-[0.08em] text-dmuted">
                   {s.label}
                 </span>
                 <span className="mt-2 block max-w-[15rem] text-sm leading-relaxed text-dfaint">
                   {s.sub}
                 </span>
-                <span className="mt-4 block font-mono text-xs tracking-[0.08em] text-dfaint/70">
+                <span className="mt-4 block text-[13px] font-medium tracking-[0.08em] text-dfaint/70">
                   {s.source}
                 </span>
               </div>

@@ -2,85 +2,85 @@
 name: Zenduit Homepage
 description: Fleet operations platform marketing site — Linear grammar in Zenduit's skin
 colors:
-  ink-950: "#060a14"
-  ink-900: "#0a0f1e"
-  ink-850: "#0c1322"
-  ink-800: "#101a31"
-  ink-700: "#182441"
-  ink-600: "#223055"
-  paper: "#f6f5f1"
-  paper-raised: "#fbfaf7"
-  card: "#fdfdfb"
-  fg: "#131b2e"
-  muted: "#4b5568"
-  faint: "#636b7c"
-  dfg: "#edf1f8"
-  dmuted: "#9aa6c1"
-  dfaint: "#7e8aa6"
-  accent: "#2188d9"
-  accent-hi: "#5cb3f8"
-  accent-deep: "#1668b0"
-  accent-deeper: "#135c9e"
+  ink-950: "#000714"
+  ink-900: "#000f2b"
+  ink-850: "#06183a"
+  ink-800: "#0a1c40"
+  ink-700: "#0e2247"
+  ink-600: "#122b55"
+  paper: "#f8fafd"
+  paper-raised: "#f2f5fa"
+  card: "#ffffff"
+  fg: "#000f2b"
+  muted: "#3d4a60"
+  faint: "#66748c"
+  dfg: "#e6ecf5"
+  dmuted: "#a8b5cc"
+  dfaint: "#6e7e9a"
+  accent: "#136ab6"
+  accent-hi: "#5ba0d6"
+  accent-deep: "#0f569a"
+  accent-deeper: "#0a406e"
   signal: "#68c8b4"
   signal-deep: "#14735f"
   warn: "#ffc466"
   warn-deep: "#8a5a00"
   alarm: "#f4674f"
   alarm-deep: "#b23a2c"
-  hairline-d: "rgb(237 241 248 / 0.08)"
-  hairline-l: "rgb(19 27 46 / 0.1)"
+  hairline-d: "#1e3260"
+  hairline-l: "#d8dee9"
 typography:
   display:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "Inter, sans-serif"
     fontSize: "clamp(2.85rem, 5.2vw, 4.45rem)"
     fontWeight: 700
     lineHeight: 1.04
     letterSpacing: "-0.033em"
   headline:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "Inter, sans-serif"
     fontSize: "clamp(2.15rem, 3.6vw, 3.2rem)"
     fontWeight: 600
     lineHeight: 1.07
     letterSpacing: "-0.028em"
   title:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "Inter, sans-serif"
     fontSize: "1.3125rem"
     fontWeight: 600
     lineHeight: 1.3
     letterSpacing: "-0.012em"
   title-sm:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "Inter, sans-serif"
     fontSize: "1.125rem"
     fontWeight: 600
     lineHeight: 1.35
     letterSpacing: "-0.008em"
   lede:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "Inter, sans-serif"
     fontSize: "1.0625rem"
     fontWeight: 400
     lineHeight: 1.6
   body:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "Inter, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.5
   sub:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "Inter, sans-serif"
     fontSize: "0.9375rem"
     fontWeight: 400
     lineHeight: 1.55
   caption:
-    fontFamily: "Archivo, system-ui, sans-serif"
+    fontFamily: "Inter, sans-serif"
     fontSize: "0.8125rem"
     fontWeight: 400
     lineHeight: 1.5
   label:
-    fontFamily: "Chivo Mono, monospace"
+    fontFamily: "ui-monospace, monospace"
     fontSize: "0.75rem"
     fontWeight: 500
     letterSpacing: "0.08em"
   stat:
-    fontFamily: "Chivo Mono, monospace"
+    fontFamily: "ui-monospace, monospace"
     fontSize: "clamp(2.4rem, 3.6vw, 3.3rem)"
     fontWeight: 500
     lineHeight: 1
@@ -88,7 +88,7 @@ typography:
 rounded:
   sm: "8px"
   md: "12px"
-  lg: "16px"
+  lg: "20px"
 spacing:
   xs: "8px"
   sm: "16px"
@@ -121,6 +121,12 @@ components:
 ---
 
 # Design System: Zenduit Homepage
+
+> **Aligned to the Zenduit Marketing Collaterals Design System** (Claude Design
+> project `019e2241-3384-7014-806b-bbe97abe5b3c`, read 2026-08-21). That system's
+> `colors_and_type.css` is the single source of truth for palette, type,
+> spacing, radii, shadows and motion; the values below mirror it. Two
+> deliberate deviations are recorded in the Colors and Typography sections.
 
 ## Overview
 
@@ -161,9 +167,9 @@ A designed navy dark family, a warm paper light family, and Zenduit's extracted 
 palette used as telemetry semantics.
 
 ### Primary
-- **Zenduit Blue** (#2188d9): brand accent, extracted from zenduit.com. Non-text accents,
-  the followed route on maps, live selection states. Text-safe variants: **Sky** (#5cb3f8)
-  on dark surfaces, **Harbor** (#1668b0) for buttons and links on light.
+- **Zenduit Blue** (#136ab6): brand accent, extracted from zenduit.com. Non-text accents,
+  the followed route on maps, live selection states. Text-safe variants: **Sky** (#5ba0d6)
+  on dark surfaces, **Harbor** (#0f569a) for buttons and links on light.
 
 ### Secondary
 - **Signal Teal** (#68c8b4): "healthy / live" telemetry only — pulse dots, LIVE badges,
@@ -176,11 +182,11 @@ palette used as telemetry semantics.
   light chips. Never used as page decoration.
 
 ### Neutral
-- **Ink family** (#060a14 → #223055): dark section backgrounds and console chrome; ink-900
-  (#0a0f1e) is the canonical dark ground.
-- **Paper family** (#f6f5f1 / #fbfaf7 / #fdfdfb): light grounds and panel fills; never pure white.
-- **Text on light**: fg #131b2e, muted #4b5568, faint #636b7c (all AA ≥4.5 on paper and card).
-- **Text on dark**: dfg #edf1f8, dmuted #9aa6c1, dfaint #7e8aa6 (all AA ≥4.5 on ink-800→950).
+- **Ink family** (#000714 → #122b55): dark section backgrounds and console chrome; ink-900
+  (#000f2b) is the canonical dark ground.
+- **Paper family** (#f8fafd / #f2f5fa / #ffffff): light grounds and panel fills; never pure white.
+- **Text on light**: fg #000f2b, muted #3d4a60, faint #66748c (all AA ≥4.5 on paper and card).
+- **Text on dark**: dfg #e6ecf5, dmuted #a8b5cc, dfaint #6e7e9a (all AA ≥4.5 on ink-800→950).
 - **Hairlines**: rgb(237 241 248 / 0.08) on dark, rgb(19 27 46 / 0.1) on light.
 
 ### Named Rules
@@ -221,7 +227,7 @@ never oversized; paired with a telemetry mono that makes every number feel instr
 - **Stat** (500, clamp(2.4rem, 3.6vw, 3.3rem), 1, tabular, mono): results figures, metric callouts.
 
 ### Named Rules
-**The Mono-for-Data Rule.** Every number, unit ID, timestamp, percentage, and status string
+**The Data-Emphasis Rule** (was Mono-for-Data; superseded by the DS, which specifies Inter as the only family). Every number, unit ID, timestamp, percentage, and status string
 is Chivo Mono with `tabular-nums`. If it could appear in a terminal, it's mono.
 
 **The Heading Stands Alone Rule.** Section headings carry their own weight — no decorative
@@ -271,10 +277,10 @@ corner treatments; no zero-radius elements; no border thicker than 1px.
 
 ### Buttons
 - **Shape:** rounded-sm (8px), heights 36/44/48px (sm/md/lg)
-- **Primary:** Harbor blue (#1668b0) fill, near-white text (#edf1f8), inset top highlight
+- **Primary:** Harbor blue (#0f569a) fill, near-white text (#e6ecf5), inset top highlight
   (`inset 0 1px 0 rgb(255 255 255 / 0.14)`)
-- **Hover / Focus:** darkens to #135c9e and scales to 1.02 (150ms); `:active` translates
-  down 1px at scale 1; global `:focus-visible` = 2px #2188d9 outline, 2px offset
+- **Hover / Focus:** darkens to #0a406e and scales to 1.02 (150ms); `:active` translates
+  down 1px at scale 1; global `:focus-visible` = 2px #136ab6 outline, 2px offset
 - **Ghost (dark):** 1px dark hairline, rgb(255 255 255 / 0.03) fill, brightens on hover
 - **Ghost (light):** 1px light hairline, transparent, tint on hover
 
@@ -287,7 +293,7 @@ corner treatments; no zero-radius elements; no border thicker than 1px.
 
 ### Cards / Containers
 - **Corner Style:** 12px (cards), 16px (panels)
-- **Background:** #fdfdfb on light; ink-850/ink-800 on dark
+- **Background:** #ffffff on light; ink-850/ink-800 on dark
 - **Shadow Strategy:** none by default; ambient only for app-window vignettes
 - **Border:** 1px hairline always
 - **Internal Padding:** 24px, 28–32px in panels
@@ -299,7 +305,7 @@ treatment when they arrive.
 ### Logo
 The official ZenduIT wordmark — vector paths taken verbatim from zenduit.com's header SVG
 (components/ui/logo.tsx), never a text stand-in or redrawing. Fill via currentColor:
-near-white (dfg) on dark grounds (their header treatment), brand blue (accent #2188d9) on
+near-white (dfg) on dark grounds (their header treatment), brand blue (accent #136ab6) on
 light grounds (their footer treatment). Default height 22px, w-auto; scale via height only.
 
 ### Navigation
@@ -354,7 +360,7 @@ throughout. This family is the page's imagery; extend it rather than adding pict
 ### Don't:
 - **Don't** add gradients beyond the two sanctioned moments (hero + final CTA top-light).
 - **Don't** color labels, eyebrows, icons, or badges — color marks action and telemetry only.
-- **Don't** use pure #fff or #000 anywhere; the neutrals are designed (paper/ink families).
+- **Don't** use #000 anywhere. Pure #ffffff IS the DS surface colour for cards; the canvas stays the DS off-white (#f8fafd).
 - **Don't** use photography or stock imagery; imagery is built product UI, SVG scenes, and
   CSS hardware.
 - **Don't** put an eyebrow label above a section heading unless it carries real information;

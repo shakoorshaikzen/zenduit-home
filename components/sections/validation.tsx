@@ -57,7 +57,7 @@ export function Validation() {
               <blockquote className="max-w-2xl text-balance font-display text-title-lg font-medium leading-[1.35] text-fg">
                 {FEATURED.quote}
               </blockquote>
-              <figcaption className="mt-5 font-mono text-xs text-muted">
+              <figcaption className="mt-5 text-xs font-medium text-muted">
                 {FEATURED.name}
                 <span className="text-faint"> · {FEATURED.role}</span>
               </figcaption>
@@ -67,7 +67,7 @@ export function Validation() {
                 prefix="-"
                 end={31}
                 suffix="%"
-                className="font-mono text-stat font-medium text-fg tabular-nums"
+                className="font-display text-stat font-bold text-accent tabular-nums"
               />
               <p className="mt-2 max-w-[180px] text-sm leading-relaxed text-muted">
                 {FEATURED.metricLabel}
@@ -82,16 +82,16 @@ export function Validation() {
                   <blockquote className="text-[0.9375rem] leading-relaxed text-fg/85">
                     {q.quote}
                   </blockquote>
-                  <figcaption className="mt-4 font-mono text-xs text-muted">
+                  <figcaption className="mt-4 text-xs font-medium text-muted">
                     {q.name}
                     <span className="text-faint"> · {q.role}</span>
                   </figcaption>
                 </figure>
                 <div className="mt-5 flex items-baseline gap-3 border-t border-hairline-l pt-4">
-                  <span className="font-mono text-lg font-medium text-fg tabular-nums">
+                  <span className="text-lg font-semibold font-medium text-fg tabular-nums">
                     {q.metric}
                   </span>
-                  <span className="font-mono text-xs uppercase tracking-[0.05em] text-faint">
+                  <span className="text-xs font-medium uppercase tracking-[0.05em] text-faint">
                     {q.metricLabel}
                   </span>
                 </div>
@@ -104,7 +104,7 @@ export function Validation() {
               className="group relative flex flex-col justify-between overflow-hidden rounded-md border border-hairline-l bg-ink-900 p-6 transition-colors duration-200 hover:border-ink-600 lg:p-7"
             >
               <div>
-                <p className="font-mono text-xs tracking-[0.08em] text-dfaint">
+                <p className="text-[13px] font-medium tracking-[0.08em] text-dfaint">
                   CUSTOMER STORIES
                 </p>
                 <p className="mt-3 text-balance font-display text-lg font-semibold leading-snug text-dfg">
