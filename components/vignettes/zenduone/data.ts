@@ -62,7 +62,9 @@ export type Asset = {
 
 type SafetyEvent = {
   id: string;
+  /** Rule name, as the real Exceptions list titles each row. */
   label: string;
+  severity: "HIGH" | "MEDIUM" | "LOW";
   asset: string;
   driver: string;
   time: string;
@@ -193,41 +195,49 @@ export const STATE_COUNTS: Record<AssetState, number> = {
 
 /* ---------- Safety ---------- */
 
+/*
+ * Three real dash-cam exports from ZenduONE, in the demo's own fleet.
+ * The speed, timestamp, duration and channel count on each record are the
+ * values burnt into that clip's own overlay, so the panel beside the player
+ * can never contradict what the viewer is watching.
+ */
 export const EVENTS: readonly SafetyEvent[] = [
   {
     id: "e1",
-    label: "HARSH ACCELERATION",
+    label: "Hard braking",
+    severity: "HIGH",
     asset: "TRK-047",
     driver: "D. Kowalski",
-    time: "07:42",
+    time: "16:06",
     tone: "alarm",
     status: "NEEDS REVIEW",
   },
   {
     id: "e2",
-    label: "TAILGATING",
-    asset: "VAN-112",
-    driver: "M. Hale",
-    time: "09:15",
+    label: "Rolling stop warning",
+    severity: "MEDIUM",
+    asset: "TRK-051",
+    driver: "J. Patel",
+    time: "11:30",
     tone: "warn",
     status: "NEEDS COACHING",
   },
   {
     id: "e3",
-    label: "DISTRACTION",
-    asset: "TRK-051",
-    driver: "J. Patel",
-    time: "11:03",
-    tone: "warn",
-    status: "COACHED",
+    label: "Manual video request",
+    severity: "LOW",
+    asset: "VAN-112",
+    driver: "M. Hale",
+    time: "22:41",
+    tone: "signal",
+    status: "REVIEWED",
   },
 ];
 
 /** Risk factors — each REVIEW link opens Exceptions at `eventIndex`. */
 export const RISKS: readonly Risk[] = [
-  { rule: "Hard Acceleration", count: "4 events", rate: "0.31 / 100 km", impact: "233 pts", eventIndex: 0 },
-  { rule: "Tailgating", count: "2 events", rate: "0.16 / 100 km", impact: "148 pts", eventIndex: 1 },
-  { rule: "Distraction", count: "1 event", rate: "0.08 / 100 km", impact: "61 pts", eventIndex: 2 },
+  { rule: "Hard braking", count: "1 event", rate: "0.08 / 100 km", impact: "96 pts", eventIndex: 0 },
+  { rule: "Rolling stop warning", count: "1 event", rate: "0.08 / 100 km", impact: "61 pts", eventIndex: 1 },
 ];
 
 /* ---------- Maintain ---------- */
@@ -391,33 +401,53 @@ export const ASSET_DETAIL: Record<AssetId, AssetDetail> = {
 
 export type EventDetail = {
   speed: string;
-  posted: string;
-  location: string;
-  clip: string;
-  note: string;
+  /** Verbatim from the clip's own GPS overlay. */
+  coords: string;
+  place: string;
+  when: string;
+  channels: string;
+  duration: string;
+  description: string;
+  video: string;
+  poster: string;
 };
 
 export const EVENT_DETAIL: Record<string, EventDetail> = {
   e1: {
-    speed: "74 km/h",
-    posted: "70 km/h",
-    location: "Route 7 N @ Oak Point Hwy",
-    clip: "12s · road + cab",
-    note: "Throttle from 41 to 74 km/h in 8s leaving the yard exit.",
+    speed: "48 km/h",
+    coords: "3.3152092N 76.16.49554W",
+    place: "Palmira, Valle del Cauca",
+    when: "Mon, Aug 17 2026, 4:06 PM",
+    channels: "CH 1 · road",
+    duration: "11 seconds",
+    description:
+      "Deceleration crossed the hard-braking threshold on a tree-lined approach. The road channel covers the full 11 seconds either side of the trigger.",
+    video: "/exceptions/hard-brake.mp4",
+    poster: "/exceptions/hard-brake.jpg",
   },
   e2: {
-    speed: "61 km/h",
-    posted: "60 km/h",
-    location: "Gastonia Rd @ Kennedy",
-    clip: "12s · road + cab",
-    note: "Followed 0.6s behind the vehicle ahead for 14s in wet conditions.",
+    speed: "50 km/h",
+    coords: "3.30.6074N 76.26.54433W",
+    place: "Palmira, Valle del Cauca",
+    when: "Sun, Aug 16 2026, 11:30 AM",
+    channels: "CH 1 · road",
+    duration: "11 seconds",
+    description:
+      "ADAS flagged a rolling stop: the vehicle slowed but never came to a complete stop. Wet surface and lane work in frame, so the clip is worth coaching from rather than dismissing.",
+    video: "/exceptions/rolling-stop.mp4",
+    poster: "/exceptions/rolling-stop.jpg",
   },
   e3: {
-    speed: "0 km/h",
-    posted: "50 km/h",
-    location: "172 Bay St Yard",
-    clip: "12s · cab only",
-    note: "Handheld device detected for 6s while stationary in the yard.",
+    speed: "51 mph",
+    coords: "40.49.59367N 74.7.39402W",
+    place: "New Jersey, US",
+    when: "Fri, Oct 10 2025, 10:41 PM",
+    channels: "CH 1 + CH 2 · road and cabin",
+    duration: "11 seconds",
+    description:
+      "Footage pulled on request rather than by a rule, so both channels came back. Nothing to coach, and the review closed it.",
+    video: "/exceptions/manual-request.mp4",
+    poster: "/exceptions/manual-request.jpg",
   },
 };
 

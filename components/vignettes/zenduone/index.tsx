@@ -30,8 +30,8 @@ const HINTS: Record<string, string> = {
   "today:cases": "Review the coaching case, approve the drafted work order, and see what was handled for you",
   "maps:live": "Click any vehicle on the map or in the list, then open its full record",
   "maps:trips": "Switch vehicle to redraw the route, or replay the trip",
-  "safety:overview": "Click REVIEW on a risk factor to open that clip",
-  "safety:coaching": "Pick an exception, view the record, or add it to the coaching queue",
+  "safety:overview": "Click REVIEW on a risk factor to open its exception",
+  "safety:coaching": "Pick an exception, press play on its clip, then add it to the coaching queue",
   "maintain:schedules": "Filter by tile, then click any service to open its work order",
 };
 
