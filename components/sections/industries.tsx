@@ -251,29 +251,27 @@ export function Industries() {
           </div>
         </div>
 
-        {/* The other ten. A grid gave ten labels the structural weight of
-            the four the section is built on, and chips just put each one in
-            a costume. They are labels, so they read as a line of labels:
-            no containers, the middot separator this system already uses,
-            and the underline arriving only on hover. */}
-        <Reveal className="mt-16 border-t border-hairline-d pt-8">
-          <p className="text-[13px] font-medium uppercase tracking-[0.08em] text-dfaint">
-            Also serving
-          </p>
-          <ul className="mt-4 flex max-w-4xl flex-wrap items-baseline gap-x-3 gap-y-2">
-            {REST.map((ind, i) => (
-              <li key={ind.name} className="flex items-baseline gap-x-3">
+        {/* The other ten, one line each — every industry has a page. The
+            gap-px grid draws its own hairlines, so two rows divide cleanly
+            where divide-x/y would only have worked for a single row. */}
+        <Reveal className="mt-16 overflow-hidden rounded-lg border border-hairline-d bg-hairline-d">
+          <ul className="grid gap-px sm:grid-cols-2 lg:grid-cols-5">
+            {REST.map((ind) => (
+              <li key={ind.name}>
                 <a
                   href={ind.href}
-                  className="text-base text-dmuted underline-offset-4 transition-colors duration-200 hover:text-dfg hover:underline"
+                  className="group flex h-full flex-col justify-between gap-4 bg-ink-900 p-4 transition-colors hover:bg-ink-850"
                 >
-                  {ind.name}
-                </a>
-                {i < REST.length - 1 && (
-                  <span aria-hidden className="text-dfaint/60">
-                    ·
+                  <span className="text-[13px] font-semibold leading-snug text-dmuted transition-colors group-hover:text-dfg">
+                    {ind.name}
                   </span>
-                )}
+                  <ArrowUpRight
+                    size={13}
+                    strokeWidth={1.5}
+                    aria-hidden
+                    className="text-dfaint transition-colors group-hover:text-accent-hi"
+                  />
+                </a>
               </li>
             ))}
           </ul>
