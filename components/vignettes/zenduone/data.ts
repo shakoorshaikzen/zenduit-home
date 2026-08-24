@@ -523,9 +523,9 @@ export const CASES: TodayCase[] = [
     id: "c1",
     kind: "review",
     tone: "alarm",
-    changed: "Harsh acceleration, TRK-047 on Route 7",
-    matters: "2nd event this week · D. Kowalski",
-    next: "Clip and context ready to review",
+    changed: "Hard braking, TRK-047 on Route 7",
+    matters: "High severity · D. Kowalski",
+    next: "11s road-channel clip ready to review",
   },
   {
     id: "c2",
