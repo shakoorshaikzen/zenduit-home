@@ -251,24 +251,29 @@ export function Industries() {
           </div>
         </div>
 
-        {/* The other ten. A 2x5 table gave ten identical boxes their own
-            grid, which competed with the four above it for no reason: these
-            are just labels. Chips of differing width wrap unevenly, so the
-            band reads as one list rather than a structure, and it costs a
-            third of the height. */}
+        {/* The other ten. A grid gave ten labels the structural weight of
+            the four the section is built on, and chips just put each one in
+            a costume. They are labels, so they read as a line of labels:
+            no containers, the middot separator this system already uses,
+            and the underline arriving only on hover. */}
         <Reveal className="mt-16 border-t border-hairline-d pt-8">
           <p className="text-[13px] font-medium uppercase tracking-[0.08em] text-dfaint">
             Also serving
           </p>
-          <ul className="mt-5 flex flex-wrap gap-2.5">
-            {REST.map((ind) => (
-              <li key={ind.name}>
+          <ul className="mt-4 flex max-w-4xl flex-wrap items-baseline gap-x-3 gap-y-2">
+            {REST.map((ind, i) => (
+              <li key={ind.name} className="flex items-baseline gap-x-3">
                 <a
                   href={ind.href}
-                  className="inline-flex rounded-pill border border-hairline-d px-4 py-2 text-[13px] font-medium text-dmuted transition-colors duration-200 hover:border-accent-hi/40 hover:bg-accent/10 hover:text-dfg"
+                  className="text-base text-dmuted underline-offset-4 transition-colors duration-200 hover:text-dfg hover:underline"
                 >
                   {ind.name}
                 </a>
+                {i < REST.length - 1 && (
+                  <span aria-hidden className="text-dfaint/60">
+                    ·
+                  </span>
+                )}
               </li>
             ))}
           </ul>
