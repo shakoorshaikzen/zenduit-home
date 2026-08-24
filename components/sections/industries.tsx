@@ -292,7 +292,7 @@ export function Industries() {
                     <span className="text-[13px] font-semibold leading-snug text-dmuted transition-colors duration-200 group-hover:text-dfg">
                       {ind.name}
                     </span>
-                    <span className="text-[11px] font-medium uppercase leading-snug tracking-[0.08em] text-dfaint">
+                    <span className="text-[13px] font-medium uppercase leading-snug tracking-[0.08em] text-dfaint">
                       {ind.tag}
                     </span>
                   </span>
