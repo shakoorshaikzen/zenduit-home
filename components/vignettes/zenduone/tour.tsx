@@ -157,7 +157,8 @@ export function TourOverlay({
 
   return (
     <div
-      className="absolute inset-0 z-40"
+      /* Above the demo's own layers (detail sheet is z-20), below the site nav. */
+      className="absolute inset-0 z-30"
       role="dialog"
       aria-modal="false"
       aria-label={`Guided tour, step ${index + 1} of ${total}: ${step.title}`}

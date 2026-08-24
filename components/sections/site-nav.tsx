@@ -182,7 +182,10 @@ export function SiteNav() {
     <header
       ref={barRef}
       className={cx(
-        "sticky top-0 z-40 border-b transition-[background-color,border-color] duration-300",
+        /* Layer scale: skip link 100 > nav 50 > demo tour 30 > detail sheet 20.
+           The dropdown below sets z-50 inside THIS element, so its level against
+           the page is the nav's, not its own — the nav must outrank the page. */
+        "sticky top-0 z-50 border-b transition-[background-color,border-color] duration-300",
         scrolled || open
           ? "border-hairline-d bg-ink-950/85 backdrop-blur-xl"
           : "border-transparent bg-ink-950",
