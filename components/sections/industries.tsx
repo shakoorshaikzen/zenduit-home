@@ -1,20 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
-  ArrowUpRight,
-  Bus,
-  HeartPulse,
-  KeyRound,
-  Landmark,
-  Plane,
-  Siren,
-  Snowflake,
-  Thermometer,
-  Trees,
-  Wheat,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { cx } from "@/lib/cx";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
@@ -37,8 +24,6 @@ type Industry = {
   tag: string;
   prop: string;
   href: string;
-  /* Index-row icon. The featured four are carried by photography instead. */
-  icon?: LucideIcon;
 };
 
 /*
@@ -85,16 +70,16 @@ const FEATURED: Industry[] = [
 /* The rest of the book, one line each. Order follows Zenduit's own footer,
    with the two newest offers first so they are not buried. */
 const REST: Industry[] = [
-  { img: "healthcare-indoor", icon: HeartPulse, name: "Hospitals & Senior Care", tag: "INDOOR TRACKING · ZENCARE", prop: "", href: "https://zenducare-landing.vercel.app/" },
-  { img: "public-school-transportation", icon: Bus, name: "Passenger Transport", tag: "ON TIME IS A SYSTEM", prop: "", href: "https://zenduit.com/industries/public-school-transportation-fleet-management/" },
-  { img: "airports", icon: Plane, name: "Airside & GSE", tag: "RIGHT EQUIPMENT · RIGHT NOW", prop: "", href: "https://zenduit.com/industries/airports-security-fleet-management/" },
-  { img: "government", icon: Landmark, name: "Government", tag: "PUBLIC AUDIT TRAIL", prop: "", href: "https://zenduit.com/industries/" },
-  { img: "public-work-winter-ops", icon: Snowflake, name: "Public Works & Winter Ops", tag: "PLOW + SALT PROOF", prop: "", href: "https://zenduit.com/industries/public-works-winter-ops/" },
-  { img: "rental-leasing", icon: KeyRound, name: "Rental & Leasing", tag: "UTILIZATION BILLING", prop: "", href: "https://zenduit.com/industries/rental-fleet-management/" },
-  { img: "healthcare-emergency", icon: Siren, name: "Emergency Response Fleets", tag: "COLD CHAIN · RESPONSE", prop: "", href: "https://zenduit.com/industries/healthcare-emergency-fleet-solutions/" },
-  { img: "forestry", icon: Trees, name: "Forestry", tag: "OFF-GRID TRACKING", prop: "", href: "https://zenduit.com/industries/" },
-  { img: "agriculture", icon: Wheat, name: "Agriculture", tag: "SEASON READINESS", prop: "", href: "https://zenduit.com/industries/agriculture-fleet-management/" },
-  { img: "food-pharma", icon: Thermometer, name: "Food & Pharmaceutical", tag: "TEMP-VERIFIED DELIVERY", prop: "", href: "https://zenduit.com/industries/food-pharma-fleet-management/" },
+  { img: "healthcare-indoor", name: "Hospitals & Senior Care", tag: "INDOOR TRACKING · ZENCARE", prop: "", href: "https://zenducare-landing.vercel.app/" },
+  { img: "public-school-transportation", name: "Passenger Transport", tag: "ON TIME IS A SYSTEM", prop: "", href: "https://zenduit.com/industries/public-school-transportation-fleet-management/" },
+  { img: "airports", name: "Airside & GSE", tag: "RIGHT EQUIPMENT · RIGHT NOW", prop: "", href: "https://zenduit.com/industries/airports-security-fleet-management/" },
+  { img: "government", name: "Government", tag: "PUBLIC AUDIT TRAIL", prop: "", href: "https://zenduit.com/industries/" },
+  { img: "public-work-winter-ops", name: "Public Works & Winter Ops", tag: "PLOW + SALT PROOF", prop: "", href: "https://zenduit.com/industries/public-works-winter-ops/" },
+  { img: "rental-leasing", name: "Rental & Leasing", tag: "UTILIZATION BILLING", prop: "", href: "https://zenduit.com/industries/rental-fleet-management/" },
+  { img: "healthcare-emergency", name: "Emergency Response Fleets", tag: "COLD CHAIN · RESPONSE", prop: "", href: "https://zenduit.com/industries/healthcare-emergency-fleet-solutions/" },
+  { img: "forestry", name: "Forestry", tag: "OFF-GRID TRACKING", prop: "", href: "https://zenduit.com/industries/" },
+  { img: "agriculture", name: "Agriculture", tag: "SEASON READINESS", prop: "", href: "https://zenduit.com/industries/agriculture-fleet-management/" },
+  { img: "food-pharma", name: "Food & Pharmaceutical", tag: "TEMP-VERIFIED DELIVERY", prop: "", href: "https://zenduit.com/industries/food-pharma-fleet-management/" },
 ];
 
 export function Industries() {
@@ -266,36 +251,23 @@ export function Industries() {
           </div>
         </div>
 
-        {/* The other ten. Each already had an outcome line in the data that
-            this row used to discard, and each now carries a geometric icon,
-            so the block reads as ten distinct capabilities rather than ten
-            identical boxes. The per-cell arrow is gone: repeating one
-            affordance ten times was the loudest thing here and said nothing
-            the hover state doesn't. */}
-        <Reveal className="mt-16 overflow-hidden rounded-lg border border-hairline-d bg-hairline-d">
-          <ul className="grid gap-px sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        {/* The other ten. A 2x5 table gave ten identical boxes their own
+            grid, which competed with the four above it for no reason: these
+            are just labels. Chips of differing width wrap unevenly, so the
+            band reads as one list rather than a structure, and it costs a
+            third of the height. */}
+        <Reveal className="mt-16 border-t border-hairline-d pt-8">
+          <p className="text-[13px] font-medium uppercase tracking-[0.08em] text-dfaint">
+            Also serving
+          </p>
+          <ul className="mt-5 flex flex-wrap gap-2.5">
             {REST.map((ind) => (
               <li key={ind.name}>
                 <a
                   href={ind.href}
-                  className="group flex h-full flex-col gap-3 bg-ink-900 p-4 transition-colors duration-200 hover:bg-ink-850"
+                  className="inline-flex rounded-pill border border-hairline-d px-4 py-2 text-[13px] font-medium text-dmuted transition-colors duration-200 hover:border-accent-hi/40 hover:bg-accent/10 hover:text-dfg"
                 >
-                  {ind.icon && (
-                    <ind.icon
-                      size={18}
-                      strokeWidth={1.5}
-                      aria-hidden
-                      className="text-dfaint transition-colors duration-200 group-hover:text-accent-hi"
-                    />
-                  )}
-                  <span className="flex flex-col gap-1">
-                    <span className="text-[13px] font-semibold leading-snug text-dmuted transition-colors duration-200 group-hover:text-dfg">
-                      {ind.name}
-                    </span>
-                    <span className="text-[13px] font-medium uppercase leading-snug tracking-[0.08em] text-dfaint">
-                      {ind.tag}
-                    </span>
-                  </span>
+                  {ind.name}
                 </a>
               </li>
             ))}
