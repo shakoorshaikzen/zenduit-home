@@ -8,10 +8,15 @@ import { ZenduOneDemo } from "@/components/vignettes/zenduone";
  * ZenduONE the visitor can drive. No specs, no claims alongside it — the
  * console is the argument. The only thing under it is the note that this
  * data is synthetic; the way onward lives in the console's own status bar.
+ *
+ * No bottom padding: this section shares its background with the one after
+ * it, so the seam should read as a single section break rather than two
+ * stacked ones. The note's own margin gives it room, and the next section's
+ * top padding owns the gap.
  */
 export function PlatformStory() {
   return (
-    <section id="how-it-works" className="bg-paper py-20 lg:py-28">
+    <section id="how-it-works" className="bg-paper pt-20 lg:pt-28">
       <Container>
         <Reveal>
           <SectionHeading
