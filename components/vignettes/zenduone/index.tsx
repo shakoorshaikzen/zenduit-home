@@ -209,7 +209,7 @@ export function ZenduOneDemo() {
             href="#demo"
             className="inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-accent-deep underline-offset-4 hover:underline"
           >
-            See the full console
+            Explore the full platform
             <ArrowRight size={12} strokeWidth={1.5} aria-hidden />
           </a>
         </div>
