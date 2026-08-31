@@ -9,10 +9,16 @@ import { SectionHeading } from "@/components/ui/section-heading";
 
 /*
  * Industries as scrollytelling — the page's one authored scroll moment.
- * Four featured industries scroll past a pinned stage; each step swaps the
- * stage to that industry's real zenduit.com photograph with a telemetry
- * chip carrying its playbook. The remaining ten index below in one line
- * each, and every entry links to its own page.
+ * THREE flagship playbooks scroll past a pinned stage; each step swaps the
+ * stage to that industry's real zenduit.com photograph. Every other industry
+ * indexes below in one line, and every entry links to its own page.
+ *
+ * Three, not thirteen. Breadth is the incumbent's argument, and thirteen
+ * equally-weighted playbooks make the same promise thirteen times without
+ * proving it once — which is the definition of vertical expertise without
+ * proof. The three here are the ones the company is actually building
+ * operating models, benchmarks and proof for, and each carries its own
+ * locked campaign line verbatim.
  *
  * Under reduced motion the crossfade collapses to an instant swap (global
  * override); the interaction itself is scroll-driven, so nothing autoplays.
@@ -27,52 +33,62 @@ type Industry = {
 };
 
 /*
- * The four Zenduit serves at the greatest scale, evidenced three ways: their
- * own footer industry order (Construction, Transportation & Logistics,
- * Utilities & Field Services lead it), the named customers on their logo
- * strip (Aecon, Speedy, San Antonio Water System), and their published case
- * studies (Labatt and Velocity Rail in logistics, Keystone ClearWater in
- * field operations, and Sharpsmart — the story their success-stories page
- * leads with — in waste). Everything else is one line in the index below,
- * which still links to its own page.
+ * The three flagship playbooks, in the order the company is proving them.
+ * Each `tag` is the locked campaign line for that territory, set verbatim —
+ * these are brand assets, not copy to rewrite per page. Each `prop` opens on
+ * that vertical's real tension: the coordination behind the outcome, not the
+ * tracking underneath it.
+ *
+ * Waste leads because it is the first full-stack proving ground: nearby
+ * customer relationships, measurable financial leakage, strong visual
+ * evidence, and the first published outcome (Sharpsmart heads their own
+ * success-stories page).
+ *
+ * IMAGERY: real operations only, never AI-generated and never a stand-in.
+ * `public-school-transportation.webp` was replaced (2026-08-31) — the previous
+ * file was a model-railway diorama, which survives a 112px thumbnail but on a
+ * 64vh stage it fails the hard rule outright ("Waste, transit or airside work
+ * shown with the specific equipment, constraints and language insiders
+ * recognize"). The replacement is a real Ontario school-bus lot with fleet
+ * unit numbers (1059, 1034) and a route card in the windshield — the yard
+ * where "on time is a system" actually starts. Photo: Aarav Chopra via Pexels
+ * (photo 34586660), Pexels licence: free for commercial use, no attribution
+ * required — the same licence basis as the hero footage. Cropped to the
+ * family spec, 1100x516.
  */
 const FEATURED: Industry[] = [
-  {
-    img: "construction",
-    name: "Construction",
-    tag: "EVERY MACHINE · EVERY SITE",
-    prop: "Know which machine is on which site, who is running it, and what it cost you to get there.",
-    href: "https://zenduit.com/industries/construction-fleet-management/",
-  },
-  {
-    img: "transportation-logistics",
-    name: "Transportation & Logistics",
-    tag: "THE LOAD ARRIVES OR IT DOES NOT",
-    prop: "Live ETAs, hours-of-service and route history in one screen, so a late load is a decision rather than a surprise.",
-    href: "https://zenduit.com/industries/transportation-logistic-fleet-management/",
-  },
-  {
-    img: "utilities-field-services",
-    name: "Utilities & Field Services",
-    tag: "CLOSEST CREW · PROVEN JOB",
-    prop: "Dispatch the nearest qualified crew, then prove the work was done with the record already attached.",
-    href: "https://zenduit.com/industries/utility-fleet-management/",
-  },
   {
     img: "waste-management",
     name: "Waste & Recycling",
     tag: "PROTECT THE ROUTE · PROTECT THE MARGIN",
-    prop: "Missed pickups, contamination and unbilled events surface with the evidence attached, while you can still act on them.",
+    prop: "Missed pickups, contamination and unbilled events surface with the evidence attached, while you can still recover the service and the revenue.",
     href: "https://zenduit.com/industries/waste-management-fleet-software/",
+  },
+  {
+    img: "public-school-transportation",
+    name: "Passenger Transport",
+    tag: "ON TIME IS A SYSTEM",
+    prop: "A late trip is rarely the route. It is driver readiness, vehicle readiness and dispatch failing to line up, so ZenduONE watches the coordination.",
+    href: "https://zenduit.com/industries/public-school-transportation-fleet-management/",
+  },
+  {
+    img: "airports",
+    name: "Airside & GSE",
+    tag: "RIGHT EQUIPMENT · RIGHT OPERATOR · RIGHT TASK · RIGHT NOW",
+    prop: "Finding the equipment is the first question, not the answer. Is it serviceable, is a qualified operator free, is something better already closer?",
+    href: "https://zenduit.com/industries/airports-security-fleet-management/",
   },
 ];
 
-/* The rest of the book, one line each. Order follows Zenduit's own footer,
-   with the two newest offers first so they are not buried. */
+/* The rest of the book, one line each — every industry still has a page, and
+   the three biggest by installed base (construction, logistics, utilities)
+   lead the index rather than the stage: real scale, no campaign claim.
+   Order follows Zenduit's own footer. */
 const REST: Industry[] = [
+  { img: "construction", name: "Construction", tag: "EVERY MACHINE · EVERY SITE", prop: "", href: "https://zenduit.com/industries/construction-fleet-management/" },
+  { img: "transportation-logistics", name: "Transportation & Logistics", tag: "THE LOAD ARRIVES OR IT DOES NOT", prop: "", href: "https://zenduit.com/industries/transportation-logistic-fleet-management/" },
+  { img: "utilities-field-services", name: "Utilities & Field Services", tag: "CLOSEST CREW · PROVEN JOB", prop: "", href: "https://zenduit.com/industries/utility-fleet-management/" },
   { img: "healthcare-indoor", name: "Hospitals & Senior Care", tag: "INDOOR TRACKING · ZENCARE", prop: "", href: "https://zenducare-landing.vercel.app/" },
-  { img: "public-school-transportation", name: "Passenger Transport", tag: "ON TIME IS A SYSTEM", prop: "", href: "https://zenduit.com/industries/public-school-transportation-fleet-management/" },
-  { img: "airports", name: "Airside & GSE", tag: "RIGHT EQUIPMENT · RIGHT NOW", prop: "", href: "https://zenduit.com/industries/airports-security-fleet-management/" },
   { img: "government", name: "Government", tag: "PUBLIC AUDIT TRAIL", prop: "", href: "https://zenduit.com/industries/" },
   { img: "public-work-winter-ops", name: "Public Works & Winter Ops", tag: "PLOW + SALT PROOF", prop: "", href: "https://zenduit.com/industries/public-works-winter-ops/" },
   { img: "rental-leasing", name: "Rental & Leasing", tag: "UTILIZATION BILLING", prop: "", href: "https://zenduit.com/industries/rental-fleet-management/" },
@@ -81,6 +97,13 @@ const REST: Industry[] = [
   { img: "agriculture", name: "Agriculture", tag: "SEASON READINESS", prop: "", href: "https://zenduit.com/industries/agriculture-fleet-management/" },
   { img: "food-pharma", name: "Food & Pharmaceutical", tag: "TEMP-VERIFIED DELIVERY", prop: "", href: "https://zenduit.com/industries/food-pharma-fleet-management/" },
 ];
+
+/* The index closes on its own door out, so "every industry has a page" is a
+   click rather than a promise. Twelve cells fill two clean rows of six. */
+const ALL_INDUSTRIES = {
+  name: "All industries",
+  href: "https://zenduit.com/industries/",
+};
 
 export function Industries() {
   const [active, setActive] = useState(0);
@@ -112,8 +135,8 @@ export function Industries() {
         <Reveal>
           <SectionHeading
             tone="dark"
-            title="Built for how your fleet actually works"
-            lede="Every industry runs a different operation. The playbook changes with it."
+            title="Built for how your operation actually works"
+            lede="Three operations we go deepest on, a full operating model each. Every other industry has its own page below."
           />
         </Reveal>
       </Container>
@@ -144,6 +167,17 @@ export function Industries() {
               </a>
             </li>
           ))}
+          <li>
+            <a
+              href={ALL_INDUSTRIES.href}
+              className="flex items-center justify-between gap-4 rounded-md border border-hairline-d bg-ink-850 px-4 py-3.5 transition-colors hover:border-dfg/25"
+            >
+              <span className="text-sm font-semibold text-dfg">
+                {ALL_INDUSTRIES.name}
+              </span>
+              <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden className="text-dfaint" />
+            </a>
+          </li>
         </ul>
       </Container>
 
@@ -247,12 +281,13 @@ export function Industries() {
           </div>
         </div>
 
-        {/* The other ten, one line each — every industry has a page. The
-            gap-px grid draws its own hairlines, so two rows divide cleanly
-            where divide-x/y would only have worked for a single row. */}
+        {/* The rest of the book, one line each — every industry has a page.
+            The gap-px grid draws its own hairlines, so two rows divide
+            cleanly where divide-x/y would only have worked for a single
+            row. */}
         <Reveal className="mt-16 overflow-hidden rounded-lg border border-hairline-d bg-hairline-d">
-          <ul className="grid gap-px sm:grid-cols-2 lg:grid-cols-5">
-            {REST.map((ind) => (
+          <ul className="grid gap-px sm:grid-cols-2 lg:grid-cols-6">
+            {[...REST, ALL_INDUSTRIES].map((ind) => (
               <li key={ind.name}>
                 <a
                   href={ind.href}

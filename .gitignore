@@ -21,6 +21,7 @@ next-env.d.ts
 .DS_Store
 *.png.tmp
 Screenshot*.png
+*.code-workspace
 
 # Reference material and working masters — not shipped with the site.
 # The hero renders public/hero-site-loop.mp4; the raw generator output and the
@@ -76,3 +77,7 @@ instructions.md
 
 # Internal strategy documents stay local
 *Brand_Positioning*.pdf
+
+# Internal audits and review reports — working documents, not part of the site
+WEBSITE_PRESSURE_TEST_REPORT.md
+*Homepage Audit*.html

@@ -15,33 +15,109 @@ const inter = Inter({
   display: "swap",
 });
 
+/*
+ * CRAWL SWITCH — read this before launch.
+ *
+ * Set NEXT_PUBLIC_SITE_URL to the production origin (https://zenduit.com/...)
+ * and this page becomes indexable with a canonical pointing at it. Leave it
+ * unset and the build ships `noindex`, because a staging origin that Google
+ * can reach competes with the real site for its own keywords and splits every
+ * bit of SEO equity the page earns. One variable, one switch, no other code
+ * path depends on it.
+ */
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
+const isPublic = Boolean(SITE_URL);
+
 export const metadata: Metadata = {
-  title: "Zenduit: Your Entire Fleet. From Signal to Done.",
+  metadataBase: new URL(SITE_URL ?? "https://zenduit-home.vercel.app"),
+  title: "Zenduit: Operational Intelligence for Complex Operations",
   description:
-    "Operational intelligence for fleet and equipment operations. ZenduONE surfaces what matters, coordinates the response and measures the result.",
+    "Your operation does not need more alerts. ZenduONE connects the systems, people, vehicles and equipment behind your operation to identify what matters, coordinate the response and measure the result.",
+  alternates: { canonical: "/" },
+  robots: isPublic
+    ? { index: true, follow: true }
+    : { index: false, follow: false },
+  /* Shared links used to render as a bare URL with no title, description or
+     image. The card image is the hero's own frame, unadorned. */
+  openGraph: {
+    type: "website",
+    siteName: "Zenduit",
+    title: "Zenduit: Operational Intelligence for Complex Operations",
+    description:
+      "Your operation does not need more alerts. It needs to know what to do next.",
+    url: "/",
+    images: [
+      {
+        url: "/og-cover.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Aerial view of an active earthworks site with a mixed fleet working",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Zenduit: Operational Intelligence for Complex Operations",
+    description:
+      "Your operation does not need more alerts. It needs to know what to do next.",
+    images: ["/og-cover.jpg"],
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0f1e",
+  /* ink-900 — the canonical dark ground, matching the nav the browser chrome
+     sits against. */
+  themeColor: "#000f2b",
+};
+
+/*
+ * Organization schema only. Product and FAQ schema can follow once there are
+ * product/FAQ pages to describe, and Review schema stays off the site until a
+ * verified, permissioned customer result exists to mark up — structured data
+ * for an unverified testimonial is the same claim with a machine reading it.
+ */
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Zenduit",
+  url: "https://zenduit.com/",
+  description:
+    "Operational intelligence for complex fleet, equipment and frontline operations.",
+  sameAs: [
+    "https://www.linkedin.com/company/zenduit/",
+    "https://www.youtube.com/@zenduit6752",
+    "https://www.instagram.com/zendu.it/",
+    "https://www.facebook.com/Zenduit",
+  ],
 };
 
 const directionContract = `<!--
-THESIS: The dashboard is the hero — a live fleet console proves "see everything, act early"
-before any claim is made; refuses the stock-photo-truck + feature-grid template of fleet marketing.
-OWN-WORLD: Linear's grammar in Zenduit's skin — designed navy (#0A0F1E family) dark moments,
-warm paper body, hairline-divided panels, Inter (optical) display set tight, Chivo Mono for
-every number and label; color appears only on interactive elements, the primary CTA, and
-telemetry status dots; topographic hairline texture in dark sections; 8/12/16 radii.
-STORY: A fleet manager sees their whole operation alive in one screen, believes surprises are
-preventable, and books a demo.
-FIRST VIEWPORT: Left — quiet mono eyebrow, two-line display headline, one-sentence subhead,
-Get a Demo + Check Our Prices; the hero itself is a frameless living fleet map (vehicles
-driving routes, floating telemetry callouts, AI-camera event card) — no fake app window;
-bottom edge — grayscale customer marquee + monochrome review badges.
-FORM: User-pinned direction (2026-08-04): Linear formatting/polish/look, hybrid dark-light
-per user choice, Samsara section parity; supersedes seed roll.
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review,
-the verdict, and DESIGN.md.
+THESIS: The OPERATOR is the hero. The page opens on the tension they live with
+(more alerts than answers), shows the coordination work disappearing, and ends on
+them back in control. The console appears in the middle of that story as the
+mechanism, never as the object of admiration. Refuses both the stock-photo-truck
+feature grid of fleet marketing AND the dashboard-as-centerpiece it replaced.
+OWN-WORLD: Linear's grammar in Zenduit's skin: designed navy (#000f2b family) dark
+moments, cool paper body, hairline-divided panels, Inter (optical) display set tight,
+mono voice for every number and label; color appears only on interactive elements,
+the primary CTA, and telemetry status dots; topographic hairline texture in dark
+sections; 8/12/20 radii.
+STORY: An operations leader recognizes their own week in the first line, walks Today
+without asking anyone's permission, sees three flagship playbooks proven rather than
+thirteen promised, and books an Operations Diagnostic.
+FIRST VIEWPORT: Left, the market tension at display scale, the turn beneath it, one
+supporting sentence, the See/Understand/Act/Measure/Improve mechanism, then Get an
+Operations Diagnostic + See how it works with "no form" said out loud; the hero is a
+full-bleed graded aerial of a working site with ONE piece of product truth over it
+(the Today card); bottom edge, the customer logo strip.
+CLAIMS: no number, quote or metric on this page without a source line or a stated
+mechanism behind it. Proof is a baseline and a measured result, never a percentage
+written for layout.
+FORM: User-pinned direction (2026-08-04): Linear formatting/polish/look, hybrid
+dark-light per user choice, Samsara section parity; supersedes seed roll. Messaging
+realigned to the Aug 2026 Brand/Product/GTM operating system (2026-08-31).
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish
+review, the verdict, and DESIGN.md.
 -->`;
 
 export default function RootLayout({
@@ -51,6 +127,10 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className="font-sans">
         <span hidden aria-hidden dangerouslySetInnerHTML={{ __html: directionContract }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-sm focus:bg-accent-deep focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white"

@@ -284,7 +284,7 @@ export const NAV_MENUS: NavMenu[] = [
         header: "Company",
         variant: "detailed",
         items: [
-          { label: "ZenduIT overview", desc: "Who we are and how we got here", href: `${Z}/about/` },
+          { label: "Zenduit overview", desc: "Who we are and how we got here", href: `${Z}/about/` },
           { label: "Careers", desc: "Open roles across four countries", href: `${Z}/careers/` },
           { label: "Contact", desc: "Talk to a person, not a form", href: `${Z}/contact/` },
         ],
@@ -303,7 +303,7 @@ export const NAV_MENUS: NavMenu[] = [
     label: "Partners",
     columns: [
       {
-        header: "The ecosystem",
+        header: "Systems we connect",
         variant: "detailed",
         items: [
           {
@@ -330,7 +330,7 @@ export const NAV_MENUS: NavMenu[] = [
         items: [
           {
             label: "Become a reseller",
-            desc: "Sell ZenduIT in your market",
+            desc: "Sell Zenduit in your market",
             href: `${Z}/partnership/`,
           },
           {
@@ -358,5 +358,17 @@ export const NAV_MENUS: NavMenu[] = [
   },
 ];
 
-/** Right-hand CTA. */
-export const NAV_CTA = { label: "Get a demo", href: "#demo" };
+/** Right-hand CTA — the same primary label as the hero and the closer.
+    "Get a demo" is retired: the motion is diagnose-before-demo, and a nav
+    button that offers the demo first argues against it. */
+export const NAV_CTA = {
+  label: "Get an Operations Diagnostic",
+  /* Below 640px the bar physically cannot hold the full label beside the
+     wordmark and the menu toggle. The offer name is what has to survive the
+     trim; the full label still appears at the foot of the mobile drawer. */
+  shortLabel: "Get a Diagnostic",
+  /* Same label, same destination as the hero and the closer. It used to point
+     at #demo, which meant one label resolved to two different places — the
+     exact collision the CTA taxonomy is supposed to remove. */
+  href: "https://zenduit.com/contact/",
+};

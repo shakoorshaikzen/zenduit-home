@@ -21,12 +21,23 @@ import { cx } from "@/lib/cx";
  * photography and a telemetry chip. Five tabs cover every solution on
  * zenduit.com/solutions; merged aspects are named in each tab's mono tag
  * line, and See the solution goes to the real solution page.
+ *
+ * COPY ALTITUDE (the maturity filter): table stakes support the claim, they
+ * never lead it. Every tab now opens on the elevated capability — the asset
+ * decision, the coached driver, the re-plan before lateness lands, the audit
+ * that became an export, the systems kept rather than replaced — and the
+ * expected capability (GPS, recording, geofences) appears as the support
+ * underneath. A buyer can get second-by-second location from anyone.
  */
 
 type Solution = {
   key: string;
   name: string;
   icon: typeof MapPin;
+  /* One compressed line, shown in the rail so a visitor who never clicks a
+     tab still gets each story — and so all five exist in the HTML rather than
+     only whichever one happens to be active. */
+  summary: string;
   copy: string;
   tags: string;
   href: string;
@@ -39,7 +50,8 @@ const SOLUTIONS: Solution[] = [
     key: "tracking",
     name: "Fleet & Asset Tracking",
     icon: MapPin,
-    copy: "Second-by-second GPS for every vehicle, and solar or long-life trackers for every asset, down to the trailer that has not moved in three days.",
+    summary: "Utilization, moves and lifecycle cost",
+    copy: "Manage the asset, not just its dot on a map. Utilization, moves, idle time and lifecycle cost sit together, so you can redeploy rather than buy.",
     tags: "FLEET TELEMATICS · ASSET TRACKING · ASSET MONITORING · ASSET MANAGEMENT",
     href: "https://zenduit.com/solutions/gps-fleet-telematics/",
     image: {
@@ -52,7 +64,8 @@ const SOLUTIONS: Solution[] = [
     key: "video-safety",
     name: "Video Safety",
     icon: Video,
-    copy: "A camera should help the driver and save the manager time. ZenCam Plus coaches in the moment, recognizes good driving, and escalates with the clip already attached.",
+    summary: "Coach in the moment, escalate with the clip",
+    copy: "A camera should help the driver and save the manager time, not build another queue of footage. ZenCam Plus coaches in the moment and escalates only what needs judgment, clip attached.",
     tags: "VIDEO BASED SAFETY · DRIVER EMPOWERMENT · IN-CAB ALERTS",
     href: "https://zenduit.com/solutions/video-based-telematics/",
     image: {
@@ -65,7 +78,8 @@ const SOLUTIONS: Solution[] = [
     key: "operations",
     name: "Routing, Fuel & Maintenance",
     icon: Route,
-    copy: "Plan routes and reassign them mid-shift, match every fill-up to a card and a tank, and let fault codes open their own work orders.",
+    summary: "Re-plan before the customer notices",
+    copy: "Re-plan before lateness becomes the customer's problem. Maintenance is prioritized by what it protects, not by mileage, and fault codes open their own work orders.",
     tags: "ROUTING & DISPATCH · OPTIMIZATION · FUEL MANAGEMENT · MAINTENANCE",
     href: "https://zenduit.com/solutions/routing-dispatch-solutions-for-fleets/",
     image: {
@@ -78,7 +92,8 @@ const SOLUTIONS: Solution[] = [
     key: "compliance",
     name: "ELD & Forms",
     icon: ClipboardCheck,
-    copy: "ZenduELD keeps hours-of-service current and digital DVIRs signed, so the audit becomes an export instead of a scramble.",
+    summary: "The audit becomes an export",
+    copy: "Compliance should be a by-product of the operation, not a second job. ZenduELD keeps hours-of-service current and DVIRs signed, so the audit becomes an export.",
     tags: "ZENDUELD · SMART FORMS · DVIR",
     href: "https://zenduit.com/solutions/eld-compliance-software/",
     image: {
@@ -91,7 +106,8 @@ const SOLUTIONS: Solution[] = [
     key: "integrations",
     name: "Integrations",
     icon: Plug,
-    copy: "Built on the open Geotab ecosystem: your hardware, your data, and ZenduConnect to grow without rip-and-replace.",
+    summary: "Keep the systems you already run",
+    copy: "Keep the systems that work. ZenduONE connects around the telematics, maintenance and business systems you already run, Geotab among them, so growth never starts with a rip-out.",
     tags: "GEOTAB MARKETPLACE · ZENDUCONNECT · MY INSTALL HUB",
     href: "https://zenduit.com/solutions/integration/",
     image: {
@@ -131,7 +147,7 @@ export function PlatformExplorer() {
         <Reveal>
           <SectionHeading
             title="The work after the signal"
-            lede="Five jobs where a signal becomes finished work. Pick one and see it happen."
+            lede="Detection is where everyone starts. These are the five jobs where a signal becomes finished work."
           />
         </Reveal>
 
@@ -156,7 +172,7 @@ export function PlatformExplorer() {
                     aria-controls={`solution-panel-${s.key}`}
                     onClick={() => setActive(i)}
                     className={cx(
-                      "relative flex shrink-0 cursor-pointer items-center gap-3 px-5 py-4 text-left text-sm font-medium transition-colors duration-200 lg:flex-1 lg:border-b lg:border-hairline-l lg:py-5 lg:last:border-b-0",
+                      "relative flex shrink-0 cursor-pointer items-start gap-3 px-5 py-4 text-left text-sm font-medium transition-colors duration-200 lg:flex-1 lg:border-b lg:border-hairline-l lg:py-5 lg:last:border-b-0",
                       selected
                         ? "bg-accent/[0.07] text-fg"
                         : "text-muted hover:bg-paper-raised hover:text-fg",
@@ -173,12 +189,22 @@ export function PlatformExplorer() {
                       strokeWidth={1.5}
                       aria-hidden
                       className={cx(
-                        "shrink-0 transition-colors duration-200",
+                        "shrink-0 transition-colors duration-200 lg:mt-0.5",
                         selected ? "text-accent-deep" : "text-faint",
                       )}
                     />
-                    <span className="whitespace-nowrap lg:whitespace-normal">
-                      {s.name}
+                    <span className="min-w-0">
+                      <span className="block whitespace-nowrap lg:whitespace-normal">
+                        {s.name}
+                      </span>
+                      <span
+                        className={cx(
+                          "mt-1 hidden text-[13px] font-normal leading-snug transition-colors duration-200 lg:block",
+                          selected ? "text-muted" : "text-faint",
+                        )}
+                      >
+                        {s.summary}
+                      </span>
                     </span>
                   </button>
                 );

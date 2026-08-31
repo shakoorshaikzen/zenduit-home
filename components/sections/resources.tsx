@@ -74,17 +74,20 @@ export function Resources() {
 
         <div className="mt-14 grid gap-6 lg:grid-cols-3 lg:grid-rows-[auto_auto]">
           {/* Featured post — real cover, real URL */}
-          <Reveal className="lg:col-span-2">
+          {/* min-w-0: a grid item defaults to min-width:auto, so the cover
+              image's own 420px cap + padding used to force the whole single
+              mobile column 502px wide and scroll the page sideways. */}
+          <Reveal className="min-w-0 lg:col-span-2">
             <a
               href={FEATURED.href}
               className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-hairline-l bg-card transition-colors duration-200 hover:border-fg/25"
             >
-              <div className="flex aspect-[16/8] items-center justify-center overflow-hidden border-b border-accent/15 bg-accent/[0.07] p-10">
+              <div className="flex aspect-[16/8] min-w-0 items-center justify-center overflow-hidden border-b border-accent/15 bg-accent/[0.07] p-6 lg:p-10">
                 <img
                   src={FEATURED.img}
                   alt={FEATURED.alt}
                   loading="lazy"
-                  className="max-h-full w-auto max-w-[420px] drop-shadow-[0_28px_44px_rgb(19_27_46/0.3)]"
+                  className="max-h-full w-auto max-w-full drop-shadow-[0_28px_44px_rgb(19_27_46/0.3)] lg:max-w-[420px]"
                 />
               </div>
               <div className="relative flex-1 p-7 lg:p-8">

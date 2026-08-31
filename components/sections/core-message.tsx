@@ -5,18 +5,23 @@ import { TopoTexture } from "@/components/ui/topo-texture";
 
 /*
  * The core message, said once and said large: the Monday insight as a
- * declarative headline, then four numbers that are all real — counted on
- * zenduit.com's own pages or stated on geotab.com — with their provenance
- * printed underneath, the way this system labels every stat. Counters
- * animate on first view (CountUp resolves instantly under reduced motion).
+ * declarative headline, then four numbers that are all real, with their
+ * provenance printed underneath the way this system labels every stat.
+ * CountUp renders the true figure in markup and treats the animation as
+ * enhancement, so this band can never print a zero.
+ *
+ * The band reads as a narrative rather than a size boast: the network we
+ * read, the solutions feeding it, the depth we commit to, and the one place
+ * it all lands. Breadth counts are Samsara's game — the strategy competes on
+ * vertical depth, so the third cell states focus, not coverage.
  */
 
 const STATS = [
   {
     end: 6,
     suffix: "M+",
-    label: "Vehicles & assets",
-    sub: "on the open Geotab ecosystem Zenduit builds on",
+    label: "Connected vehicles & assets",
+    sub: "on Geotab, one of the systems ZenduONE reads",
     source: "GEOTAB.COM",
   },
   {
@@ -27,17 +32,17 @@ const STATS = [
     source: "ZENDUIT.COM/SOLUTIONS",
   },
   {
-    end: 13,
+    end: 3,
     suffix: "",
-    label: "Industries",
-    sub: "each running its own playbook",
-    source: "ZENDUIT.COM/INDUSTRIES",
+    label: "Flagship playbooks",
+    sub: "waste, passenger transport and airside",
+    source: "ZENDUIT · 2026 FOCUS",
   },
   {
     end: 1,
     suffix: "",
-    label: "Login",
-    sub: "where the next action starts",
+    label: "Today",
+    sub: "one screen where the operation is reduced to what matters",
     source: "ZENDUONE",
   },
 ] as const;
@@ -53,8 +58,8 @@ export function CoreMessage() {
             Stop finding out on Monday.
           </h2>
           <p className="mt-5 max-w-xl text-pretty text-[1.0625rem] leading-relaxed text-dmuted">
-            The idling, the hard brake, the trailer nobody can place. Zenduit
-            catches it the moment it happens, assembles the context and moves
+            The idling, the hard brake, the trailer nobody can place.
+            ZenduONE catches it as it happens, assembles the context and moves
             the response to done. Nothing waits for Friday's report.
           </p>
         </Reveal>

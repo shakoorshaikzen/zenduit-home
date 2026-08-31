@@ -132,6 +132,17 @@ components:
 
 **Creative North Star: "The Living Dashboard"**
 
+> **Doctrine correction (2026-08-31).** The hero of the page is the OPERATOR, not the
+> console. Audited against the Aug 2026 Brand/Product/GTM operating system, the build
+> failed the first creative-approval question ("Who is the hero? If the answer is
+> GoZen, ZenduONE, AI, the camera or the dashboard, redo it"). The visual system below
+> is unchanged and correct; what changed is what it is pointed at. The console still
+> appears in the middle of the story as the mechanism; the page now opens on the market
+> tension in the operator's words, features three flagship verticals with real
+> operations photography rather than thirteen thin playbooks, and closes on a diagnostic
+> whose three steps are stated. Every number carries a source line or a stated
+> mechanism — no drafted proof.
+
 The page is the product. Every surface behaves like a fleet console that never sleeps:
 telemetry set in mono, status carried by small colored dots, panels divided by hairlines,
 and one full-bleed photograph above the fold — a drone view of an active earthworks site
@@ -200,6 +211,18 @@ Labels, icons, eyebrows, and badges stay neutral.
 
 **The Two Gradients Rule.** Exactly two gradient moments exist on the page — the faint
 top-center light in the hero and in the final CTA panel. No other gradients, ever.
+
+**The Sourced-Number Rule.** Every figure on a public surface carries either a printed
+provenance line (the stat band's `GEOTAB.COM`, `ZENDUIT.COM/SOLUTIONS`) or a stated
+mechanism behind it (`30–60 days from baseline to decision gate`). A number written for
+layout is never shipped, and a count-up animation is never what produces a value —
+`CountUp` renders the real figure in markup and animates only as enhancement. Testimonial
+and review markup stays off the page until a named, permissioned customer result exists.
+
+**The Real-Operations Rule.** Where a photograph appears, it documents competence: real
+equipment, real yards, real fleet numbers, and people applying judgment. Never staged
+props, never a model or mock-up, never AI-generated. Licence and photographer are
+recorded in the consuming component's header comment.
 
 ## Typography
 
