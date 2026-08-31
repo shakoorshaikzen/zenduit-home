@@ -71,9 +71,14 @@ export function ZenduOneDemo() {
      itself rather than just the ref. */
   useEffect(() => setWindowEl(windowRef.current), []);
 
-  /* Offer the guide the first time the console is actually on screen, once
-     per session. Auto-running it on every visit would be nagging; never
-     running it means nobody discovers what the console does. */
+  /* Onboard on first arrival: run the guide once per session, the first time
+     the console is actually on screen. Auto-running it every visit would nag;
+     never running it means nobody discovers what the console does.
+
+     This is safe to auto-run only because the overlay is a coach mark rather
+     than a modal (see tour.tsx): the console stays clickable underneath, so a
+     visitor who would rather just drive it can, without dismissing anything
+     first. */
   useEffect(() => {
     const el = windowRef.current;
     if (!el || typeof IntersectionObserver === "undefined") return;

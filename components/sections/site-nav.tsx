@@ -253,7 +253,8 @@ export function SiteNav() {
 
         <div className="flex shrink-0 items-center gap-2">
           <Button size="sm" href={NAV_CTA.href}>
-            {NAV_CTA.label}
+            <span className="sm:hidden">{NAV_CTA.shortLabel}</span>
+            <span className="max-sm:hidden">{NAV_CTA.label}</span>
           </Button>
           <button
             type="button"
@@ -316,6 +317,11 @@ export function SiteNav() {
                 </div>
               </details>
             ))}
+
+            {/* The canonical label, full length, where there is room for it */}
+            <Button size="lg" href={NAV_CTA.href} className="mt-5 w-full">
+              {NAV_CTA.label}
+            </Button>
           </div>
         </div>
       )}

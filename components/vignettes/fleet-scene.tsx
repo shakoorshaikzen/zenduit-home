@@ -19,18 +19,48 @@ import { cx } from "@/lib/cx";
  * clip plays through, holds its final frame for a beat, and restarts. The
  * poster is the clip's own first frame at 4K (responsive srcSet), so the
  * fade-in is seamless and reduced-motion users see the same site at rest.
+ *
+ * LOAD POLICY: the poster is the LCP element and is fetched at high priority;
+ * the video masters are never requested until after mount, and then only on a
+ * connection that can carry them. Fleet managers are on field connections —
+ * a 25 MB 4K master must never sit in front of the headline. Reduced motion,
+ * Save-Data, and 2g/3g all resolve to the photograph, which is the same frame.
  */
+
+/* Does this connection get the motion master? Unknown connections are
+   treated as capable (the API is Chromium-only); anything that reports
+   Save-Data or a pre-4g effective type keeps the photograph. */
+function connectionCanCarryVideo() {
+  const conn = (
+    navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    }
+  ).connection;
+  if (!conn) return true;
+  if (conn.saveData) return false;
+  const type = conn.effectiveType;
+  return !type || type === "4g";
+}
 
 export function FleetScene() {
   const [mounted, setMounted] = useState(false);
+  const [loadVideo, setLoadVideo] = useState(false);
   const [videoLive, setVideoLive] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => setMounted(true), []);
 
+  // Decide once, after mount, whether the masters get requested at all.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!connectionCanCarryVideo()) return;
+    setLoadVideo(true);
+  }, []);
+
   // Play only for users who accept motion, and surface the video only once
   // frames are actually rendering — on any failure the photo simply remains.
   useEffect(() => {
+    if (!loadVideo) return;
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     const video = videoRef.current;
     if (!video) return;
@@ -39,13 +69,14 @@ export function FleetScene() {
         video.pause();
         setVideoLive(false);
       } else {
+        video.load();
         video.play().catch(() => {});
       }
     };
     sync();
     media.addEventListener("change", sync);
     return () => media.removeEventListener("change", sync);
-  }, []);
+  }, [loadVideo]);
 
   return (
     <div
@@ -62,6 +93,8 @@ export function FleetScene() {
         srcSet="/hero-site.webp 1920w, /hero-site-4k.webp 3840w"
         sizes="100vw"
         alt=""
+        fetchPriority="high"
+        decoding="async"
         className="absolute inset-0 h-full w-full object-cover"
       />
 
@@ -72,7 +105,7 @@ export function FleetScene() {
         muted
         loop
         playsInline
-        preload="auto"
+        preload="none"
         onPlaying={() => setVideoLive(true)}
         onError={() => setVideoLive(false)}
         className={cx(
@@ -80,7 +113,9 @@ export function FleetScene() {
           videoLive ? "opacity-100" : "opacity-0",
         )}
       >
-        {/* Resolution + codec ladder. The browser takes the first source
+        {/* Sources mount only once the connection has been cleared, so a
+            field connection never even opens the request.
+            Resolution + codec ladder. The browser takes the first source
             whose media query matches AND whose codec it can decode, so each
             screen gets the best master it can actually resolve: phones pull
             the 1080p AV1 (a 4K decode they cannot display is wasted
@@ -89,14 +124,18 @@ export function FleetScene() {
             1080p H.264 is the universal floor: any browser reaching it
             supports neither modern codec, so it predates 4K displays and
             gains nothing from a 4K master. */}
-        <source
-          src="/hero-site-loop-1080.webm"
-          type="video/webm"
-          media="(max-width: 768px)"
-        />
-        <source src="/hero-site-loop-4k.webm" type="video/webm" />
-        <source src="/hero-site-loop-4k-hevc.mp4" type='video/mp4; codecs="hvc1"' />
-        <source src="/hero-site-loop.mp4" type="video/mp4" />
+        {loadVideo && (
+          <>
+            <source
+              src="/hero-site-loop-1080.webm"
+              type="video/webm"
+              media="(max-width: 768px)"
+            />
+            <source src="/hero-site-loop-4k.webm" type="video/webm" />
+            <source src="/hero-site-loop-4k-hevc.mp4" type='video/mp4; codecs="hvc1"' />
+            <source src="/hero-site-loop.mp4" type="video/mp4" />
+          </>
+        )}
       </video>
 
       {/* Type scrim: navy holds the left column, the driver stays vivid right */}
@@ -169,6 +208,15 @@ export function FleetScene() {
           <span className="flex items-center gap-1.5 text-[13px] font-medium tracking-[0.04em] text-dmuted">
             <span className="size-1 rounded-full bg-signal" />
             REST IS HANDLED
+          </span>
+        </div>
+        {/* Says what it is. A visitor has no other way to know these values
+            are illustrative, and the demo further down the page already
+            carries the same disclaimer — the hero should not be the one
+            surface that leaves it ambiguous. */}
+        <div className="border-t border-hairline-d bg-ink-950/40 px-3.5 py-1.5">
+          <span className="text-[13px] font-medium tracking-[0.06em] text-dfaint/80">
+            SAMPLE DATA, NOT A LIVE FLEET
           </span>
         </div>
       </div>

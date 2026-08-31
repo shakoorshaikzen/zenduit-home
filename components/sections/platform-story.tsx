@@ -9,6 +9,16 @@ import { ZenduOneDemo } from "@/components/vignettes/zenduone";
  * console is the argument. The only thing under it is the note that this
  * data is synthetic; the way onward lives in the console's own status bar.
  *
+ * Today is introduced here BY NAME, with its locked line as the heading.
+ * It is the signature manager-attention experience in the architecture and
+ * the most ownable asset the brand has; treating it as a tab label inside a
+ * widget wastes it. The eyebrow carries real information (which product,
+ * and where it lives), which is the only kind of eyebrow this system allows.
+ *
+ * "No form" is said out loud: an ungated walkthrough is a real difference
+ * against a field where the demo is a lead-gen gate, and a difference nobody
+ * notices is not a difference.
+ *
  * No bottom padding: this section shares its background with the one after
  * it, so the seam should read as a single section break rather than two
  * stacked ones. The note's own margin gives it room, and the next section's
@@ -20,8 +30,9 @@ export function PlatformStory() {
       <Container>
         <Reveal>
           <SectionHeading
-            title="ZenduONE, before the demo call"
-            lede="A working miniature of the real console. Start in Today, where the operation is reduced to what matters, then drive the map, review a coaching clip and check maintenance."
+            eyebrow="Today · inside ZenduONE"
+            title="Your operation, reduced to what matters"
+            lede="Thousands of signals a day. Today surfaces the few that need you, with the evidence already attached. This is the real console, working. No form, no call."
           />
         </Reveal>
 

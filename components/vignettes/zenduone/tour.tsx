@@ -5,14 +5,21 @@ import { X } from "lucide-react";
 import type { ModuleId } from "./data";
 
 /*
- * A short guided pass over the console: dim everything, ring the one thing
- * being explained, say what it is in a sentence. Each step names the module
- * and view it needs, so the shell can put the console in the right state
- * before the spotlight lands.
+ * A short guided pass over the console: back the rest of it off, ring the one
+ * thing being explained, say what it is in a sentence. Each step names the
+ * module and view it needs, so the shell can put the console in the right
+ * state before the spotlight lands.
  *
- * Escape or the close button leaves at any point, and the status bar keeps a
- * control to run it again, so nobody is trapped and nobody has to reload to
- * see it twice.
+ * IT IS A COACH MARK, NOT A GATE. The overlay is pointer-events-none apart
+ * from its own card, so the console stays fully drivable while the guide is
+ * up: a visitor can ignore the steps and start clicking, or follow them and
+ * click along. An ungated demo that cannot be touched until you dismiss a
+ * modal is just a gate with extra steps.
+ *
+ * Because the visitor can navigate mid-step, the spotlight re-measures on a
+ * timer and drops the ring if its target is genuinely gone, keeping the card
+ * so nothing is stranded. Escape or the close button leaves at any point, and
+ * the status bar keeps a control to run it again.
  */
 
 export type TourStep = {
@@ -36,7 +43,7 @@ export const TOUR: TourStep[] = [
     module: "today",
     tab: "cases",
     title: "Every case answers three questions",
-    body: "What changed, why it matters, and what happens next — so you are deciding, not assembling context.",
+    body: "What changed, why it matters, and what happens next, so you are deciding rather than assembling context.",
   },
   {
     target: "case-approve",
@@ -88,17 +95,26 @@ export function TourOverlay({
   onExit: () => void;
 }) {
   const [box, setBox] = useState<Box | null>(null);
+  /* Held until the first measurement resolves, so the card does not appear at
+     its fallback spot and then slide to the target. */
+  const [settled, setSettled] = useState(false);
 
   /* The console re-renders when a step changes its module, so the target may
      not exist on the first frame. Poll a few frames rather than measuring
      once and missing. */
-  const measure = useCallback(() => {
+  const measure = useCallback((clearIfMissing = false) => {
     if (!container) return false;
     const el = container.querySelector<HTMLElement>(`[data-tour="${step.target}"]`);
-    if (!el) return false;
+    if (!el) {
+      if (clearIfMissing) setBox(null);
+      return false;
+    }
     const c = container.getBoundingClientRect();
     const t = el.getBoundingClientRect();
-    if (t.width === 0 || t.height === 0) return false;
+    if (t.width === 0 || t.height === 0) {
+      if (clearIfMissing) setBox(null);
+      return false;
+    }
     setBox({
       left: t.left - c.left,
       top: t.top - c.top,
@@ -112,7 +128,13 @@ export function TourOverlay({
     let frames = 0;
     let raf = 0;
     const tick = () => {
-      if (measure() || frames > 30) return;
+      /* No clearIfMissing here: on a step change the new target may not exist
+         for a frame or two, and holding the previous box lets the ring travel
+         to it instead of blinking out and back. */
+      if (measure() || frames > 30) {
+        setSettled(true);
+        return;
+      }
       frames += 1;
       raf = requestAnimationFrame(tick);
     };
@@ -120,10 +142,16 @@ export function TourOverlay({
     return () => cancelAnimationFrame(raf);
   }, [measure]);
 
+  /* Steady state: the visitor can drive the console while the guide is up, so
+     the ring has to keep up with it, and let go when its target is gone. */
   useEffect(() => {
+    const id = setInterval(() => measure(true), 300);
     const onResize = () => measure();
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    return () => {
+      clearInterval(id);
+      window.removeEventListener("resize", onResize);
+    };
   }, [measure]);
 
   /* Escape leaves; arrows move. A guide you cannot dismiss from the keyboard
@@ -145,26 +173,56 @@ export function TourOverlay({
     return () => window.removeEventListener("keydown", onKey);
   }, [onNext, onBack, onExit]);
 
-  if (!box) return null;
+  if (!settled && !box) return null;
 
   const ch = container?.clientHeight ?? 0;
   const cw = container?.clientWidth ?? 0;
-  const below = box.top + box.height + 190 < ch;
-  const cardTop = below ? box.top + box.height + 12 : Math.max(12, box.top - 178);
-  /* Keep the card inside the window on both edges. */
-  const cardLeft = Math.min(Math.max(12, box.left + box.width / 2 - 150), Math.max(12, cw - 312));
+  const CARD_W = 300;
+  const CARD_H = 178;
+
+  /* Placement has one job beyond looking tidy: never cover the thing the
+     visitor might want to click next. Dropping the card under a left-rail
+     item lands it squarely on the rest of the rail, so a narrow target near
+     the left edge gets the card BESIDE it instead of below it. Wide targets
+     in the body keep the under/over placement, which covers nothing. */
+  const beside =
+    box !== null &&
+    box.left + box.width < cw * 0.35 &&
+    cw - (box.left + box.width) > CARD_W + 24;
+
+  const below = box ? box.top + box.height + CARD_H + 12 < ch : false;
+
+  let cardTop: number;
+  let cardLeft: number;
+  if (box && beside) {
+    cardLeft = box.left + box.width + 12;
+    cardTop = Math.min(Math.max(12, box.top), Math.max(12, ch - CARD_H - 12));
+  } else if (box) {
+    cardTop = below ? box.top + box.height + 12 : Math.max(12, box.top - CARD_H);
+    cardLeft = Math.min(
+      Math.max(12, box.left + box.width / 2 - CARD_W / 2),
+      Math.max(12, cw - CARD_W - 12),
+    );
+  } else {
+    /* No target left to point at: park bottom-left, still operable. */
+    cardTop = Math.max(12, ch - CARD_H - 22);
+    cardLeft = 12;
+  }
   const last = index === total - 1;
 
   return (
     <div
-      /* Above the demo's own layers (detail sheet is z-20), below the site nav. */
-      className="absolute inset-0 z-30"
+      /* Above the demo's own layers (detail sheet is z-20), below the site
+         nav. pointer-events-none is the whole point: the console underneath
+         stays clickable while the guide is up. */
+      className="pointer-events-none absolute inset-0 z-30"
       role="dialog"
       aria-modal="false"
       aria-label={`Guided tour, step ${index + 1} of ${total}: ${step.title}`}
     >
       {/* The spotlight: a ring on the target, with the rest of the console
-          dimmed by one very large shadow the window clips. */}
+          backed off by one very large shadow the window clips. */}
+      {box && (
       <div
         aria-hidden
         className="pointer-events-none absolute rounded-md ring-2 ring-accent transition-all duration-300 ease-out"
@@ -173,12 +231,14 @@ export function TourOverlay({
           top: box.top - 3,
           width: box.width + 6,
           height: box.height + 6,
-          boxShadow: "0 0 0 9999px rgb(6 10 20 / 0.76)",
+          /* Backs the rest of the console off without switching it off. */
+          boxShadow: "0 0 0 9999px rgb(6 10 20 / 0.58)",
         }}
       />
+      )}
 
       <div
-        className="absolute w-[300px] rounded-md border border-hairline-l bg-card p-4 shadow-console transition-all duration-300 ease-out"
+        className="pointer-events-auto absolute w-[300px] max-w-[calc(100%-24px)] rounded-md border border-hairline-l bg-card p-4 shadow-console transition-all duration-300 ease-out"
         style={{ left: cardLeft, top: cardTop }}
       >
         <div className="flex items-start justify-between gap-3">

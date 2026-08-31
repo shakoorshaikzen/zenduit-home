@@ -78,7 +78,8 @@ export function SiteFooter() {
           <div>
             <Logo tone="dark" />
             <p className="mt-4 max-w-[220px] text-sm leading-relaxed text-dmuted">
-              One platform to measure, monitor, and manage your entire fleet.
+              Operational intelligence for complex fleet and equipment
+              operations.
             </p>
             <div className="mt-6 flex gap-2">
               {SOCIALS.map((s) => (
@@ -117,10 +118,20 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        <div className="mt-14 flex flex-col justify-between gap-4 border-t border-hairline-d pt-6 sm:flex-row sm:items-center">
-          <p className="text-[13px] text-dfaint">
-            © 2026 Zenduit. All rights reserved.
-          </p>
+        {/* Procurement-readiness signals: a public-sector buyer looks for a
+            named legal entity and a registered address before starting an
+            evaluation. Both are taken verbatim from Zenduit's own privacy
+            policy (read 2026-08-31) — confirm the registered capitalization
+            with legal, and add a Terms of Service link here as soon as one is
+            published (zenduit.com has no terms page today, and a dead legal
+            link is worse than a missing one). */}
+        <div className="mt-14 flex flex-col justify-between gap-4 border-t border-hairline-d pt-6 sm:flex-row sm:items-end">
+          <div className="text-[13px] leading-relaxed text-dfaint">
+            <p>© 2026 Zenduit Inc. All rights reserved.</p>
+            <p className="mt-1">
+              102-2680 Matheson Blvd East, Mississauga, ON L4W 0A5, Canada
+            </p>
+          </div>
           <a
             href="https://zenduit.com/privacy-policy/"
             className="text-[13px] text-dfaint transition-colors hover:text-dfg"
