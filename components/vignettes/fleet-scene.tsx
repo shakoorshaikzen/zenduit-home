@@ -176,11 +176,11 @@ export function FleetScene() {
               <span className="block text-[13px] font-medium tracking-[0.06em] text-dfaint">
                 {k}
               </span>
-              <span className="mt-1 block font-display text-[22px] font-semibold leading-none text-dfg tabular-nums">
+              <span className="mt-1 block font-display text-title font-semibold leading-none text-dfg tabular-nums">
                 {v}
               </span>
-              <span className="mt-1.5 flex items-center gap-1.5 text-[11px] font-medium tracking-[0.02em] text-dmuted">
-                <span aria-hidden className={`size-1 shrink-0 rounded-full ${tone}`} />
+              <span className="mt-1.5 flex items-start gap-1.5 text-[13px] font-medium tracking-[0.02em] text-dmuted">
+                <span aria-hidden className={`mt-[7px] size-1 shrink-0 rounded-full ${tone}`} />
                 {sub}
               </span>
             </div>

@@ -153,7 +153,7 @@ export function Industries() {
                 ))}
               </ul>
               <div className="border-t border-hairline-d bg-ink-950/60 px-4 py-1.5">
-                <span className="text-[11px] font-medium tracking-[0.08em] text-dfaint">
+                <span className="text-[13px] font-medium tracking-[0.08em] text-dfaint">
                   ILLUSTRATIVE WORKFLOW
                 </span>
               </div>
