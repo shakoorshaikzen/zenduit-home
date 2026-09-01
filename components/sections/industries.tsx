@@ -1,291 +1,226 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
-import { cx } from "@/lib/cx";
+import {
+  AlertTriangle,
+  ArrowUpRight,
+  Bus,
+  Camera,
+  ChevronRight,
+  CircleCheck,
+  CircleDollarSign,
+  FileText,
+  Plane,
+  ShieldCheck,
+} from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 
 /*
- * Industries as scrollytelling — the page's one authored scroll moment.
- * THREE flagship playbooks scroll past a pinned stage; each step swaps the
- * stage to that industry's real zenduit.com photograph. Every other industry
- * indexes below in one line, and every entry links to its own page.
+ * Waste first, and visibly first (2026-08-31 redesign concepts, design ref/).
  *
- * Three, not thirteen. Breadth is the incumbent's argument, and thirteen
- * equally-weighted playbooks make the same promise thirteen times without
- * proving it once — which is the definition of vertical expertise without
- * proof. The three here are the ones the company is actually building
- * operating models, benchmarks and proof for, and each carries its own
- * locked campaign line verbatim.
- *
- * Under reduced motion the crossfade collapses to an instant swap (global
- * override); the interaction itself is scroll-driven, so nothing autoplays.
- */
-
-type Industry = {
-  img: string;
-  name: string;
-  tag: string;
-  prop: string;
-  href: string;
-};
-
-/*
- * The three flagship playbooks, in the order the company is proving them.
- * Each `tag` is the locked campaign line for that territory, set verbatim —
- * these are brand assets, not copy to rewrite per page. Each `prop` opens on
- * that vertical's real tension: the coordination behind the outcome, not the
- * tracking underneath it.
- *
- * Waste leads because it is the first full-stack proving ground: nearby
- * customer relationships, measurable financial leakage, strong visual
- * evidence, and the first published outcome (Sharpsmart heads their own
- * success-stories page).
+ * The three-step scrollytelling gave waste, passenger and airside equal
+ * weight, which is exactly the guardrail the strategy warns about: three
+ * simultaneous campaigns produce generic collateral and weak proof. The doc
+ * names waste as the proving ground, so waste now gets the full operating
+ * model: the locked campaign line as the headline, the real crew photograph,
+ * an illustrative workflow showing the hidden operational work behind one
+ * completed stop, and the three outcome systems it protects. Passenger and
+ * airside keep their locked lines as the next models in the sequence, and
+ * every other industry keeps its one-line path in the index.
  *
  * IMAGERY: real operations only, never AI-generated and never a stand-in.
- * `public-school-transportation.webp` was replaced (2026-08-31) — the previous
- * file was a model-railway diorama, which survives a 112px thumbnail but on a
- * 64vh stage it fails the hard rule outright ("Waste, transit or airside work
- * shown with the specific equipment, constraints and language insiders
- * recognize"). The replacement is a real Ontario school-bus lot with fleet
- * unit numbers (1059, 1034) and a route card in the windshield — the yard
- * where "on time is a system" actually starts. Photo: Aarav Chopra via Pexels
- * (photo 34586660), Pexels licence: free for commercial use, no attribution
- * required — the same licence basis as the hero footage. Cropped to the
- * family spec, 1100x516.
+ * The waste photograph is the crew-and-rear-loader frame from zenduit.com's
+ * own industry pages. The workflow card overlays it the way the Today card
+ * overlays the hero: one piece of product truth over a real scene, labelled
+ * illustrative because it is.
  */
-const FEATURED: Industry[] = [
+
+/* The chain from one stop to a billable event, in the console's voice. */
+const WORKFLOW = [
+  { icon: CircleCheck, label: "STOP 1842", value: "SERVICE VERIFIED" },
+  { icon: Camera, label: "CONTAMINATION", value: "EVIDENCE ATTACHED" },
+  { icon: FileText, label: "CONTRACT RULE", value: "MATCHED" },
+  { icon: ChevronRight, label: "NEXT", value: "REVIEW BILLABLE EVENT" },
+];
+
+/* The outcome systems the waste operating model protects. */
+const OUTCOMES = [
   {
-    img: "waste-management",
-    name: "Waste & Recycling",
-    tag: "PROTECT THE ROUTE · PROTECT THE MARGIN",
-    prop: "Missed pickups, contamination and unbilled events surface with the evidence attached, while you can still recover the service and the revenue.",
-    href: "https://zenduit.com/industries/waste-management-fleet-software/",
+    icon: ShieldCheck,
+    name: "Proof of service",
+    line: "Every stop verified, with the record to settle a dispute.",
   },
   {
-    img: "public-school-transportation",
+    icon: AlertTriangle,
+    name: "Exception response",
+    line: "Missed service surfaces while the truck is still on the route.",
+  },
+  {
+    icon: CircleDollarSign,
+    name: "Revenue assurance",
+    line: "Overages and unbilled events become invoices, not write-offs.",
+  },
+];
+
+/* The next operating models in the sequence, locked lines verbatim. */
+const NEXT_MODELS = [
+  {
+    icon: Bus,
     name: "Passenger Transport",
     tag: "ON TIME IS A SYSTEM",
-    prop: "A late trip is rarely the route. It is driver readiness, vehicle readiness and dispatch failing to line up, so ZenduONE watches the coordination.",
     href: "https://zenduit.com/industries/public-school-transportation-fleet-management/",
   },
   {
-    img: "airports",
+    icon: Plane,
     name: "Airside & GSE",
     tag: "RIGHT EQUIPMENT · RIGHT OPERATOR · RIGHT TASK · RIGHT NOW",
-    prop: "Finding the equipment is the first question, not the answer. Is it serviceable, is a qualified operator free, is something better already closer?",
     href: "https://zenduit.com/industries/airports-security-fleet-management/",
   },
 ];
 
-/* The rest of the book, one line each — every industry still has a page, and
-   the three biggest by installed base (construction, logistics, utilities)
-   lead the index rather than the stage: real scale, no campaign claim.
-   Order follows Zenduit's own footer. */
-const REST: Industry[] = [
-  { img: "construction", name: "Construction", tag: "EVERY MACHINE · EVERY SITE", prop: "", href: "https://zenduit.com/industries/construction-fleet-management/" },
-  { img: "transportation-logistics", name: "Transportation & Logistics", tag: "THE LOAD ARRIVES OR IT DOES NOT", prop: "", href: "https://zenduit.com/industries/transportation-logistic-fleet-management/" },
-  { img: "utilities-field-services", name: "Utilities & Field Services", tag: "CLOSEST CREW · PROVEN JOB", prop: "", href: "https://zenduit.com/industries/utility-fleet-management/" },
-  { img: "healthcare-indoor", name: "Hospitals & Senior Care", tag: "INDOOR TRACKING · ZENCARE", prop: "", href: "https://zenducare-landing.vercel.app/" },
-  { img: "government", name: "Government", tag: "PUBLIC AUDIT TRAIL", prop: "", href: "https://zenduit.com/industries/" },
-  { img: "public-work-winter-ops", name: "Public Works & Winter Ops", tag: "PLOW + SALT PROOF", prop: "", href: "https://zenduit.com/industries/public-works-winter-ops/" },
-  { img: "rental-leasing", name: "Rental & Leasing", tag: "UTILIZATION BILLING", prop: "", href: "https://zenduit.com/industries/rental-fleet-management/" },
-  { img: "healthcare-emergency", name: "Emergency Response Fleets", tag: "COLD CHAIN · RESPONSE", prop: "", href: "https://zenduit.com/industries/healthcare-emergency-fleet-solutions/" },
-  { img: "forestry", name: "Forestry", tag: "OFF-GRID TRACKING", prop: "", href: "https://zenduit.com/industries/" },
-  { img: "agriculture", name: "Agriculture", tag: "SEASON READINESS", prop: "", href: "https://zenduit.com/industries/agriculture-fleet-management/" },
-  { img: "food-pharma", name: "Food & Pharmaceutical", tag: "TEMP-VERIFIED DELIVERY", prop: "", href: "https://zenduit.com/industries/food-pharma-fleet-management/" },
+/* The rest of the book, one line each. Order follows Zenduit's own footer. */
+const REST = [
+  { name: "Construction", href: "https://zenduit.com/industries/construction-fleet-management/" },
+  { name: "Transportation & Logistics", href: "https://zenduit.com/industries/transportation-logistic-fleet-management/" },
+  { name: "Utilities & Field Services", href: "https://zenduit.com/industries/utility-fleet-management/" },
+  { name: "Hospitals & Senior Care", href: "https://zenducare-landing.vercel.app/" },
+  { name: "Government", href: "https://zenduit.com/industries/" },
+  { name: "Public Works & Winter Ops", href: "https://zenduit.com/industries/public-works-winter-ops/" },
+  { name: "Rental & Leasing", href: "https://zenduit.com/industries/rental-fleet-management/" },
+  { name: "Emergency Response Fleets", href: "https://zenduit.com/industries/healthcare-emergency-fleet-solutions/" },
+  { name: "Forestry", href: "https://zenduit.com/industries/" },
+  { name: "Agriculture", href: "https://zenduit.com/industries/agriculture-fleet-management/" },
+  { name: "Food & Pharmaceutical", href: "https://zenduit.com/industries/food-pharma-fleet-management/" },
 ];
 
-/* The index closes on its own door out, so "every industry has a page" is a
-   click rather than a promise. Twelve cells fill two clean rows of six. */
 const ALL_INDUSTRIES = {
   name: "All industries",
   href: "https://zenduit.com/industries/",
 };
 
 export function Industries() {
-  const [active, setActive] = useState(0);
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const idx = stepRefs.current.indexOf(
-              entry.target as HTMLDivElement,
-            );
-            if (idx !== -1) setActive(idx);
-          }
-        }
-      },
-      { rootMargin: "-45% 0px -45% 0px" },
-    );
-    stepRefs.current.forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
-  const current = FEATURED[active];
-
   return (
     <section className="bg-ink-900 py-20 lg:py-28">
       <Container>
         <Reveal>
           <SectionHeading
             tone="dark"
-            title="Built for how your operation actually works"
-            lede="Three operations we go deepest on, a full operating model each. Every other industry has its own page below."
+            eyebrow="Waste & Recycling · first operating model"
+            title="Protect the route. Protect the margin."
+            lede="A completed stop can hide missed service, missing evidence, contamination and unbilled work. ZenduONE brings the route, customer, video and service context together while there is still time to act."
           />
+          <a
+            href="https://zenduit.com/industries/waste-management-fleet-software/"
+            className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent-hi underline-offset-4 hover:underline"
+          >
+            See the waste playbook
+            <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden />
+          </a>
         </Reveal>
-      </Container>
 
-      {/* Mobile: compact scannable cards, every industry linked */}
-      <Container className="lg:hidden">
-        <ul className="mt-10 space-y-3">
-          {[...FEATURED, ...REST].map((ind) => (
-            <li key={ind.name}>
-              <a
-                href={ind.href}
-                className="flex gap-4 overflow-hidden rounded-md border border-hairline-d bg-ink-850 transition-colors hover:border-dfg/25"
-              >
-                <img
-                  src={`/industries/${ind.img}.webp`}
-                  alt=""
-                  loading="lazy"
-                  className="h-auto w-28 shrink-0 object-cover"
-                />
-                <div className="min-w-0 py-3 pr-4">
-                  <h3 className="text-sm font-semibold leading-snug text-dfg">
-                    {ind.name}
-                  </h3>
-                  <p className="mt-1 text-[13px] font-medium tracking-[0.08em] text-dfaint">
-                    {ind.tag}
-                  </p>
-                </div>
-              </a>
-            </li>
-          ))}
-          <li>
-            <a
-              href={ALL_INDUSTRIES.href}
-              className="flex items-center justify-between gap-4 rounded-md border border-hairline-d bg-ink-850 px-4 py-3.5 transition-colors hover:border-dfg/25"
-            >
-              <span className="text-sm font-semibold text-dfg">
-                {ALL_INDUSTRIES.name}
-              </span>
-              <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden className="text-dfaint" />
-            </a>
-          </li>
-        </ul>
-      </Container>
-
-      {/* Desktop: pinned stage + scrolling industry stories */}
-      <Container className="hidden lg:block">
-        <div className="mt-14 grid grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-14">
-          {/* Scroll steps, metered by a minimal vertical progress rail */}
-          <div className="relative pl-10">
+        {/* The scene and the hidden work: real crew, illustrative workflow. */}
+        <Reveal delay={0.08} className="mt-12">
+          <div className="relative overflow-hidden rounded-lg border border-hairline-d">
+            <img
+              src="/industries/waste-management.webp"
+              alt="Waste collection crew loading carts into a rear loader"
+              loading="lazy"
+              className="h-[320px] w-full object-cover object-[center_30%] lg:h-[440px]"
+            />
+            {/* The scrim and the floating card are desktop treatments. On a
+                phone the card would bury the crew under the UI, which is the
+                exact inversion the imagery rules forbid, so there the photo
+                stands alone and the workflow docks beneath it. */}
             <div
               aria-hidden
-              className="absolute bottom-[26vh] left-0 top-[26vh] w-px bg-hairline-d"
-            >
-              <span
-                className="absolute left-0 top-0 block w-px bg-accent transition-[height] duration-500 ease-out"
-                style={{ height: `${(active / (FEATURED.length - 1)) * 100}%` }}
-              />
-              <span
-                className="absolute left-1/2 block size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent transition-[top] duration-500 ease-out"
-                style={{ top: `${(active / (FEATURED.length - 1)) * 100}%` }}
-              />
+              className="absolute inset-0 hidden bg-[linear-gradient(90deg,transparent_35%,rgb(0_7_20/0.55)_70%,rgb(0_7_20/0.72)_100%)] lg:block"
+            />
+
+            <div className="border-t border-hairline-d bg-ink-950/80 backdrop-blur-md lg:absolute lg:right-8 lg:top-1/2 lg:w-[21rem] lg:-translate-y-1/2 lg:overflow-hidden lg:rounded-md lg:border">
+              <ul className="divide-y divide-hairline-d">
+                {WORKFLOW.map((w) => (
+                  <li key={w.label} className="flex items-center gap-3 px-4 py-2.5">
+                    <w.icon
+                      size={15}
+                      strokeWidth={1.5}
+                      aria-hidden
+                      className="shrink-0 text-signal"
+                    />
+                    <span className="text-[13px] font-medium tracking-[0.04em] text-dfg">
+                      {w.label}
+                      <span className="text-dmuted"> · {w.value}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <div className="border-t border-hairline-d bg-ink-950/60 px-4 py-1.5">
+                <span className="text-[11px] font-medium tracking-[0.08em] text-dfaint">
+                  ILLUSTRATIVE WORKFLOW
+                </span>
+              </div>
             </div>
-            {FEATURED.map((ind, i) => (
+          </div>
+        </Reveal>
+
+        {/* The outcome systems the model protects, panel grammar. */}
+        <Reveal delay={0.12} className="mt-5">
+          <div className="grid overflow-hidden rounded-lg border border-hairline-d bg-ink-950/50 sm:grid-cols-3">
+            {OUTCOMES.map((o) => (
               <div
-                key={ind.name}
-                ref={(el) => {
-                  stepRefs.current[i] = el;
-                }}
-                className="flex min-h-[52vh] items-center"
+                key={o.name}
+                className="border-hairline-d p-6 max-sm:[&:nth-child(n+2)]:border-t sm:[&:nth-child(n+2)]:border-l lg:p-7"
               >
-                <div>
-                  <h3
-                    className={cx(
-                      "text-balance font-display text-title-lg font-semibold transition-colors duration-300",
-                      i === active ? "text-dfg" : "text-dfaint",
-                    )}
-                  >
-                    {ind.name}
-                  </h3>
-                  <p
-                    className={cx(
-                      "mt-2 text-[13px] font-medium tracking-[0.08em] transition-colors duration-300",
-                      i === active ? "text-signal" : "text-dfaint",
-                    )}
-                  >
-                    {ind.tag}
-                  </p>
-                  <p
-                    className={cx(
-                      "mt-3 max-w-sm text-pretty text-[0.9375rem] leading-relaxed transition-colors duration-300",
-                      i === active ? "text-dmuted" : "text-dfaint/60",
-                    )}
-                  >
-                    {ind.prop}
-                  </p>
-                  <a
-                    href={ind.href}
-                    tabIndex={i === active ? 0 : -1}
-                    className={cx(
-                      "mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent-hi underline-offset-4 transition-opacity duration-300 hover:underline",
-                      i === active ? "opacity-100" : "pointer-events-none opacity-0",
-                    )}
-                  >
-                    See the {ind.name.split(" ")[0].toLowerCase()} playbook
-                    <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden />
-                  </a>
-                </div>
+                <o.icon size={17} strokeWidth={1.5} aria-hidden className="text-dmuted" />
+                <h3 className="mt-3 text-[0.9375rem] font-semibold uppercase tracking-[0.06em] text-dfg">
+                  {o.name}
+                </h3>
+                <p className="mt-2 text-[13px] leading-relaxed text-dmuted">{o.line}</p>
               </div>
             ))}
           </div>
+        </Reveal>
 
-          {/* Pinned stage */}
-          <div className="relative">
-            <div className="sticky top-[16vh] h-[64vh] overflow-hidden rounded-lg border border-hairline-d">
-              {FEATURED.map((ind, i) => (
-                <div
-                  key={ind.name}
-                  aria-hidden={i !== active}
-                  className={cx(
-                    "absolute inset-0 transition-opacity duration-500",
-                    i === active ? "opacity-100" : "opacity-0",
-                  )}
-                >
-                  <img
-                    src={`/industries/${ind.img}.webp`}
-                    alt={ind.name}
-                    loading={i === 0 ? "eager" : "lazy"}
-                    className={cx(
-                      "absolute inset-0 h-full w-full object-cover",
-                      ind.img === "healthcare-indoor"
-                        ? "object-center"
-                        : "object-[center_65%]",
-                    )}
+        {/* The next models in the sequence, locked lines verbatim. */}
+        <Reveal delay={0.16} className="mt-14">
+          <p className="text-[13px] font-medium tracking-[0.08em] text-dfaint">
+            NEXT OPERATING MODELS
+          </p>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            {NEXT_MODELS.map((m) => (
+              <a
+                key={m.name}
+                href={m.href}
+                className="group flex items-center justify-between gap-4 rounded-md border border-hairline-d bg-ink-850 p-5 transition-colors hover:border-dfg/25 lg:p-6"
+              >
+                <span className="flex min-w-0 items-start gap-4">
+                  <m.icon
+                    size={18}
+                    strokeWidth={1.5}
+                    aria-hidden
+                    className="mt-0.5 shrink-0 text-dmuted"
                   />
-                  <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink-950/80 to-transparent" />
-                  <span className="absolute bottom-5 right-5 text-[13px] font-medium tracking-[0.08em] text-dfg/80">
-                    {String(active + 1).padStart(2, "0")} / {String(FEATURED.length).padStart(2, "0")}
+                  <span className="min-w-0">
+                    <span className="block font-display text-title font-semibold text-dfg">
+                      {m.name}
+                    </span>
+                    <span className="mt-1 block text-[13px] font-medium tracking-[0.08em] text-signal">
+                      {m.tag}
+                    </span>
                   </span>
-                </div>
-              ))}
-            </div>
+                </span>
+                <ArrowUpRight
+                  size={16}
+                  strokeWidth={1.5}
+                  aria-hidden
+                  className="shrink-0 text-dfaint transition-colors group-hover:text-accent-hi"
+                />
+              </a>
+            ))}
           </div>
-        </div>
+        </Reveal>
 
-        {/* The rest of the book, one line each — every industry has a page.
-            The gap-px grid draws its own hairlines, so two rows divide
-            cleanly where divide-x/y would only have worked for a single
-            row. */}
-        <Reveal className="mt-16 overflow-hidden rounded-lg border border-hairline-d bg-hairline-d">
+        {/* Every other industry keeps its page. The gap-px grid draws its own
+            hairlines, so two rows divide cleanly. */}
+        <Reveal delay={0.2} className="mt-10 overflow-hidden rounded-lg border border-hairline-d bg-hairline-d">
           <ul className="grid gap-px sm:grid-cols-2 lg:grid-cols-6">
             {[...REST, ALL_INDUSTRIES].map((ind) => (
               <li key={ind.name}>

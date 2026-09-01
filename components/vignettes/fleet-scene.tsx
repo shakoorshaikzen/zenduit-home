@@ -145,10 +145,10 @@ export function FleetScene() {
       {/* Grounding: the photograph settles into the page rather than stopping */}
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink-950 via-ink-950/70 to-transparent" />
 
-      {/* One piece of product truth: Today reading THIS site. Every row
-          names a machine visible in the footage, and the card shows the
-          attention triage rather than raw monitoring: one decision waiting,
-          the rest already handled. Synthetic-plausible values. */}
+      {/* One piece of product truth: Today reading THIS site as the comp
+          draws it — the attention triage, not raw monitoring. One decision
+          waiting; twenty things that never needed a manager. Synthetic-
+          plausible values, and the card says so on its last line. */}
       <div className="absolute right-[4.5%] top-1/2 hidden w-[21rem] -translate-y-1/2 overflow-hidden rounded-md border border-hairline-d bg-ink-950/65 shadow-console backdrop-blur-md lg:block">
         <div className="flex items-center justify-between border-b border-hairline-d px-3.5 py-2.5">
           <span className="text-[13px] font-semibold tracking-[0.04em] text-dfg">
@@ -159,55 +159,39 @@ export function FleetScene() {
             LIVE
           </span>
         </div>
+        {/* The comp's card (design ref): the triage alone, at reading size.
+            Each state carries the demo's own vocabulary and a telemetry dot
+            in its meaning: amber for a decision waiting, sky for prepared
+            work, teal for handled. The machine rows moved out with the comp;
+            what remains is the one number a manager actually opens the day
+            with, and the count that says everything else took care of
+            itself. */}
         <div className="grid grid-cols-3 divide-x divide-hairline-d border-b border-hairline-d">
           {[
-            ["NEEDS YOU", "1"],
-            ["HANDLED", "6"],
-            ["IDLE", "4%"],
-          ].map(([k, v]) => (
-            <div key={k} className="px-3 py-2.5">
+            ["NEEDS YOU", "1", "Action needed", "bg-warn"],
+            ["PREPARED", "6", "Ready for action", "bg-accent-hi"],
+            ["HANDLED", "14", "Completed today", "bg-signal"],
+          ].map(([k, v, sub, tone]) => (
+            <div key={k} className="px-3.5 py-3">
               <span className="block text-[13px] font-medium tracking-[0.06em] text-dfaint">
                 {k}
               </span>
-              <span className="mt-0.5 block text-[13px] font-semibold text-dfg tabular-nums">
+              <span className="mt-1 block font-display text-[22px] font-semibold leading-none text-dfg tabular-nums">
                 {v}
               </span>
-            </div>
-          ))}
-        </div>
-        <div className="divide-y divide-hairline-d">
-          {[
-            ["EXC-114", "TRENCHING · ON PLAN"],
-            ["TRK-032", "BRAKE WEAR · WO DRAFTED"],
-            ["LDR-05", "STAGING · HANDLED"],
-          ].map(([unit, status]) => (
-            <div
-              key={unit}
-              className="flex items-center justify-between px-3.5 py-2"
-            >
-              <span className="whitespace-nowrap text-[13px] font-semibold tracking-[0.02em] text-dfg">
-                {unit}
-              </span>
-              <span className="flex items-center gap-1.5 text-[13px] font-medium tracking-[0.02em] text-dmuted">
-                <span
-                  className={
-                    status.includes("DRAFTED")
-                      ? "size-1 rounded-full bg-warn"
-                      : "size-1 rounded-full bg-signal"
-                  }
-                />
-                {status}
+              <span className="mt-1.5 flex items-center gap-1.5 text-[11px] font-medium tracking-[0.02em] text-dmuted">
+                <span aria-hidden className={`size-1 shrink-0 rounded-full ${tone}`} />
+                {sub}
               </span>
             </div>
           ))}
         </div>
-        <div className="flex items-center justify-between border-t border-hairline-d px-3.5 py-2">
-          <span className="text-[13px] font-medium tracking-[0.06em] text-dfaint">
-            1 DECISION WAITING
+        <div className="flex items-center justify-between px-3.5 py-2">
+          <span className="text-[13px] font-medium tracking-[0.04em] text-accent-hi">
+            View all
           </span>
-          <span className="flex items-center gap-1.5 text-[13px] font-medium tracking-[0.04em] text-dmuted">
-            <span className="size-1 rounded-full bg-signal" />
-            REST IS HANDLED
+          <span className="text-[13px] font-medium tracking-[0.04em] text-dmuted tabular-nums">
+            21 total
           </span>
         </div>
         {/* Says what it is. A visitor has no other way to know these values

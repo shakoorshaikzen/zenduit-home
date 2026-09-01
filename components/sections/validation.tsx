@@ -58,7 +58,7 @@ const STORIES = [
 
 export function Validation() {
   return (
-    <section className="bg-paper py-20 lg:py-28">
+    <section id="customer-results" className="bg-paper py-20 lg:py-28">
       <Container>
         <Reveal>
           <SectionHeading title="Run by people who run fleets" />
