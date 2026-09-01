@@ -32,15 +32,20 @@ export function PlatformStory() {
           <SectionHeading
             eyebrow="Today · inside ZenduONE"
             title="Your operation, reduced to what matters"
-            lede="Thousands of signals a day. Today surfaces the few that need you, with the evidence already attached. This is the real console, working. No form, no call."
+            lede="Thousands of signals a day. Today ranks the few that could cost you service, revenue or safety, and brings them with the evidence attached. This is the real console, working. No form, no call."
           />
         </Reveal>
 
         <Reveal delay={0.08} className="mt-12">
           <ZenduOneDemo />
-          <p className="mt-4 text-right text-[13px] text-faint">
-            Sample data, not a live fleet
-          </p>
+          {/* The product signature lives with the demo, which is where the
+              messaging house assigns it. */}
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
+            <p className="text-[13px] font-medium tracking-[0.08em] text-faint">
+              FROM SIGNAL TO DONE
+            </p>
+            <p className="text-[13px] text-faint">Sample data, not a live fleet</p>
+          </div>
         </Reveal>
       </Container>
     </section>

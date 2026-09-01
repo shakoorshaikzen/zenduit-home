@@ -52,52 +52,66 @@ export function Hero() {
       <Container className="relative">
         <div className="pb-20 pt-20 lg:min-h-[600px] lg:pb-28 lg:pt-28">
           <Reveal>
-            {/* Two beats: the complaint, then the turn. The turn is the
-                promise, so it gets the second line to itself at title-lg —
-                display type stays reserved for the tension. */}
-            {/* The two-line break is an authored beat at desktop scale; below
-                lg the sentence flows and `text-balance` evens the rag, which
-                beats forcing a 23-character line onto a phone. */}
-            <h1 className="max-w-[52rem] text-balance font-display text-hero font-bold text-dfg">
-              <span className="lg:block">Your operation does not</span>{" "}
-              <span className="lg:block">need more alerts.</span>
-            </h1>
-            <p className="mt-5 max-w-xl text-balance font-display text-title-lg font-medium text-dfg/90">
-              It needs to know what to do next.
+            {/* The category, named once, where the page starts. It carries
+                real information (the umbrella the strategy claims), so it
+                clears the eyebrow rule. */}
+            <p className="mb-5 text-[13px] font-medium tracking-[0.08em] text-dfaint">
+              OPERATIONAL INTELLIGENCE
             </p>
+            {/* One headline, both beats (design ref, hero comp): complaint
+                and answer share the display size, and `text-balance` keeps
+                the four-line rag even at every width. */}
+            {/* One step below the display token, and each sentence set as
+                its own balanced block so lines break at phrase boundaries
+                ("doesn't need more / alerts" was the free-flow rag). The
+                comp's contraction is kept deliberately: as two words, the
+                balancer splits "does / not" across lines. */}
+            <h1 className="max-w-[48rem] font-display text-[clamp(2.5rem,4.4vw,3.8rem)] font-bold leading-[1.1] tracking-[-0.02em] text-dfg">
+              <span className="block text-balance">
+                Your operation doesn&rsquo;t need more alerts.
+              </span>
+              {/* The answer steps down a size from the complaint, in em so
+                  it tracks the headline through every clamp width. */}
+              <span className="mt-2 block text-balance text-[0.85em]">
+                It needs to know what to do next.
+              </span>
+            </h1>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-6 max-w-lg text-pretty text-[1.0625rem] leading-relaxed text-dfg/80">
-              ZenduONE connects the systems, people and equipment behind your
-              operation to identify what matters, coordinate the response and
-              measure the result.
-            </p>
-            <p className="mt-5 text-[13px] font-medium tracking-[0.08em] text-dfaint">
-              SEE · UNDERSTAND · ACT · MEASURE · IMPROVE
+              ZenduONE connects the systems, people, vehicles and equipment
+              behind your operation to surface what matters, coordinate the
+              next action and measure the result.
             </p>
           </Reveal>
           <Reveal delay={0.16}>
-            {/* Two CTAs, the doc's pair, in the doc's order of priority —
-                the same two labels appear at the closer and in the nav. */}
+            {/* The diagnostic stays the one primary everywhere; the second
+                action names the surface it lands on (design ref, hero comp).
+                Both resolve to the same destinations as before. */}
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Button size="lg" href="https://zenduit.com/contact/">
                 Get an Operations Diagnostic
               </Button>
               <Button size="lg" variant="ghostDark" href="#how-it-works">
-                See how it works
+                See Today in action
               </Button>
             </div>
-            <p className="mt-4 text-[13px] font-medium tracking-[0.08em] text-dfaint">
-              NO FORM · WALK THROUGH IT NOW
+            {/* The product signature and its mechanism, under the actions in
+                the comp's order. "No form" moved to the demo section's own
+                lede, where the walkthrough actually is. */}
+            <p className="mt-6 text-[13px] font-medium tracking-[0.08em] text-dfaint">
+              FROM SIGNAL TO DONE · SEE · UNDERSTAND · ACT · MEASURE · IMPROVE
             </p>
           </Reveal>
         </div>
 
-        {/* In-fold proof: real customers, their own logos. */}
+        {/* In-fold proof: real customers, their own logos, and a path to the
+            named results further down so the wall is connected to outcomes
+            instead of standing silent. */}
         <Reveal delay={0.24}>
           <div className="border-t border-hairline-d pb-10 pt-8">
             <p className="text-[13px] font-medium tracking-[0.08em] text-dfaint">
-              TRUSTED BY FLEETS AT
+              PROVEN IN COMPLEX OPERATIONS
             </p>
             <ul className="mt-6 flex flex-wrap items-center gap-x-10 gap-y-6 lg:gap-x-12">
               {CLIENTS.map((c) => (
@@ -111,6 +125,14 @@ export function Hero() {
                 </li>
               ))}
             </ul>
+            <p className="mt-7 text-center">
+              <a
+                href="#customer-results"
+                className="text-[13px] font-medium tracking-[0.04em] text-dmuted underline-offset-4 transition-colors hover:text-dfg hover:underline"
+              >
+                Named outcomes and case studies →
+              </a>
+            </p>
           </div>
         </Reveal>
       </Container>

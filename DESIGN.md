@@ -143,6 +143,20 @@ components:
 > whose three steps are stated. Every number carries a source line or a stated
 > mechanism — no drafted proof.
 
+> **Concept pass (2026-08-31, `design ref/`), as it shipped after review.** The hero
+> follows its comp exactly: category eyebrow, one four-line display headline carrying
+> both beats, the diagnostic + "See Today in action" pair, the signature-and-mechanism
+> mono line beneath the actions, the Today card reduced to the triage (needs you /
+> prepared / handled, with status dots and a view-all count), and the logo strip labelled
+> "proven in complex operations" with a centered link to the named results. The
+> three-step industries scrollytelling became the waste-first operating model (locked
+> line as headline, real crew photograph with a docked illustrative workflow, outcome
+> tiles, passenger and airside as the next models), and the Today demo carries the
+> cost-ranked framing. Two concepts were tried and rolled back by decision: the
+> shared-operational-record section (the five-tab switcher stands) and the customer
+> results proof-hierarchy chrome (the section keeps its quote-led layout with real
+> published stories). Anything schematic is labelled ILLUSTRATIVE.
+
 The page is the product. Every surface behaves like a fleet console that never sleeps:
 telemetry set in mono, status carried by small colored dots, panels divided by hairlines,
 and one full-bleed photograph above the fold — a drone view of an active earthworks site
